@@ -15,7 +15,10 @@
       "Bash(pnpm prisma *)",
       "Bash(pnpm create *)",
       "Bash(node *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git remote *)",
+      "Bash(pnpm type-check *)",
+      "Bash(Remove-Item *)"
     ]
   }
 }
