@@ -1,0 +1,310 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [pgvector(map: "vector")]
+}
+
+// ─── ENUMS ────────────────────────────────────────────────────────────────────
+
+enum GlobalRole {
+  SUPER_ADMIN
+  USER
+}
+
+enum CompanyRole {
+  ADMIN
+  MANAGER
+  STAFF
+  GUEST
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  BLOCKED
+  DONE
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DELEGATED
+}
+
+enum NotificationPriority {
+  URGENT
+  HIGH
+  NORMAL
+  LOW
+}
+
+enum NotificationChannel {
+  in_app
+  email
+  push
+}
+
+enum SocialPostStatus {
+  DRAFT
+  AWAITING_APPROVAL
+  APPROVED
+  SCHEDULED
+  PUBLISHED
+  FAILED
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  APPROVE
+  REJECT
+  DELEGATE
+  LOGIN
+  LOGOUT
+  VIEW
+}
+
+// ─── GLOBAL MODELS ────────────────────────────────────────────────────────────
+
+model User {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  name        String?
+  avatar      String?
+  globalRole  GlobalRole @default(USER)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  memberships CompanyMembership[]
+  tasks       Task[]              @relation("TaskAssignee")
+  createdTasks Task[]             @relation("TaskCreator")
+  notifications Notification[]
+  auditLogs   AuditLog[]
+
+  @@map("users")
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  domain      String?
+  logo        String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  memberships CompanyMembership[]
+  tasks       Task[]
+  approvals   Approval[]
+  notifications Notification[]
+  socialPosts  SocialPost[]
+  bookings    Booking[]
+  workflowRuns WorkflowRun[]
+  auditLogs   AuditLog[]
+  embeddings  VectorEmbedding[]
+
+  @@map("companies")
+}
+
+model CompanyMembership {
+  id        String      @id @default(cuid())
+  userId    String
+  companyId String
+  role      CompanyRole @default(STAFF)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId])
+  @@index([userId])
+  @@index([companyId])
+  @@map("company_memberships")
+}
+
+// ─── FEATURE MODELS (all company-scoped) ──────────────────────────────────────
+
+model Task {
+  id          String       @id @default(cuid())
+  companyId   String
+  title       String
+  description String?
+  assigneeId  String?
+  creatorId   String
+  status      TaskStatus   @default(TODO)
+  priority    TaskPriority @default(MEDIUM)
+  dueDate     DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  company     Company @relation(fields: [companyId], references: [id])
+  assignee    User?   @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  creator     User    @relation("TaskCreator", fields: [creatorId], references: [id])
+
+  @@index([companyId, status])
+  @@index([assigneeId])
+  @@map("tasks")
+}
+
+model Approval {
+  id          String         @id @default(cuid())
+  companyId   String
+  title       String
+  body        String?
+  category    String?
+  amount      Decimal?       @db.Decimal(12, 2)
+  requesterId String
+  approverId  String?
+  n8nWorkflowId String?
+  n8nRunId    String?
+  status      ApprovalStatus @default(PENDING)
+  decision    String?
+  decidedAt   DateTime?
+  metadata    Json?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  company     Company @relation(fields: [companyId], references: [id])
+
+  @@index([companyId, status])
+  @@index([approverId, status])
+  @@map("approvals")
+}
+
+model Notification {
+  id        String               @id @default(cuid())
+  userId    String
+  companyId String?
+  type      String
+  title     String
+  body      String
+  data      Json?
+  priority  NotificationPriority @default(NORMAL)
+  channel   NotificationChannel  @default(in_app)
+  read      Boolean              @default(false)
+  readAt    DateTime?
+  createdAt DateTime             @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  @@index([userId, read])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
+
+model SocialPost {
+  id          String           @id @default(cuid())
+  companyId   String
+  content     String           @db.Text
+  platforms   Json
+  mediaUrls   Json?
+  scheduledAt DateTime?
+  publishedAt DateTime?
+  status      SocialPostStatus @default(DRAFT)
+  creatorId   String
+  n8nWorkflowId String?
+  metadata    Json?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  company     Company @relation(fields: [companyId], references: [id])
+
+  @@index([companyId, status])
+  @@index([scheduledAt])
+  @@map("social_posts")
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  companyId   String
+  title       String
+  hostId      String
+  guestEmail  String?
+  guestName   String?
+  startAt     DateTime
+  endAt       DateTime
+  status      String   @default("confirmed")
+  notes       String?
+  meetingUrl  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company     Company @relation(fields: [companyId], references: [id])
+
+  @@index([companyId, startAt])
+  @@map("bookings")
+}
+
+model WorkflowRun {
+  id              String   @id @default(cuid())
+  companyId       String
+  n8nWorkflowId   String
+  n8nWorkflowName String?
+  triggeredBy     String?
+  status          String   @default("running")
+  result          Json?
+  error           String?
+  startedAt       DateTime @default(now())
+  finishedAt      DateTime?
+
+  company         Company @relation(fields: [companyId], references: [id])
+
+  @@index([companyId, startedAt])
+  @@map("workflow_runs")
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  companyId   String?
+  userId      String?
+  action      AuditAction
+  resource    String
+  resourceId  String?
+  before      Json?
+  after       Json?
+  metadata    Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+
+  company     Company? @relation(fields: [companyId], references: [id])
+  user        User?    @relation(fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+  @@index([userId, createdAt])
+  @@index([resource, resourceId])
+  @@map("audit_logs")
+}
+
+model VectorEmbedding {
+  id           String   @id @default(cuid())
+  companyId    String
+  content      String   @db.Text
+  embedding    Unsupported("vector(1536)")?
+  resourceType String
+  resourceId   String?
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  company      Company @relation(fields: [companyId], references: [id])
+
+  @@index([companyId, resourceType])
+  @@map("vector_embeddings")
+}

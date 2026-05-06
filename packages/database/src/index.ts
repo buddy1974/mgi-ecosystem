@@ -1,0 +1,24 @@
+export { prisma } from './client'
+export { Prisma, PrismaClient } from '@prisma/client'
+export type {
+  User,
+  Company,
+  CompanyMembership,
+  Task,
+  Approval,
+  Notification,
+  SocialPost,
+  Booking,
+  WorkflowRun,
+  AuditLog,
+  VectorEmbedding,
+  GlobalRole,
+  CompanyRole,
+  TaskStatus,
+  TaskPriority,
+  ApprovalStatus,
+  NotificationPriority,
+  NotificationChannel,
+  SocialPostStatus,
+  AuditAction,
+} from '@prisma/client'
