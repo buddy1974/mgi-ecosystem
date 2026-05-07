@@ -20,7 +20,9 @@
       "Bash(pnpm type-check *)",
       "Bash(Remove-Item *)",
       "Bash(pnpm lint *)",
-      "Bash(./node_modules/.bin/next lint *)"
+      "Bash(./node_modules/.bin/next lint *)",
+      "Bash(pnpm build *)",
+      "Bash(git pull *)"
     ]
   }
 }
