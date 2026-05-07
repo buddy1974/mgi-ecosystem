@@ -5,9 +5,13 @@ import { authConfig } from './config'
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
-    Nodemailer({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM ?? 'noreply@mgi-ventures.com',
-    }),
+    ...(process.env.EMAIL_SERVER
+      ? [
+          Nodemailer({
+            server: process.env.EMAIL_SERVER,
+            from: process.env.EMAIL_FROM ?? 'noreply@mgi-ventures.com',
+          }),
+        ]
+      : []),
   ],
 })
