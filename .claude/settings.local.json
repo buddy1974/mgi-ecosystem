@@ -22,7 +22,11 @@
       "Bash(pnpm lint *)",
       "Bash(./node_modules/.bin/next lint *)",
       "Bash(pnpm build *)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(pnpm db:push)",
+      "Bash(pnpm dev *)",
+      "Bash(pnpm exec *)",
+      "Bash(git stash *)"
     ]
   }
 }

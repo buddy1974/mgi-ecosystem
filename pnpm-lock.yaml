@@ -38,6 +38,9 @@ importers:
       '@mgi/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@neondatabase/serverless':
+        specifier: ^1.1.0
+        version: 1.1.0
       next:
         specifier: ^16.2.4
         version: 16.2.4(@babel/core@7.29.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
