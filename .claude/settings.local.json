@@ -26,7 +26,8 @@
       "Bash(pnpm db:push)",
       "Bash(pnpm dev *)",
       "Bash(pnpm exec *)",
-      "Bash(git stash *)"
+      "Bash(git stash *)",
+      "Bash(gh pr create --title 'feat: Phase 2 — Command Center dashboard with NMI bridge' --base develop --head feature/phase-2-command-center --body ' *)"
     ]
   }
 }

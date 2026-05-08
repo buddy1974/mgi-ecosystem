@@ -21,4 +21,7 @@ export type {
   NotificationChannel,
   SocialPostStatus,
   AuditAction,
+  Message,
+  MessageSource,
+  MessageDirection,
 } from '@prisma/client'

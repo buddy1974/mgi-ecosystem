@@ -78,6 +78,21 @@ enum AuditAction {
   VIEW
 }
 
+enum MessageSource {
+  EMAIL
+  WHATSAPP
+  LINKEDIN
+  INSTAGRAM
+  TIKTOK
+  FACEBOOK
+  INTERNAL
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
 // ─── GLOBAL MODELS ────────────────────────────────────────────────────────────
 
 model User {
@@ -351,4 +366,35 @@ model VectorEmbedding {
 
   @@index([companyId, resourceType])
   @@map("vector_embeddings")
+}
+
+// ─── COMMUNICATIONS ───────────────────────────────────────────────────────────
+
+model Message {
+  id          String           @id @default(cuid())
+  externalId  String?          @unique
+  companyId   String
+  source      MessageSource
+  direction   MessageDirection @default(INBOUND)
+  fromName    String
+  fromHandle  String?
+  fromAvatar  String?
+  subject     String?
+  body        String           @db.Text
+  bodyHtml    String?          @db.Text
+  receivedAt  DateTime
+  isRead      Boolean          @default(false)
+  isArchived  Boolean          @default(false)
+  isStarred   Boolean          @default(false)
+  aiSummary   String?          @db.Text
+  aiDraft     String?          @db.Text
+  aiActToday  Boolean          @default(false)
+  delegatedTo String?
+  threadId    String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([companyId, source, receivedAt])
+  @@index([isRead, aiActToday])
+  @@map("messages")
 }
