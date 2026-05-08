@@ -27,7 +27,11 @@
       "Bash(pnpm dev *)",
       "Bash(pnpm exec *)",
       "Bash(git stash *)",
-      "Bash(gh pr create --title 'feat: Phase 2 — Command Center dashboard with NMI bridge' --base develop --head feature/phase-2-command-center --body ' *)"
+      "Bash(gh pr create --title 'feat: Phase 2 — Command Center dashboard with NMI bridge' --base develop --head feature/phase-2-command-center --body ' *)",
+      "Bash(pnpm --filter @mgi/database run db:generate)",
+      "Bash(pnpm --filter @mgi/database build)",
+      "Bash(npx kill-port *)",
+      "Bash(pnpm db:generate)"
     ]
   }
 }

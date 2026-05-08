@@ -44,6 +44,22 @@ enum ApprovalStatus {
   DELEGATED
 }
 
+enum ApprovalCategory {
+  FINANCE
+  PROCUREMENT
+  HIRING
+  MARKETING
+  OPERATIONS
+  LEGAL
+}
+
+enum ApprovalPriority {
+  CRITICAL
+  HIGH
+  NORMAL
+  LOW
+}
+
 enum NotificationPriority {
   URGENT
   HIGH
@@ -169,7 +185,6 @@ model Company {
 
   memberships CompanyMembership[]
   tasks       Task[]
-  approvals   Approval[]
   notifications Notification[]
   socialPosts  SocialPost[]
   bookings    Booking[]
@@ -222,27 +237,30 @@ model Task {
 }
 
 model Approval {
-  id          String         @id @default(cuid())
-  companyId   String
-  title       String
-  body        String?
-  category    String?
-  amount      Decimal?       @db.Decimal(12, 2)
-  requesterId String
-  approverId  String?
-  n8nWorkflowId String?
-  n8nRunId    String?
-  status      ApprovalStatus @default(PENDING)
-  decision    String?
-  decidedAt   DateTime?
-  metadata    Json?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id            String           @id @default(cuid())
+  companyId     String
+  category      ApprovalCategory
+  title         String
+  description   String           @db.Text
+  amount        Float?
+  currency      String           @default("XAF")
+  requestedBy   String
+  requestedAt   DateTime         @default(now())
+  status        ApprovalStatus   @default(PENDING)
+  priority      ApprovalPriority @default(NORMAL)
+  n8nWorkflow   String?
+  aiAnalysis    String?          @db.Text
+  aiRisk        String?
+  decidedAt     DateTime?
+  decidedBy     String?
+  delegatedTo   String?
+  rejectionNote String?
+  auditLog      Json?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 
-  company     Company @relation(fields: [companyId], references: [id])
-
+  @@index([status, priority, requestedAt])
   @@index([companyId, status])
-  @@index([approverId, status])
   @@map("approvals")
 }
 

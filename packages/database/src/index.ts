@@ -17,6 +17,8 @@ export type {
   TaskStatus,
   TaskPriority,
   ApprovalStatus,
+  ApprovalCategory,
+  ApprovalPriority,
   NotificationPriority,
   NotificationChannel,
   SocialPostStatus,
