@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { getNmiKpis, getNmiHealthScore } from './nmi-bridge'
+import { getPendingApprovals } from './approvals-data'
 
 export interface ApprovalItem {
   id: string
@@ -25,20 +26,17 @@ export async function getDashboardData() {
   ] = await Promise.allSettled([
     getNmiKpis(),
     getNmiHealthScore(),
-    prisma.approval.findMany({
-      where: { status: 'PENDING' },
-      orderBy: { createdAt: 'desc' },
-      take: 5,
-    }).catch(() => []),
+    getPendingApprovals().catch(() => []),
   ])
 
   const approvalsData = approvalsRaw.status === 'fulfilled' ? approvalsRaw.value : []
   const openApprovals: ApprovalItem[] = approvalsData.map((a) => ({
     id: a.id,
     title: a.title,
-    requestedBy: a.requesterId,
-    amount: a.amount ? `$${Number(a.amount).toLocaleString()}` : undefined,
-    createdAt: a.createdAt,
+    requestedBy: a.requestedBy,
+    amount: a.amount ? `XAF ${Number(a.amount).toLocaleString('fr-CM')}` : undefined,
+    company: a.companyId,
+    createdAt: a.requestedAt,
   }))
 
   return {
