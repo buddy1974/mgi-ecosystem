@@ -22,6 +22,7 @@
   "devDependencies": {
     "@mgi/types": "workspace:*",
     "prisma": "^7.8.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.4.5"
   }
 }

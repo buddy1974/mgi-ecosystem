@@ -79,8 +79,17 @@ function NavLink({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
   )
 }
 
-export function Sidebar() {
+interface SidebarProps {
+  unreadMessages?: number
+}
+
+export function Sidebar({ unreadMessages }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
+  const commandNav = COMMAND_NAV.map(item =>
+    item.href === '/inbox' && unreadMessages !== undefined
+      ? { ...item, badge: unreadMessages }
+      : item
+  )
 
   return (
     <aside
@@ -133,7 +142,7 @@ export function Sidebar() {
             </p>
           )}
           <div className="space-y-0.5">
-            {COMMAND_NAV.map((item) => (
+            {commandNav.map((item) => (
               <NavLink key={item.href} item={item} collapsed={collapsed} />
             ))}
           </div>
