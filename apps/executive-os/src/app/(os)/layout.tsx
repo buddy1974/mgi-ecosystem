@@ -1,12 +1,15 @@
 import { Sidebar } from '@mgi/ui'
 import { TopBar } from '@mgi/ui'
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
+
 export default async function OSLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  // DEV BYPASS — remove before Phase 2
-  const session = { user: { name: 'Rogers Nforgwei', email: 'rogers@mgi-ventures.com' } }
+  const session = await auth()
+  if (!session) redirect('/login')
 
   return (
     <div className="flex h-screen overflow-hidden bg-mgi-bg">
