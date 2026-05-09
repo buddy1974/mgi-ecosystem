@@ -73,6 +73,15 @@ enum NotificationChannel {
   push
 }
 
+enum SocialPlatform {
+  FACEBOOK
+  INSTAGRAM
+  LINKEDIN
+  TWITTER
+  YOUTUBE
+  TIKTOK
+}
+
 enum SocialPostStatus {
   DRAFT
   AWAITING_APPROVAL
@@ -186,7 +195,6 @@ model Company {
   memberships CompanyMembership[]
   tasks       Task[]
   notifications Notification[]
-  socialPosts  SocialPost[]
   bookings    Booking[]
   workflowRuns WorkflowRun[]
   auditLogs   AuditLog[]
@@ -289,19 +297,14 @@ model Notification {
 model SocialPost {
   id          String           @id @default(cuid())
   companyId   String
-  content     String           @db.Text
-  platforms   Json
-  mediaUrls   Json?
+  platform    SocialPlatform
+  content     String
+  mediaUrls   String[]
+  status      SocialPostStatus @default(DRAFT)
   scheduledAt DateTime?
   publishedAt DateTime?
-  status      SocialPostStatus @default(DRAFT)
-  creatorId   String
-  n8nWorkflowId String?
-  metadata    Json?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
-
-  company     Company @relation(fields: [companyId], references: [id])
 
   @@index([companyId, status])
   @@index([scheduledAt])
