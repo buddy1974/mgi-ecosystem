@@ -1,6 +1,6 @@
 {
-  "installCommand": "pnpm install",
-  "buildCommand": "cd packages/database && pnpm db:generate && cd ../.. && pnpm --filter executive-os build",
-  "outputDirectory": "apps/executive-os/.next",
+  "installCommand": "cd ../.. && pnpm install",
+  "buildCommand": "cd ../../packages/database && pnpm db:generate && cd - && pnpm build",
+  "outputDirectory": ".next",
   "framework": "nextjs"
 }
