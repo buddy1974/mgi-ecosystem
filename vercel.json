@@ -1,6 +1,6 @@
 {
   "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "cd ../../packages/database && pnpm db:generate && cd - && pnpm build",
+  "buildCommand": "pnpm build",
   "outputDirectory": ".next",
   "framework": "nextjs"
 }
