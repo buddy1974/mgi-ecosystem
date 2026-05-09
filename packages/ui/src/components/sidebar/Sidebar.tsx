@@ -27,10 +27,10 @@ const COMMAND_NAV: NavItem[] = [
   { href: '/approvals', label: 'Approval Center',    icon: '✅', badge: 8 },
   { href: '/ventures',  label: 'Ventures',           icon: '🏢' },
   { href: '/calendar',  label: 'Calendar',           icon: '📅' },
+  { href: '/social',    label: 'Social Command',     icon: '📣' },
 ]
 
 const OPERATIONS_NAV: NavItem[] = [
-  { href: '/social',     label: 'Social Command',    icon: '📣' },
   { href: '/crm',        label: 'CRM',               icon: '👥', badge: 28 },
   { href: '/events',     label: 'Events & Bookings', icon: '📆' },
   { href: '/newsletter', label: 'Newsletter Engine', icon: '📧' },
@@ -75,9 +75,10 @@ interface SidebarProps {
   unreadMessages?: number
   pendingApprovals?: number
   pendingBookings?: number
+  scheduledPosts?: number
 }
 
-export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings }: SidebarProps) {
+export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, scheduledPosts }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const commandNav = COMMAND_NAV.map(item => {
     if (item.href === '/inbox' && unreadMessages !== undefined)
@@ -86,6 +87,8 @@ export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings }: S
       return { ...item, badge: pendingApprovals }
     if (item.href === '/calendar' && pendingBookings !== undefined && pendingBookings > 0)
       return { ...item, badge: pendingBookings }
+    if (item.href === '/social' && scheduledPosts !== undefined && scheduledPosts > 0)
+      return { ...item, badge: scheduledPosts }
     return item
   })
 
