@@ -74,15 +74,18 @@ function NavLink({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
 interface SidebarProps {
   unreadMessages?: number
   pendingApprovals?: number
+  pendingBookings?: number
 }
 
-export function Sidebar({ unreadMessages, pendingApprovals }: SidebarProps) {
+export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const commandNav = COMMAND_NAV.map(item => {
     if (item.href === '/inbox' && unreadMessages !== undefined)
       return { ...item, badge: unreadMessages }
     if (item.href === '/approvals' && pendingApprovals !== undefined)
       return { ...item, badge: pendingApprovals }
+    if (item.href === '/calendar' && pendingBookings !== undefined && pendingBookings > 0)
+      return { ...item, badge: pendingBookings }
     return item
   })
 
