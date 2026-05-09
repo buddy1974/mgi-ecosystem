@@ -13,12 +13,12 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function DashboardPage() {
-  const { nmiKpis, nmiHealth, openApprovals } = await getDashboardData()
+  const { nmiKpis, nmiHealth, openApprovals, aiBriefing } = await getDashboardData()
 
   return (
     <div className="flex flex-col gap-6 p-6">
       <GreetingHeader />
-      <AiBriefingCard nmiKpis={nmiKpis} openApprovals={openApprovals.length} />
+      <AiBriefingCard nmiKpis={nmiKpis} openApprovals={openApprovals.length} aiBriefing={aiBriefing} />
       <KpiRow openApprovals={openApprovals.length} nmiKpis={nmiKpis} />
       <div className="grid grid-cols-[1fr_350px] gap-4">
         <VenturesTable nmiHealth={nmiHealth} />

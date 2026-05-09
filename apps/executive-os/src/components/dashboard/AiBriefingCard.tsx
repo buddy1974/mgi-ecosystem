@@ -3,9 +3,10 @@ import type { NmiKpis } from '@/lib/nmi-bridge'
 interface AiBriefingCardProps {
   nmiKpis: NmiKpis | null
   openApprovals: number
+  aiBriefing?: string | null
 }
 
-function generateBriefing(nmiKpis: NmiKpis | null, openApprovals: number): string {
+function generateFallbackBriefing(nmiKpis: NmiKpis | null, openApprovals: number): string {
   const items: string[] = []
   if (openApprovals > 0)
     items.push(`${openApprovals} approval${openApprovals > 1 ? 's' : ''} waiting for your decision`)
@@ -33,8 +34,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
   )
 }
 
-export function AiBriefingCard({ nmiKpis, openApprovals }: AiBriefingCardProps) {
-  const briefing = generateBriefing(nmiKpis, openApprovals)
+export function AiBriefingCard({ nmiKpis, openApprovals, aiBriefing }: AiBriefingCardProps) {
   const count = [
     openApprovals > 0,
     (nmiKpis?.overdueInvoices ?? 0) > 0,
@@ -46,6 +46,7 @@ export function AiBriefingCard({ nmiKpis, openApprovals }: AiBriefingCardProps) 
       className="rounded-card border border-mgi-border p-6 relative overflow-hidden"
       style={{ background: 'radial-gradient(ellipse at 70% 50%, #1a1040 0%, #0C0F1A 60%)' }}
     >
+      {/* Header */}
       <div className="flex items-center gap-2 mb-4">
         <span className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-status-active animate-pulse" />
@@ -53,18 +54,38 @@ export function AiBriefingCard({ nmiKpis, openApprovals }: AiBriefingCardProps) 
             AI Executive Briefing
           </span>
         </span>
+        <span className="text-[10px] text-mgi-dim">claude-haiku · updated hourly</span>
         <span className="text-[10px] text-mgi-dim ml-auto">
           {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
         </span>
       </div>
-      <p className="text-[22px] font-bold text-white leading-snug max-w-3xl">
-        {count > 0
-          ? `${count} item${count > 1 ? 's' : ''} need${count === 1 ? 's' : ''} you before noon.`
-          : "You're clear. No urgent items today."
-        }
-      </p>
-      <p className="text-sm text-mgi-muted mt-2 max-w-2xl">{briefing}</p>
-      <div className="mt-6 flex items-center gap-6 pt-4 border-t border-mgi-border">
+
+      {/* Live Claude briefing — shown when API key is set */}
+      {aiBriefing !== undefined ? (
+        aiBriefing ? (
+          <p className="text-sm text-mgi-muted leading-relaxed max-w-3xl mb-4">{aiBriefing}</p>
+        ) : (
+          <p className="text-sm text-mgi-label italic mb-4">
+            Briefing unavailable — set ANTHROPIC_API_KEY in .env.local to enable.
+          </p>
+        )
+      ) : (
+        <>
+          {/* Fallback: local generation */}
+          <p className="text-[22px] font-bold text-white leading-snug max-w-3xl">
+            {count > 0
+              ? `${count} item${count > 1 ? 's' : ''} need${count === 1 ? 's' : ''} you before noon.`
+              : "You're clear. No urgent items today."
+            }
+          </p>
+          <p className="text-sm text-mgi-muted mt-2 max-w-2xl mb-4">
+            {generateFallbackBriefing(nmiKpis, openApprovals)}
+          </p>
+        </>
+      )}
+
+      {/* Stats bar */}
+      <div className="flex items-center gap-6 pt-4 border-t border-mgi-border">
         <Stat label="Ventures Monitored" value="6" />
         <Stat label="NMI Orders Today" value={nmiKpis?.ordersToday ?? '–'} />
         <Stat label="Open Approvals" value={openApprovals} />

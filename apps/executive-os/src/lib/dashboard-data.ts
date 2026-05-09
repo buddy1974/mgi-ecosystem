@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { getNmiKpis, getNmiHealthScore } from './nmi-bridge'
 import { getPendingApprovals } from './approvals-data'
+import { getAIBriefing } from './ai-briefing'
 
 export interface ApprovalItem {
   id: string
@@ -23,10 +24,12 @@ export async function getDashboardData() {
     nmiKpis,
     nmiHealth,
     approvalsRaw,
+    aiBriefing,
   ] = await Promise.allSettled([
     getNmiKpis(),
     getNmiHealthScore(),
     getPendingApprovals().catch(() => []),
+    getAIBriefing(),
   ])
 
   const approvalsData = approvalsRaw.status === 'fulfilled' ? approvalsRaw.value : []
@@ -40,8 +43,9 @@ export async function getDashboardData() {
   }))
 
   return {
-    nmiKpis:       nmiKpis.status === 'fulfilled' ? nmiKpis.value : null,
-    nmiHealth:     nmiHealth.status === 'fulfilled' ? nmiHealth.value : { score: 0, status: 'build' as const, summary: 'Not connected' },
+    nmiKpis:    nmiKpis.status === 'fulfilled' ? nmiKpis.value : null,
+    nmiHealth:  nmiHealth.status === 'fulfilled' ? nmiHealth.value : { score: 0, status: 'build' as const, summary: 'Not connected' },
     openApprovals,
+    aiBriefing: aiBriefing.status === 'fulfilled' ? aiBriefing.value : null,
   }
 }
