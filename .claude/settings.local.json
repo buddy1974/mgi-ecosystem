@@ -32,7 +32,8 @@
       "Bash(pnpm --filter @mgi/database build)",
       "Bash(npx kill-port *)",
       "Bash(pnpm db:generate)",
-      "PowerShell(taskkill *)"
+      "PowerShell(taskkill *)",
+      "Bash(vercel --version)"
     ]
   }
 }

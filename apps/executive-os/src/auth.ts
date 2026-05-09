@@ -15,20 +15,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         ]
       : []),
     Credentials({
-      name: 'Dev Access',
+      name: 'Executive Access',
       credentials: {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // Auth.js v5: credentials is typed from the credentials object above
-        // cast explicitly to avoid type mismatch
         const password = credentials?.password as string | undefined
-        if (password === 'essen2026') {
-          return {
-            id: '1',
-            name: 'Rogers Nforgwei',
-            email: 'rogers@mgi-ventures.com',
-          }
+        // Production: use OS_PASSWORD env var
+        // Development fallback: 'essen2026' (only when NODE_ENV === 'development')
+        const expectedPassword =
+          process.env.OS_PASSWORD ??
+          (process.env.NODE_ENV === 'development' ? 'essen2026' : null)
+        if (!expectedPassword) return null
+        if (password === expectedPassword) {
+          return { id: '1', name: 'Rogers Nforgwei', email: 'rogers@mgi-ventures.com' }
         }
         return null
       },
