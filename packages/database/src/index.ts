@@ -26,4 +26,9 @@ export type {
   Message,
   MessageSource,
   MessageDirection,
+  Event,
+  EventType,
+  EventStatus,
+  BookingRequest,
+  BookingStatus,
 } from '@prisma/client'

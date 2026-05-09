@@ -416,3 +416,64 @@ model Message {
   @@index([isRead, aiActToday])
   @@map("messages")
 }
+
+// ─── CALENDAR ─────────────────────────────────────────────────────────────────
+
+enum EventType {
+  MEETING
+  CALL
+  CONFERENCE
+  INTERNAL
+  PERSONAL
+  TRAVEL
+}
+
+enum EventStatus {
+  CONFIRMED
+  TENTATIVE
+  CANCELLED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  DECLINED
+}
+
+model Event {
+  id          String      @id @default(cuid())
+  companyId   String?
+  title       String
+  description String?
+  type        EventType   @default(MEETING)
+  status      EventStatus @default(CONFIRMED)
+  startAt     DateTime
+  endAt       DateTime
+  location    String?
+  attendees   String[]
+  notes       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([startAt, status])
+  @@map("events")
+}
+
+model BookingRequest {
+  id             String        @id @default(cuid())
+  companyId      String?
+  requesterName  String
+  requesterEmail String
+  requesterPhone String?
+  purpose        String
+  requestedDate  DateTime
+  duration       Int
+  status         BookingStatus @default(PENDING)
+  declinedReason String?
+  respondedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, requestedDate])
+  @@map("booking_requests")
+}
