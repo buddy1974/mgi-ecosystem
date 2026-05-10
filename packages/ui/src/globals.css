@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* MGI Design System — LEITSTELLE v2.4 */
+    --mgi-bg:           12 15 26;       /* #0C0F1A */
+    --mgi-sidebar:      17 24 39;       /* #111827 */
+    --mgi-card:         30 41 59;       /* #1E293B */
+    --mgi-card-hover:   36 48 71;       /* #243047 */
+    --mgi-border:       31 45 64;       /* #1F2D40 */
+    --mgi-input:        26 35 50;       /* #1A2332 */
+    --mgi-text:         255 255 255;    /* #FFFFFF */
+    --mgi-muted:        148 163 184;    /* #94A3B8 */
+    --mgi-label:        75 96 112;      /* #4B6070 */
+    --mgi-active:       16 185 129;     /* #10B981 */
+    --mgi-attention:    245 158 11;     /* #F59E0B */
+    --mgi-risk:         239 68 68;      /* #EF4444 */
+    --mgi-build:        59 130 246;     /* #3B82F6 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[rgb(var(--mgi-border))];
+  }
+  body {
+    @apply bg-[rgb(var(--mgi-bg))] text-[rgb(var(--mgi-text))];
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}

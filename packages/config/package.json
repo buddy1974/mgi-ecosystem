@@ -1,0 +1,14 @@
+{
+  "name": "@mgi/config",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./eslint": "./eslint/index.js",
+    "./typescript/*": "./typescript/*.json",
+    "./tailwind": "./tailwind/index.ts"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.4.5"
+  }
+}

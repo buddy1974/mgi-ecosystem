@@ -1,0 +1,20 @@
+{
+  "name": "@mgi/auth",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "latest",
+    "@mgi/database": "workspace:*",
+    "@mgi/types": "workspace:*",
+    "next-auth": "beta",
+    "nodemailer": "^7.0.13"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.0",
+    "typescript": "^5.4.5"
+  }
+}
