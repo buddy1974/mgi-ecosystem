@@ -101,7 +101,7 @@ export default function Home() {
                 alt="MGI"
                 width={22}
                 height={22}
-                className="object-contain brightness-200"
+                className="object-contain invert"
               />
             </div>
             <div>
@@ -289,7 +289,7 @@ export default function Home() {
       <section className="border-y border-white/[0.05] bg-white/[0.015] py-16 px-6 mb-0">
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-2xl md:text-3xl font-bold text-white/60 leading-relaxed">
-            &ldquo;Au cœur de la performance des entreprises.&rdquo;
+            &ldquo;At the heart of business performance.&rdquo;
           </p>
           <p className="text-sm text-white/25 mt-3 tracking-widest uppercase">
             Mina-Galeed Invest (MGI) Ltd · Yaoundé, Cameroon
@@ -310,7 +310,7 @@ export default function Home() {
                 alt="MGI"
                 width={18}
                 height={18}
-                className="object-contain brightness-200"
+                className="object-contain invert"
               />
             </div>
             <div>
@@ -319,7 +319,6 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-6 text-xs text-white/25">
-            <span>contact@mina-galeed.com</span>
             <span>Yaoundé, Cameroon</span>
             <Link
               href="https://os.mgi-ventures.com"
