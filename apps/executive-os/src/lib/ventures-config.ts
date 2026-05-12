@@ -7,6 +7,12 @@ export interface SocialHandles {
   tiktok?: string
 }
 
+export interface ProgramConfig {
+  slug: string
+  name: string
+  shortName: string
+}
+
 export interface VentureConfig {
   slug: string
   name: string
@@ -16,6 +22,7 @@ export interface VentureConfig {
   primaryColor: string
   accentColor: string
   programs: string[]
+  programConfigs?: ProgramConfig[]
   social: SocialHandles
 }
 
@@ -91,6 +98,11 @@ export const VENTURES: Record<string, VentureConfig> = {
       "Dominion Life Men's Conference",
       'Men On Duty',
       'CEO On Mission',
+    ],
+    programConfigs: [
+      { slug: 'dominion-life-mens-conference', name: "Dominion Life Men's Conference", shortName: 'DLMC' },
+      { slug: 'men-on-duty',                   name: 'Men On Duty',                    shortName: 'MOD'  },
+      { slug: 'ceo-on-mission',                name: 'CEO On Mission',                 shortName: 'COM'  },
     ],
     social: {},
   },
