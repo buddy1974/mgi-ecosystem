@@ -24,58 +24,58 @@ const stats = [
 
 const ventures = [
   {
-    name:      "Rogers Nforgwei Platform",
-    domain:    "rogersnforgwei.com",
-    logo:      "/logos/mgi-main.png",
-    color:     "#3a0ca3",
-    accent:    "#f72585",
-    tag:       "Executive Development",
-    tagline:   "Switch on the better side of the future.",
-    programs:  ["Dominion Life Men's Conference", "Men On Duty", "CEO On Mission"],
+    name:     "Rogers Nforgwei Platform",
+    domain:   "rogersnforgwei.com",
+    logo:     "/logos/mgi-main.png",
+    color:    "#3a0ca3",
+    accent:   "#f72585",
+    tag:      "Executive Development",
+    tagline:  "Switch on the better side of the future.",
+    programs: ["Dominion Life Men's Conference", "Men On Duty", "CEO On Mission"],
     comingSoon: false,
   },
   {
-    name:      "Horeb Solutions",
-    domain:    "horebsolutions.org",
-    logo:      "/logos/horeb-solutions.png",
-    color:     "#0a8348",
-    accent:    "#fdda2b",
-    tag:       "Logistics",
-    tagline:   "Reliability in motion. Your logistics, our priority.",
-    programs:  [],
+    name:     "Horeb Solutions",
+    domain:   "horebsolutions.org",
+    logo:     "/logos/horeb-solutions.png",
+    color:    "#0a8348",
+    accent:   "#fdda2b",
+    tag:      "Logistics",
+    tagline:  "Reliability in motion. Your logistics, our priority.",
+    programs: [],
     comingSoon: false,
   },
   {
-    name:      "NMI Education",
-    domain:    "nmieducation.com",
-    logo:      "/logos/nmi-main.png",
-    color:     "#1a56db",
-    accent:    "#60a5fa",
-    tag:       "Education",
-    tagline:   "Empowering minds. Building futures.",
-    programs:  [],
+    name:     "NMI Education",
+    domain:   "nmieducation.com",
+    logo:     "/logos/nmi-main.png",
+    color:    "#1a56db",
+    accent:   "#60a5fa",
+    tag:      "Education",
+    tagline:  "Empowering minds. Building futures.",
+    programs: [],
     comingSoon: false,
   },
   {
-    name:      "Librairie du Quartier",
-    domain:    "librairieduquartier.org",
-    logo:      "/logos/librairie-du-quartier.png",
-    color:     "#393186",
-    accent:    "#EF7F1B",
-    tag:       "Community & Culture",
-    tagline:   "Your neighborhood. Your knowledge.",
-    programs:  [],
+    name:     "Librairie du Quartier",
+    domain:   "librairieduquartier.org",
+    logo:     "/logos/librairie-du-quartier.png",
+    color:    "#393186",
+    accent:   "#EF7F1B",
+    tag:      "Community & Culture",
+    tagline:  "Your neighborhood. Your knowledge.",
+    programs: [],
     comingSoon: false,
   },
   {
-    name:      "DROS Construction",
-    domain:    "drosconstruction.com",
-    logo:      "/logos/dros-construction.png",
-    color:     "#1c3a2e",
-    accent:    "#a3855a",
-    tag:       "Construction & Development",
-    tagline:   "Building structures that stand the test of time.",
-    programs:  [],
+    name:     "DROS Construction",
+    domain:   "drosconstruction.com",
+    logo:     "/logos/dros-construction.png",
+    color:    "#1c3a2e",
+    accent:   "#a3855a",
+    tag:      "Construction & Development",
+    tagline:  "Building structures that stand the test of time.",
+    programs: [],
     comingSoon: false,
   },
   {
@@ -118,16 +118,23 @@ const systems = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#070a08] text-[#f4f7f5] overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden" style={{ background: "#f4f7f4" }}>
 
-      {/* ══ NAV ══════════════════════════════════════════ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#070a08]/90 backdrop-blur-xl border-b border-white/[0.05]">
+      {/* ══ NAV — WHITE, INSTITUTIONAL ════════════════════ */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
+        style={{
+          background: "rgba(255,255,255,0.95)",
+          borderBottom: "1px solid rgba(13,110,54,0.1)",
+          boxShadow: "0 1px 20px rgba(0,0,0,0.06)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
 
           <div className="flex items-center gap-4">
             <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: "#0d110e", border: "1px solid rgba(13,110,54,0.4)" }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: "#f0f7f2", border: "1px solid rgba(13,110,54,0.2)" }}
             >
               <Image
                 src="/logos/mgi-main.png"
@@ -138,23 +145,23 @@ export default function Home() {
               />
             </div>
             <div>
-              <p className="text-sm font-bold text-white tracking-tight leading-none">
+              <p className="text-sm font-bold tracking-tight leading-none" style={{ color: "#0c1a10" }}>
                 Mina-Galeed Invest
               </p>
-              <p className="text-[10px] text-white/30 tracking-[0.2em] uppercase leading-none mt-0.5">
+              <p className="text-[10px] tracking-[0.2em] uppercase leading-none mt-0.5" style={{ color: "#5a7a65" }}>
                 MGI Ltd · Est. 2019
               </p>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-8 text-sm text-white/40">
-            <span className="hover:text-white/70 cursor-pointer transition-colors">About</span>
-            <span className="hover:text-white/70 cursor-pointer transition-colors">Expertise</span>
-            <span className="hover:text-white/70 cursor-pointer transition-colors">Ventures</span>
+          <div className="hidden md:flex items-center gap-8">
+            <span className="text-sm cursor-pointer transition-colors hover:text-[#0d6e36]" style={{ color: "#5a7a65" }}>About</span>
+            <span className="text-sm cursor-pointer transition-colors hover:text-[#0d6e36]" style={{ color: "#5a7a65" }}>Expertise</span>
+            <span className="text-sm cursor-pointer transition-colors hover:text-[#0d6e36]" style={{ color: "#5a7a65" }}>Ventures</span>
             <Link
               href="https://os.mgi-ventures.com"
-              className="px-4 py-2 rounded-lg text-white/80 hover:text-white font-medium border transition-colors"
-              style={{ borderColor: "rgba(13,110,54,0.5)", background: "rgba(13,110,54,0.15)" }}
+              className="px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:brightness-110"
+              style={{ background: "#0d6e36" }}
             >
               Executive OS
             </Link>
@@ -162,54 +169,52 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ══ HERO ══════════════════════════════════════════ */}
-      <section className="relative pt-32 pb-24 px-8 overflow-hidden">
+      {/* ══ HERO — DEEP GREEN, WARM & EXPANSIVE ═══════════ */}
+      <section className="relative pt-32 pb-28 px-8 overflow-hidden" style={{ background: "#0c1912" }}>
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full pointer-events-none opacity-[0.07] blur-[140px]"
-          style={{ background: "#0d6e36" }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] pointer-events-none"
+          style={{ background: "radial-gradient(ellipse at 50% 35%, rgba(22,163,74,0.18) 0%, rgba(13,110,54,0.08) 40%, transparent 70%)" }}
+        />
+        <div
+          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+          style={{ background: "linear-gradient(to top, rgba(22,163,74,0.06), transparent)" }}
         />
 
         <div className="relative max-w-5xl mx-auto text-center">
 
           {/* Large hero logo */}
           <div
-            className="w-40 h-40 md:w-52 md:h-52 rounded-3xl mx-auto mb-10 flex items-center justify-center"
+            className="w-44 h-44 md:w-56 md:h-56 rounded-3xl mx-auto mb-10 flex items-center justify-center"
             style={{
-              background: "#0d110e",
-              border: "1px solid rgba(13,110,54,0.35)",
-              boxShadow: "0 0 60px rgba(13,110,54,0.12), 0 20px 60px rgba(0,0,0,0.4)",
+              background: "rgba(13,110,54,0.15)",
+              border: "1px solid rgba(22,163,74,0.3)",
+              boxShadow: "0 0 80px rgba(22,163,74,0.15), 0 30px 80px rgba(0,0,0,0.35)",
             }}
           >
             <Image
               src="/logos/mgi-main.png"
               alt="Mina-Galeed Invest"
-              width={120}
-              height={120}
+              width={130}
+              height={130}
               className="object-contain"
               priority
             />
           </div>
 
-          <p
-            className="text-xs font-semibold tracking-[0.35em] uppercase mb-6"
-            style={{ color: "#16a34a" }}
-          >
+          <p className="text-xs font-bold tracking-[0.35em] uppercase mb-5" style={{ color: "#22c55e" }}>
             Mina-Galeed Invest (MGI) Ltd
           </p>
 
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.0] mb-6 text-white">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.0] mb-6" style={{ color: "#f4f7f5" }}>
             Start well.{" "}
             <span style={{ color: "#4ade80" }}>Grow well.</span>
           </h1>
 
-          <p className="text-lg text-white/45 max-w-2xl mx-auto leading-relaxed mb-4">
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed mb-4" style={{ color: "rgba(244,247,245,0.5)" }}>
             A holding company accompanying enterprises through their full development cycle —
             from legal structuring and governance to digital transformation and intelligent systems.
           </p>
-          <p
-            className="text-sm tracking-widest uppercase mb-16"
-            style={{ color: "#7a8f84" }}
-          >
+          <p className="text-sm tracking-widest uppercase mb-14" style={{ color: "rgba(244,247,245,0.25)" }}>
             Rogers Nforgwei · Founder & CEO · Yaoundé, Cameroon
           </p>
 
@@ -219,107 +224,84 @@ export default function Home() {
               <div
                 key={e.label}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl text-left"
-                style={{
-                  background: "#0d110e",
-                  border: "1px solid rgba(255,255,255,0.05)",
-                }}
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)" }}
               >
-                <span className="text-sm flex-shrink-0" style={{ color: "#16a34a" }}>
-                  {e.icon}
-                </span>
-                <p className="text-xs text-white/55 leading-tight font-medium">{e.label}</p>
+                <span className="text-sm flex-shrink-0" style={{ color: "#22c55e" }}>{e.icon}</span>
+                <p className="text-xs leading-tight font-medium" style={{ color: "rgba(244,247,245,0.55)" }}>{e.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ AT A GLANCE ════════════════════════════════════ */}
-      <section
-        className="border-y py-16 px-8"
-        style={{ borderColor: "rgba(255,255,255,0.05)", background: "#0d110e" }}
-      >
+      {/* ══ AT A GLANCE — WHITE, OPEN ═════════════════════ */}
+      <section className="py-20 px-8" style={{ background: "#ffffff" }}>
         <div className="max-w-7xl mx-auto">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-12 text-center" style={{ color: "#0d6e36" }}>
+            MGI At A Glance
+          </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p
-                  className="text-4xl md:text-5xl font-black mb-2"
-                  style={{ color: "#4ade80" }}
-                >
-                  {s.value}
-                </p>
-                <p className="text-sm text-white/40 tracking-widest uppercase">{s.label}</p>
+              <div key={s.label} className="text-center py-8 rounded-2xl" style={{ background: "#f0f7f2" }}>
+                <p className="text-5xl md:text-6xl font-black mb-2" style={{ color: "#0d6e36" }}>{s.value}</p>
+                <p className="text-xs tracking-widest uppercase font-semibold" style={{ color: "#5a7a65" }}>{s.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ CORE EXPERTISE ═════════════════════════════════ */}
-      <section className="max-w-7xl mx-auto px-8 py-24">
-        <div className="mb-14">
-          <p
-            className="text-xs tracking-[0.3em] uppercase mb-3 font-semibold"
-            style={{ color: "#16a34a" }}
-          >
-            Core Expertise
-          </p>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-            Enterprise Transformation Services
-          </h2>
-          <p className="text-white/40 mt-3 max-w-xl leading-relaxed">
-            MGI accompanies businesses across their full development cycles through
-            nine integrated service domains.
-          </p>
-        </div>
+      {/* ══ CORE EXPERTISE — LIGHT, BREATHING ═════════════ */}
+      <section className="py-24 px-8" style={{ background: "#f0f7f2" }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-14">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#16a34a" }}>
+              Core Expertise
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-3" style={{ color: "#0c1a10" }}>
+              Enterprise Transformation Services
+            </h2>
+            <p className="max-w-xl leading-relaxed" style={{ color: "#5a7a65" }}>
+              MGI accompanies businesses across their full development cycles through
+              nine integrated service domains.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {expertise.map((e) => (
-            <div
-              key={e.label}
-              className="px-6 py-5 rounded-2xl flex items-start gap-4 group hover:border-[#0d6e36]/50 transition-colors duration-300"
-              style={{
-                background: "#0d110e",
-                border: "1px solid rgba(255,255,255,0.05)",
-              }}
-            >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {expertise.map((e) => (
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-lg"
-                style={{ background: "rgba(13,110,54,0.2)", color: "#4ade80" }}
+                key={e.label}
+                className="px-6 py-5 rounded-2xl flex items-start gap-4 group transition-all duration-300 hover:shadow-md"
+                style={{ background: "#ffffff", border: "1px solid rgba(13,110,54,0.1)" }}
               >
-                {e.icon}
-              </div>
-              <div>
-                <p className="text-sm font-bold text-white/80">{e.label}</p>
                 <div
-                  className="mt-2 h-px w-0 group-hover:w-full transition-all duration-500"
-                  style={{ background: "#16a34a" }}
-                />
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-lg"
+                  style={{ background: "#e8f5eb", color: "#0d6e36" }}
+                >
+                  {e.icon}
+                </div>
+                <div>
+                  <p className="text-sm font-bold" style={{ color: "#0c1a10" }}>{e.label}</p>
+                  <div className="mt-2 h-px w-0 group-hover:w-full transition-all duration-500" style={{ background: "#16a34a" }} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ══ ECOSYSTEM ARCHITECTURE ═════════════════════════ */}
-      <section
-        className="py-24 px-8"
-        style={{ background: "#0a0d0b", borderTop: "1px solid rgba(255,255,255,0.04)" }}
-      >
+      {/* ══ ECOSYSTEM ARCHITECTURE — WHITE, SPACIOUS ══════ */}
+      <section className="py-24 px-8" style={{ background: "#ffffff" }}>
         <div className="max-w-7xl mx-auto">
           <div className="mb-14">
-            <p
-              className="text-xs tracking-[0.3em] uppercase mb-3 font-semibold"
-              style={{ color: "#16a34a" }}
-            >
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#16a34a" }}>
               Ecosystem Architecture
             </p>
             <div className="flex items-end justify-between flex-wrap gap-4">
-              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight" style={{ color: "#0c1a10" }}>
                 Our Ventures
               </h2>
-              <p className="text-sm text-white/25">6 companies · 5 sectors</p>
+              <p className="text-sm" style={{ color: "#8aaa90" }}>6 companies · 5 sectors</p>
             </div>
           </div>
 
@@ -330,41 +312,24 @@ export default function Home() {
                 href={v.comingSoon ? "#" : `https://${v.domain}`}
                 target={v.comingSoon ? "_self" : "_blank"}
                 rel="noopener noreferrer"
-                className="group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1"
-                style={{
-                  background: "#0d110e",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                }}
+                className="group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.07)", boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}
               >
-                {/* Entity color top bar */}
-                <div
-                  className="h-[2px] w-full flex-shrink-0"
-                  style={{ background: `linear-gradient(90deg, ${v.color}, ${v.accent})` }}
-                />
-
-                {/* Hover tint */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ background: `radial-gradient(ellipse at 50% 0%, ${v.color}18, transparent 60%)` }}
-                />
+                <div className="h-[3px] w-full flex-shrink-0" style={{ background: `linear-gradient(90deg, ${v.color}, ${v.accent})` }} />
 
                 <div className="p-6 flex flex-col flex-1 relative">
                   {v.comingSoon && (
                     <span
                       className="absolute top-4 right-4 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
-                      style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}
+                      style={{ background: "#f0f7f2", color: "#5a7a65", border: "1px solid rgba(13,110,54,0.15)" }}
                     >
                       Coming soon
                     </span>
                   )}
 
-                  {/* Logo */}
                   <div
                     className="w-20 h-20 rounded-xl mb-5 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
-                    style={{
-                      background: `linear-gradient(145deg, ${v.color}22, ${v.accent}14)`,
-                      border: `1px solid ${v.color}35`,
-                    }}
+                    style={{ background: `linear-gradient(145deg, ${v.color}15, ${v.accent}0d)`, border: `1px solid ${v.color}25` }}
                   >
                     <Image
                       src={v.logo}
@@ -372,39 +337,36 @@ export default function Home() {
                       width={52}
                       height={52}
                       className="object-contain"
-                      style={{ filter: `drop-shadow(0 0 8px ${v.color}55)` }}
+                      style={{ filter: `drop-shadow(0 2px 6px ${v.color}40)` }}
                     />
                   </div>
 
                   <p
                     className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2"
-                    style={{ color: v.accent }}
+                    style={{ color: v.accent === "#fdda2b" ? "#b08800" : v.accent }}
                   >
                     {v.tag}
                   </p>
 
-                  <h3 className="text-lg font-black text-white leading-tight mb-2 tracking-tight">
+                  <h3 className="text-lg font-black leading-tight mb-2 tracking-tight" style={{ color: "#0c1a10" }}>
                     {v.name}
                   </h3>
 
-                  <p className="text-xs text-white/35 italic leading-relaxed mb-2">
+                  <p className="text-xs italic leading-relaxed mb-2" style={{ color: "#5a7a65" }}>
                     &ldquo;{v.tagline}&rdquo;
                   </p>
 
-                  <p className="text-[11px] text-white/20 mb-4">{v.domain}</p>
+                  <p className="text-[11px] mb-4" style={{ color: "#8aaa90" }}>{v.domain}</p>
 
                   {v.programs.length > 0 && (
-                    <div
-                      className="mt-auto pt-4 space-y-1.5"
-                      style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
-                    >
+                    <div className="mt-auto pt-4 space-y-1.5" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
                       {v.programs.map((p) => (
                         <div key={p} className="flex items-center gap-2">
                           <span
-                            className="w-1 h-1 rounded-full flex-shrink-0"
-                            style={{ background: v.accent }}
+                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                            style={{ background: v.accent === "#fdda2b" ? "#b08800" : v.accent }}
                           />
-                          <p className="text-xs text-white/35">{p}</p>
+                          <p className="text-xs" style={{ color: "#5a7a65" }}>{p}</p>
                         </div>
                       ))}
                     </div>
@@ -416,118 +378,96 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ ENTERPRISE SYSTEMS LAYER ═══════════════════════ */}
-      <section className="max-w-7xl mx-auto px-8 py-24">
-        <div className="mb-14">
-          <p
-            className="text-xs tracking-[0.3em] uppercase mb-3 font-semibold"
-            style={{ color: "#16a34a" }}
-          >
-            Enterprise Systems
-          </p>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-            Intelligent Infrastructure
-          </h2>
-          <p className="text-white/40 mt-3 max-w-xl leading-relaxed">
-            MGI operates a centralized technology and governance layer enabling
-            real-time oversight, AI-driven automation, and operational intelligence
-            across the full ecosystem.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {systems.map((s) => (
-            <div
-              key={s.title}
-              className="px-7 py-6 rounded-2xl"
-              style={{
-                background: "#0d110e",
-                border: "1px solid rgba(13,110,54,0.2)",
-              }}
-            >
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl"
-                style={{ background: "rgba(13,110,54,0.25)", color: "#4ade80" }}
-              >
-                {s.icon}
-              </div>
-              <h3 className="text-base font-bold text-white mb-2">{s.title}</h3>
-              <p className="text-sm text-white/40 leading-relaxed">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Executive OS CTA */}
-        <div
-          className="mt-8 px-8 py-7 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6"
-          style={{
-            background: "linear-gradient(135deg, rgba(13,110,54,0.15), rgba(13,110,54,0.08))",
-            border: "1px solid rgba(13,110,54,0.3)",
-          }}
-        >
-          <div>
-            <h3 className="text-lg font-bold text-white mb-1">MGI Executive OS</h3>
-            <p className="text-sm text-white/45">
-              The centralized command center for ecosystem management, approvals, communications, and strategic oversight.
+      {/* ══ ENTERPRISE SYSTEMS — DARK, POWERFUL ═══════════ */}
+      <section className="py-24 px-8" style={{ background: "#0f1a12" }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-14">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#22c55e" }}>
+              Enterprise Systems
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-3" style={{ color: "#f4f7f5" }}>
+              Intelligent Infrastructure
+            </h2>
+            <p className="max-w-xl leading-relaxed" style={{ color: "rgba(244,247,245,0.45)" }}>
+              MGI operates a centralized technology and governance layer enabling
+              real-time oversight, AI-driven automation, and operational intelligence
+              across the full ecosystem.
             </p>
           </div>
-          <Link
-            href="https://os.mgi-ventures.com"
-            className="flex-shrink-0 px-6 py-3 rounded-xl font-bold text-sm text-white transition-all hover:brightness-110"
-            style={{ background: "#0d6e36" }}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+            {systems.map((s) => (
+              <div
+                key={s.title}
+                className="px-7 py-6 rounded-2xl"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(34,197,94,0.15)" }}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl"
+                  style={{ background: "rgba(13,110,54,0.3)", color: "#4ade80" }}
+                >
+                  {s.icon}
+                </div>
+                <h3 className="text-base font-bold mb-2" style={{ color: "#f4f7f5" }}>{s.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "rgba(244,247,245,0.4)" }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className="px-8 py-7 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6"
+            style={{ background: "rgba(13,110,54,0.2)", border: "1px solid rgba(34,197,94,0.25)" }}
           >
-            Access Executive OS →
-          </Link>
+            <div>
+              <h3 className="text-lg font-bold mb-1" style={{ color: "#f4f7f5" }}>MGI Executive OS</h3>
+              <p className="text-sm" style={{ color: "rgba(244,247,245,0.5)" }}>
+                The centralized command center for ecosystem management, approvals,
+                communications, and strategic oversight.
+              </p>
+            </div>
+            <Link
+              href="https://os.mgi-ventures.com"
+              className="flex-shrink-0 px-6 py-3 rounded-xl font-bold text-sm text-white transition-all hover:brightness-110"
+              style={{ background: "#16a34a" }}
+            >
+              Access Executive OS →
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* ══ POSITIONING STRIP ══════════════════════════════ */}
-      <section
-        className="py-20 px-8"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.04)", background: "#0d110e" }}
-      >
+      {/* ══ POSITIONING STRIP — WARM LIGHT GREEN ══════════ */}
+      <section className="py-20 px-8" style={{ background: "#e8f5eb" }}>
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-2xl md:text-4xl font-bold text-white/55 leading-relaxed">
+          <p className="text-2xl md:text-4xl font-bold leading-relaxed" style={{ color: "#0d6e36" }}>
             &ldquo;At the heart of business performance.&rdquo;
           </p>
-          <p
-            className="text-sm mt-4 tracking-widest uppercase"
-            style={{ color: "#3a4a42" }}
-          >
+          <p className="text-sm mt-4 tracking-widest uppercase" style={{ color: "#5a7a65" }}>
             Mina-Galeed Invest (MGI) Ltd · Yaoundé, Cameroon
           </p>
         </div>
       </section>
 
       {/* ══ FOOTER ═════════════════════════════════════════ */}
-      <footer
-        className="py-10 px-8"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
-      >
+      <footer className="py-10 px-8" style={{ background: "#0c1710", borderTop: "1px solid rgba(34,197,94,0.1)" }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div
               className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: "rgba(13,110,54,0.2)", border: "1px solid rgba(13,110,54,0.3)" }}
+              style={{ background: "rgba(13,110,54,0.25)", border: "1px solid rgba(13,110,54,0.4)" }}
             >
-              <Image
-                src="/logos/mgi-main.png"
-                alt="MGI"
-                width={18}
-                height={18}
-                className="object-contain"
-              />
+              <Image src="/logos/mgi-main.png" alt="MGI" width={18} height={18} className="object-contain" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white/50">Mina-Galeed Invest (MGI) Ltd</p>
-              <p className="text-xs text-white/20">© {new Date().getFullYear()} · All rights reserved</p>
+              <p className="text-sm font-semibold" style={{ color: "rgba(244,247,245,0.5)" }}>Mina-Galeed Invest (MGI) Ltd</p>
+              <p className="text-xs" style={{ color: "rgba(244,247,245,0.2)" }}>© {new Date().getFullYear()} · All rights reserved</p>
             </div>
           </div>
-          <div className="flex items-center gap-6 text-xs text-white/25">
+          <div className="flex items-center gap-6 text-xs" style={{ color: "rgba(244,247,245,0.25)" }}>
             <span>Yaoundé, Cameroon</span>
             <Link
               href="https://os.mgi-ventures.com"
-              className="font-medium transition-colors hover:text-white/50"
+              className="font-medium transition-colors"
               style={{ color: "rgba(74,222,128,0.5)" }}
             >
               Executive OS →
