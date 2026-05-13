@@ -1,6 +1,0 @@
-{
-  "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile",
-  "buildCommand": "cd ../.. && pnpm --filter @mgi/web-drimp build",
-  "outputDirectory": "apps/web-drimp/.next",
-  "framework": "nextjs"
-}
