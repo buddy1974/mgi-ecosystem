@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import './globals.css'
+import ChatWidget from '@/components/ChatWidget'
 
 export const metadata: Metadata = {
   title: 'MGI Ventures — Mina-Galeed Invest (MGI) Ltd',
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </nav>
 
         {children}
+        <ChatWidget />
       </body>
     </html>
   )
