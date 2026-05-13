@@ -99,7 +99,7 @@ const ventures: Array<{
     tag:        "Hospitality & Lifestyle",
     tagline:    "Something exceptional is coming.",
     programs:   [],
-    comingSoon: true,
+    comingSoon: false,
     initials:   "ALP",
   },
   {
