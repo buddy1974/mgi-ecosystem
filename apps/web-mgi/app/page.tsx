@@ -291,7 +291,7 @@ export default function Home() {
       </section>
 
       {/* ══ ECOSYSTEM ARCHITECTURE — DARK, PREMIUM ════════ */}
-      <section className="py-24 px-8" style={{ background: "#0a0d0b" }}>
+      <section className="py-24 px-8" style={{ background: "#0c1015" }}>
         <div className="max-w-7xl mx-auto">
           <div className="mb-14">
             <p
@@ -322,8 +322,9 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:-translate-y-1.5"
                 style={{
-                  background: "#0f1210",
-                  border: "1px solid rgba(255,255,255,0.06)",
+                  background: `linear-gradient(145deg, ${v.color}35 0%, #1a2028 100%)`,
+                  border: `1px solid ${v.color}50`,
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.35)",
                 }}
               >
                 {/* Hover glow — entity color */}
