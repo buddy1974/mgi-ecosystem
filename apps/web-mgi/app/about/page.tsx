@@ -169,8 +169,8 @@ export default function AboutPage() {
             <a href="tel:+237699812513" className="px-8 py-4 rounded-xl text-sm font-bold transition-all hover:opacity-90" style={{ background: "white", color: "#0d6e36" }}>
               (+237) 699 81 25 13
             </a>
-            <a href="mailto:info@mgi-holdings.com" className="px-8 py-4 rounded-xl text-sm font-bold transition-all" style={{ background: "rgba(255,255,255,0.12)", color: "white", border: "1px solid rgba(255,255,255,0.25)" }}>
-              info@mgi-holdings.com
+            <a href="mailto:info@mgi-ventures.com" className="px-8 py-4 rounded-xl text-sm font-bold transition-all" style={{ background: "rgba(255,255,255,0.12)", color: "white", border: "1px solid rgba(255,255,255,0.25)" }}>
+              info@mgi-ventures.com
             </a>
           </div>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
