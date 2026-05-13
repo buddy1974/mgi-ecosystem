@@ -264,6 +264,40 @@ importers:
         specifier: ^5
         version: 5.9.3
 
+  apps/web-nmi:
+    dependencies:
+      next:
+        specifier: 16.2.4
+        version: 16.2.4(@babel/core@7.29.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.5
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.5(react@19.2.5)
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.19.41
+      '@types/react':
+        specifier: ^19
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.2.3(@types/react@19.2.14)
+      autoprefixer:
+        specifier: ^10.4.20
+        version: 10.5.0(postcss@8.5.14)
+      postcss:
+        specifier: ^8
+        version: 8.5.14
+      tailwindcss:
+        specifier: ^3.4.17
+        version: 3.4.19(tsx@4.21.0)
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+
   apps/web-rogers:
     dependencies:
       next:
