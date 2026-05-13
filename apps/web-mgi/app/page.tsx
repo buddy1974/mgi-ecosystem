@@ -19,12 +19,15 @@ const expertise = [
 
 const stats = [
   { value: "2019", label: "Founded"           },
-  { value: "6",    label: "Venture Companies" },
+  { value: "7",    label: "Venture Companies" },
   { value: "5",    label: "Industry Sectors"  },
   { value: "9",    label: "Service Domains"   },
 ];
 
-const ventures = [
+const ventures: Array<{
+  name: string; domain: string; logo: string; color: string; accent: string;
+  tag: string; tagline: string; programs: string[]; comingSoon: boolean; externalLink?: string;
+}> = [
   {
     name:     "Rogers Nforgwei Platform",
     domain:   "rogersnforgwei.com",
@@ -83,13 +86,25 @@ const ventures = [
   {
     name:       "Abba Land Place",
     domain:     "abbalandplace.com",
-    logo:       "/logos/drimp-foundation.png",
-    color:      "#023F78",
-    accent:     "#FC9D02",
-    tag:        "Real Estate",
-    tagline:    "Premium land. Premium living.",
+    logo:       "/logos/abbaland.png",
+    color:      "#110d07",
+    accent:     "#c8a96e",
+    tag:        "Hospitality & Lifestyle",
+    tagline:    "Something exceptional is coming.",
     programs:   [],
     comingSoon: true,
+  },
+  {
+    name:         "Drimp Foundation",
+    domain:       "drimpfoundation.org",
+    logo:         "/logos/drimp-foundation.png",
+    color:        "#023F78",
+    accent:       "#FC9D02",
+    tag:          "Social Impact & Humanitarian",
+    tagline:      "Transforming communities. Restoring dignity.",
+    programs:     [],
+    comingSoon:   false,
+    externalLink: "https://www.drimpfoundation.org",
   },
 ];
 
@@ -380,7 +395,7 @@ export default function Home() {
                 return <div key={v.domain} className={sharedClassName} style={sharedStyle}>{cardContent}</div>;
               }
               return (
-                <a key={v.domain} href={`https://${v.domain}`} target="_blank" rel="noopener noreferrer" className={sharedClassName} style={sharedStyle}>
+                <a key={v.domain} href={v.externalLink ?? `https://${v.domain}`} target="_blank" rel="noopener noreferrer" className={sharedClassName} style={sharedStyle}>
                   {cardContent}
                 </a>
               );
