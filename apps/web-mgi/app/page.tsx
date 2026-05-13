@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,7 +27,8 @@ const stats = [
 
 const ventures: Array<{
   name: string; domain: string; logo: string; color: string; accent: string;
-  tag: string; tagline: string; programs: string[]; comingSoon: boolean; externalLink?: string;
+  tag: string; tagline: string; programs: string[]; comingSoon: boolean;
+  externalLink?: string; initials: string;
 }> = [
   {
     name:     "Rogers Nforgwei Platform",
@@ -38,6 +40,7 @@ const ventures: Array<{
     tagline:  "Switch on the better side of the future.",
     programs: ["Dominion Life Men's Conference", "Men On Duty", "CEO On Mission"],
     comingSoon: false,
+    initials: "RN",
   },
   {
     name:     "Horeb Solutions",
@@ -49,6 +52,7 @@ const ventures: Array<{
     tagline:  "Reliability in motion. Your logistics, our priority.",
     programs: [],
     comingSoon: false,
+    initials: "HS",
   },
   {
     name:     "NMI Education",
@@ -60,6 +64,7 @@ const ventures: Array<{
     tagline:  "Empowering minds. Building futures.",
     programs: [],
     comingSoon: false,
+    initials: "NMI",
   },
   {
     name:     "Librairie du Quartier",
@@ -71,6 +76,7 @@ const ventures: Array<{
     tagline:  "Your neighborhood. Your knowledge.",
     programs: [],
     comingSoon: false,
+    initials: "LQ",
   },
   {
     name:     "DROS Construction",
@@ -82,6 +88,7 @@ const ventures: Array<{
     tagline:  "Building structures that stand the test of time.",
     programs: [],
     comingSoon: false,
+    initials: "DC",
   },
   {
     name:       "Abba Land Place",
@@ -93,6 +100,7 @@ const ventures: Array<{
     tagline:    "Something exceptional is coming.",
     programs:   [],
     comingSoon: true,
+    initials:   "ALP",
   },
   {
     name:         "Drimp Foundation",
@@ -105,6 +113,7 @@ const ventures: Array<{
     programs:     [],
     comingSoon:   false,
     externalLink: "https://www.drimpfoundation.org",
+    initials:     "DF",
   },
 ];
 
@@ -152,6 +161,64 @@ const expertiseDomains = [
     services: ["Project setup & business plan development", "Project & program monitoring-evaluation", "Socioeconomic & environmental impact studies", "Administrative procedure tracking"],
   },
 ];
+
+/* ─── LOGO BADGE ─────────────────────────────────────── */
+
+function LogoBadge({
+  logo, initials, color, accent
+}: {
+  logo: string; initials: string; color: string; accent: string;
+}) {
+  const [imgFailed, setImgFailed] = React.useState(false);
+
+  if (imgFailed || !logo) {
+    return (
+      <div
+        style={{
+          width: 40, height: 40,
+          borderRadius: 8,
+          background: color,
+          border: `1px solid ${accent}33`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexShrink: 0,
+        }}
+      >
+        <span style={{
+          color: accent,
+          fontSize: initials.length > 2 ? 9 : 12,
+          fontWeight: 700,
+          letterSpacing: "0.05em",
+          fontFamily: "system-ui, sans-serif",
+          lineHeight: 1,
+        }}>
+          {initials}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        width: 40, height: 40,
+        borderRadius: 8,
+        background: "rgba(255,255,255,0.08)",
+        border: "1px solid rgba(255,255,255,0.1)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        overflow: "hidden", flexShrink: 0,
+      }}
+    >
+      <img
+        src={logo}
+        alt={initials}
+        width={32}
+        height={32}
+        style={{ objectFit: "contain" }}
+        onError={() => setImgFailed(true)}
+      />
+    </div>
+  );
+}
 
 /* ─── ANIMATED TICKER ────────────────────────────────── */
 
@@ -371,7 +438,8 @@ export default function Home() {
                       </span>
                     )}
                     <div className="w-20 h-20 rounded-xl mb-5 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105" style={{ background: `linear-gradient(145deg, ${v.color}22, ${v.accent}14)`, border: `1px solid ${v.color}35`, boxShadow: `0 4px 20px ${v.color}18` }}>
-                      <Image src={v.logo} alt={v.name} width={52} height={52} className="object-contain" style={{ filter: `drop-shadow(0 0 8px ${v.color}55)` }} />
+                      {/* Logo or text fallback */}
+                      <LogoBadge logo={v.logo} initials={v.initials} color={v.color} accent={v.accent} />
                     </div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: v.accent }}>{v.tag}</p>
                     <h3 className="text-lg font-black leading-tight mb-2 tracking-tight" style={{ color: "#f4f7f5" }}>{v.name}</h3>
