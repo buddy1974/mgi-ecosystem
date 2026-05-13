@@ -505,8 +505,8 @@ export default function Home() {
                 <a href="tel:+237699812513" className="block text-xs hover:text-white transition-colors" style={{ color: "rgba(244,247,245,0.5)" }}>
                   (+237) 699 81 25 13
                 </a>
-                <a href="mailto:info@mgi-holdings.com" className="block text-xs hover:text-white transition-colors" style={{ color: "rgba(244,247,245,0.5)" }}>
-                  info@mgi-holdings.com
+                <a href="mailto:info@mgi-ventures.com" className="block text-xs hover:text-white transition-colors" style={{ color: "rgba(244,247,245,0.5)" }}>
+                  info@mgi-ventures.com
                 </a>
               </div>
             </div>
