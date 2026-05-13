@@ -290,18 +290,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ ECOSYSTEM ARCHITECTURE — WHITE, SPACIOUS ══════ */}
-      <section className="py-24 px-8" style={{ background: "#ffffff" }}>
+      {/* ══ ECOSYSTEM ARCHITECTURE — DARK, PREMIUM ════════ */}
+      <section className="py-24 px-8" style={{ background: "#0a0d0b" }}>
         <div className="max-w-7xl mx-auto">
           <div className="mb-14">
-            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#16a34a" }}>
+            <p
+              className="text-xs font-bold tracking-[0.3em] uppercase mb-3"
+              style={{ color: "#22c55e" }}
+            >
               Ecosystem Architecture
             </p>
             <div className="flex items-end justify-between flex-wrap gap-4">
-              <h2 className="text-3xl md:text-4xl font-black tracking-tight" style={{ color: "#0c1a10" }}>
+              <h2
+                className="text-3xl md:text-4xl font-black tracking-tight"
+                style={{ color: "#f4f7f5" }}
+              >
                 Our Ventures
               </h2>
-              <p className="text-sm" style={{ color: "#8aaa90" }}>6 companies · 5 sectors</p>
+              <p className="text-sm" style={{ color: "#3a4a42" }}>
+                6 companies · 5 sectors
+              </p>
             </div>
           </div>
 
@@ -312,24 +320,48 @@ export default function Home() {
                 href={v.comingSoon ? "#" : `https://${v.domain}`}
                 target={v.comingSoon ? "_self" : "_blank"}
                 rel="noopener noreferrer"
-                className="group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.07)", boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}
+                className="group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:-translate-y-1.5"
+                style={{
+                  background: "#0f1210",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                }}
               >
-                <div className="h-[3px] w-full flex-shrink-0" style={{ background: `linear-gradient(90deg, ${v.color}, ${v.accent})` }} />
+                {/* Hover glow — entity color */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                  style={{
+                    background: `radial-gradient(ellipse at 50% -10%, ${v.color}28 0%, transparent 65%)`,
+                  }}
+                />
 
-                <div className="p-6 flex flex-col flex-1 relative">
+                {/* Entity color top bar */}
+                <div
+                  className="h-[3px] w-full flex-shrink-0"
+                  style={{ background: `linear-gradient(90deg, ${v.color}, ${v.accent})` }}
+                />
+
+                <div className="flex flex-col flex-1 p-6 relative">
                   {v.comingSoon && (
                     <span
                       className="absolute top-4 right-4 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
-                      style={{ background: "#f0f7f2", color: "#5a7a65", border: "1px solid rgba(13,110,54,0.15)" }}
+                      style={{
+                        background: "rgba(255,255,255,0.05)",
+                        color: "rgba(255,255,255,0.3)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                      }}
                     >
                       Coming soon
                     </span>
                   )}
 
+                  {/* Logo */}
                   <div
                     className="w-20 h-20 rounded-xl mb-5 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
-                    style={{ background: `linear-gradient(145deg, ${v.color}15, ${v.accent}0d)`, border: `1px solid ${v.color}25` }}
+                    style={{
+                      background: `linear-gradient(145deg, ${v.color}22, ${v.accent}14)`,
+                      border: `1px solid ${v.color}35`,
+                      boxShadow: `0 4px 20px ${v.color}18`,
+                    }}
                   >
                     <Image
                       src={v.logo}
@@ -337,36 +369,55 @@ export default function Home() {
                       width={52}
                       height={52}
                       className="object-contain"
-                      style={{ filter: `drop-shadow(0 2px 6px ${v.color}40)` }}
+                      style={{ filter: `drop-shadow(0 0 8px ${v.color}55)` }}
                     />
                   </div>
 
                   <p
                     className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2"
-                    style={{ color: v.accent === "#fdda2b" ? "#b08800" : v.accent }}
+                    style={{ color: v.accent }}
                   >
                     {v.tag}
                   </p>
 
-                  <h3 className="text-lg font-black leading-tight mb-2 tracking-tight" style={{ color: "#0c1a10" }}>
+                  <h3
+                    className="text-lg font-black leading-tight mb-2 tracking-tight"
+                    style={{ color: "#f4f7f5" }}
+                  >
                     {v.name}
                   </h3>
 
-                  <p className="text-xs italic leading-relaxed mb-2" style={{ color: "#5a7a65" }}>
+                  <p
+                    className="text-xs italic leading-relaxed mb-2"
+                    style={{ color: "rgba(244,247,245,0.38)" }}
+                  >
                     &ldquo;{v.tagline}&rdquo;
                   </p>
 
-                  <p className="text-[11px] mb-4" style={{ color: "#8aaa90" }}>{v.domain}</p>
+                  <p
+                    className="text-[11px] mb-4"
+                    style={{ color: "rgba(244,247,245,0.2)" }}
+                  >
+                    {v.domain}
+                  </p>
 
                   {v.programs.length > 0 && (
-                    <div className="mt-auto pt-4 space-y-1.5" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+                    <div
+                      className="mt-auto pt-4 space-y-1.5"
+                      style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+                    >
                       {v.programs.map((p) => (
                         <div key={p} className="flex items-center gap-2">
                           <span
-                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                            style={{ background: v.accent === "#fdda2b" ? "#b08800" : v.accent }}
+                            className="w-1 h-1 rounded-full flex-shrink-0"
+                            style={{ background: v.accent }}
                           />
-                          <p className="text-xs" style={{ color: "#5a7a65" }}>{p}</p>
+                          <p
+                            className="text-xs"
+                            style={{ color: "rgba(244,247,245,0.38)" }}
+                          >
+                            {p}
+                          </p>
                         </div>
                       ))}
                     </div>
