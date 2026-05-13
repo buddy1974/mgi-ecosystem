@@ -27,19 +27,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             display: "flex", alignItems: "center", justifyContent: "space-between",
           }}>
             <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12 }}>
+              {/* Logo mark — HS on gradient green, tan banner strip */}
               <div style={{
-                width: 44, height: 44, borderRadius: 10,
-                background: "#0a8348",
+                width: 48, height: 48, borderRadius: 10,
+                background: "linear-gradient(135deg, #0a8348, #0d9e58)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 900, color: "white", fontSize: 18, letterSpacing: "-0.05em",
+                position: "relative", overflow: "hidden",
               }}>
-                HS
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 16, background: "#ce9c66", opacity: 0.6 }} />
+                <span style={{ fontWeight: 900, color: "white", fontSize: 18, letterSpacing: "-0.05em", position: "relative", zIndex: 1 }}>HS</span>
               </div>
               <div>
-                <p style={{ color: "#0a8348", fontWeight: 800, fontSize: 15, margin: 0, lineHeight: 1.1, fontFamily: "'Roboto', sans-serif" }}>
-                  Horeb Solutions
+                <p style={{ color: "#0a8348", fontWeight: 700, fontSize: 15, margin: 0, lineHeight: 1.1, fontFamily: "'Roboto', sans-serif" }}>
+                  Horeb Solutions Sarl
                 </p>
-                <p style={{ color: "#ce9c66", fontWeight: 500, fontSize: 10, margin: 0, fontStyle: "italic" }}>
+                <p style={{ color: "#ce9c66", fontWeight: 400, fontSize: 10, margin: 0, fontStyle: "italic" }}>
                   Votre partenaire de la distribution
                 </p>
               </div>
@@ -47,15 +49,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
               {[
-                { label: "Accueil",      href: "/"              },
-                { label: "À propos",     href: "#about"         },
-                { label: "Produits",     href: "#products"      },
-                { label: "Distribution", href: "#distribution"  },
-                { label: "Contact",      href: "#contact"       },
+                { label: "Accueil",      href: "/"             },
+                { label: "À propos",     href: "#about"        },
+                { label: "Produits",     href: "#products"     },
+                { label: "Distribution", href: "#distribution" },
+                { label: "Contact",      href: "#contact"      },
               ].map((item) => (
                 <Link key={item.label} href={item.href} style={{
-                  color: "#374151", fontSize: 13, textDecoration: "none",
-                  fontWeight: 500, fontFamily: "'Roboto', sans-serif",
+                  color: "#374151", fontSize: 13, textDecoration: "none", fontWeight: 500,
+                  fontFamily: "'Roboto', sans-serif",
                 }}>
                   {item.label}
                 </Link>
@@ -80,54 +82,64 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "3rem", marginBottom: "3rem" }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 8, background: "#0a8348", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, color: "white", fontSize: 16 }}>HS</div>
-                  <p style={{ color: "#ffffff", fontWeight: 800, fontSize: 16, margin: 0 }}>Horeb Solutions Sarl</p>
+                  <div style={{
+                    width: 40, height: 40, borderRadius: 8,
+                    background: "linear-gradient(135deg, #0a8348, #0d9e58)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontWeight: 900, color: "white", fontSize: 16,
+                  }}>HS</div>
+                  <p style={{ color: "#ffffff", fontWeight: 700, fontSize: 16, margin: 0, fontFamily: "'Roboto', sans-serif" }}>
+                    Horeb Solutions Sarl
+                  </p>
                 </div>
-                <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, lineHeight: 1.7, maxWidth: 320, margin: "0 0 12px" }}>
+                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, lineHeight: 1.7, maxWidth: 320, margin: "0 0 12px", fontFamily: "'Roboto', sans-serif" }}>
                   Notre mission est d&apos;offrir une logistique fiable et dynamique,
                   en plaçant votre succès au cœur de nos priorités.
                 </p>
-                <p style={{ color: "#fdda2b", fontStyle: "italic", fontSize: 13, margin: 0 }}>
+                <p style={{ color: "#fdda2b", fontStyle: "italic", fontSize: 13, margin: 0, fontFamily: "'Roboto', sans-serif" }}>
                   Fiabilité en mouvement. Votre logistique, notre priorité.
                 </p>
               </div>
 
               <div>
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 16px" }}>
+                <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 16px", fontFamily: "'Montserrat', sans-serif" }}>
                   Agences
                 </p>
                 {[
-                  { city: "Yaoundé — Gare",     tel: "+237 676 165 716" },
+                  { city: "Yaoundé — Gare",    tel: "+237 676 165 716" },
                   { city: "Yaoundé — Acacias",  tel: "+237 699 276 185" },
-                  { city: "Douala — Ville",      tel: "+237 674 879 647" },
-                  { city: "Douala — Bonaberi",   tel: "+237 683 318 223" },
-                  { city: "Bafoussam",           tel: "+237 650 121 811" },
+                  { city: "Douala — Ville",     tel: "+237 674 879 647" },
+                  { city: "Douala — Bonaberi",  tel: "+237 683 318 223" },
+                  { city: "Bafoussam",          tel: "+237 650 121 811" },
                 ].map((a) => (
                   <div key={a.city} style={{ marginBottom: 10 }}>
-                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, margin: "0 0 2px", fontWeight: 600 }}>{a.city}</p>
-                    <a href={`tel:${a.tel.replace(/\s/g, "")}`} style={{ color: "rgba(255,255,255,0.35)", fontSize: 11, textDecoration: "none" }}>{a.tel}</a>
+                    <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 12, margin: "0 0 2px", fontWeight: 600 }}>{a.city}</p>
+                    <a href={`tel:${a.tel.replace(/\s/g, "")}`} style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, textDecoration: "none" }}>{a.tel}</a>
                   </div>
                 ))}
               </div>
 
               <div>
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 16px" }}>
+                <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 16px", fontFamily: "'Montserrat', sans-serif" }}>
                   Contact
                 </p>
-                <a href="mailto:info@horebsolutions.org" style={{ color: "#4ade80", fontSize: 13, textDecoration: "none", display: "block", marginBottom: 16 }}>
+                <a href="mailto:info@horebsolutions.org" style={{ color: "#4ade80", fontSize: 13, textDecoration: "none", display: "block", marginBottom: 12 }}>
                   info@horebsolutions.org
                 </a>
-                <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 12, lineHeight: 1.6, margin: "0 0 16px" }}>
+                <a href="tel:+237222233560" style={{ color: "rgba(255,255,255,0.3)", fontSize: 12, textDecoration: "none", display: "block", marginBottom: 16 }}>
+                  +237 222 23 35 60
+                </a>
+                <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 12, lineHeight: 1.6, margin: "0 0 16px" }}>
                   Immeuble CCA<br />Marché Central Yaoundé<br />BP 31750, Yaoundé – Cameroun
                 </p>
-                <a href="https://mgi-ventures.com" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(74,222,128,0.5)", fontSize: 12, textDecoration: "none" }}>
+                <a href="https://mgi-ventures.com" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(74,222,128,0.4)", fontSize: 12, textDecoration: "none" }}>
                   MGI Ecosystem →
                 </a>
               </div>
             </div>
 
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ color: "rgba(255,255,255,0.18)", fontSize: 11, margin: 0 }}>
+              <p style={{ color: "rgba(255,255,255,0.15)", fontSize: 11, margin: 0, fontFamily: "'Roboto', sans-serif" }}>
                 © {new Date().getFullYear()} Horeb Solutions Sarl · Tous droits réservés · Une entreprise du groupe Mina-Galeed Invest (MGI) Ltd
               </p>
             </div>
