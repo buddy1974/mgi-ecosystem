@@ -33,12 +33,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* NAV */}
         <nav style={{
-          position: "sticky", top: 0, zIndex: 50,
+          position: "fixed", top: 0, zIndex: 50, width: "100%",
           background: "rgba(10,4,20,0.96)",
           backdropFilter: "blur(16px)",
           borderBottom: "1px solid rgba(58,12,163,0.25)",
           boxShadow: "0 1px 20px rgba(58,12,163,0.15)",
         }}>
+          <style>{`@media(max-width:768px){.nav-desktop{display:none!important}}`}</style>
           <div style={{
             maxWidth: 1280, margin: "0 auto",
             padding: "0 2rem", height: 70,
@@ -58,28 +59,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </p>
             </Link>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-              {[
-                { label: "Home",     href: "/"         },
-                { label: "About",    href: "#about"    },
-                { label: "Programs", href: "#programs" },
-                { label: "Vision",   href: "#vision"   },
-                { label: "Contact",  href: "#contact"  },
-              ].map((item) => (
-                <Link key={item.label} href={item.href} style={{
-                  color: "rgba(255,255,255,0.6)", fontSize: 13, textDecoration: "none", fontWeight: 500,
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: 28 }}>
+                {[
+                  { label: "Programs",  href: "#programs"  },
+                  { label: "Events",    href: "#events"    },
+                  { label: "Community", href: "#community" },
+                  { label: "About",     href: "#story"     },
+                  { label: "Coaching",  href: "#coaching"  },
+                ].map((item) => (
+                  <Link key={item.label} href={item.href} style={{
+                    color: "rgba(255,255,255,0.6)", fontSize: 13, textDecoration: "none", fontWeight: 500,
+                  }}>
+                    {item.label}
+                  </Link>
+                ))}
+                <a href="#programs" style={{
+                  background: "#f72585",
+                  color: "white", padding: "9px 22px", borderRadius: 10,
+                  fontSize: 13, fontWeight: 700, textDecoration: "none",
+                  boxShadow: "0 2px 16px rgba(247,37,133,0.35)",
+                  whiteSpace: "nowrap",
                 }}>
-                  {item.label}
-                </Link>
-              ))}
-              <a href="#contact" style={{
-                background: "#f72585",
-                color: "white", padding: "9px 22px", borderRadius: 10,
-                fontSize: 13, fontWeight: 700, textDecoration: "none",
-                boxShadow: "0 2px 16px rgba(247,37,133,0.35)",
-              }}>
-                Connect
-              </a>
+                  Reserve Your Seat
+                </a>
+              </div>
               <MobileNav />
             </div>
           </div>
@@ -133,13 +137,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
 
-            {/* Full-width square bar — brand footer element */}
             <div style={{ display: "flex", marginBottom: 20 }}>
               <div style={{ flex: 1, height: 3, background: "#3a0ca3" }} />
               <div style={{ flex: 1, height: 3, background: "#f72585" }} />
             </div>
 
-            <p style={{ color: "rgba(255,255,255,0.12)", fontSize: 11, margin: 0, textAlign: "center" }}>
+            <p style={{ color: "rgba(255,255,255,0.12)", fontSize: 11, margin: 0, textAlign: "center", fontFamily: "var(--font-body, 'Nunito', sans-serif)" }}>
               © {new Date().getFullYear()} Rogers Nforgwei · All rights reserved · MGI Ecosystem
             </p>
           </div>
