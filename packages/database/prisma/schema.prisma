@@ -487,6 +487,31 @@ model BookingRequest {
   @@map("booking_requests")
 }
 
+// ─── VENTURE REPORTS ─────────────────────────────────────────────────────────
+
+model VentureReport {
+  id            String    @id @default(cuid())
+  venture       String
+  ventureName   String
+  type          String    // 'report' | 'incident' | 'update' | 'approval_request'
+  urgency       String    @default("normal") // 'normal' | 'urgent' | 'critical'
+  title         String
+  body          String    @db.Text
+  submittedBy   String
+  submittedVia  String    @default("form") // 'form' | 'telegram'
+  status        String    @default("new") // 'new' | 'acknowledged' | 'in_review' | 'resolved'
+  ceoReply      String?   @db.Text
+  repliedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  resolvedAt    DateTime?
+
+  @@index([venture])
+  @@index([status])
+  @@index([urgency])
+  @@index([createdAt])
+  @@map("venture_reports")
+}
+
 // ─── ROGERS REGISTRATIONS ─────────────────────────────────────────────────────
 
 model RogersRegistration {

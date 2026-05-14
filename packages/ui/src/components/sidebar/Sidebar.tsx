@@ -21,14 +21,15 @@ interface NavItem {
 }
 
 const COMMAND_NAV: NavItem[] = [
-  { href: '/priority',  label: 'Priority Tracker',   icon: '🎯' },
-  { href: '/dashboard', label: 'Executive Overview', icon: '🏠' },
-  { href: '/ai',        label: 'AI Assistant',       icon: '🤖', badge: 'Live' },
-  { href: '/inbox',     label: 'Communications',     icon: '💬', badge: 14 },
-  { href: '/approvals', label: 'Approval Center',    icon: '✅', badge: 8 },
-  { href: '/ventures',  label: 'Ventures',           icon: '🏢' },
-  { href: '/calendar',  label: 'Calendar',           icon: '📅' },
-  { href: '/social',    label: 'Social Command',     icon: '📣' },
+  { href: '/priority',   label: 'Priority Tracker',   icon: '🎯' },
+  { href: '/dashboard',  label: 'Executive Overview', icon: '🏠' },
+  { href: '/operations', label: 'Ops Bridge',         icon: '📡' },
+  { href: '/ai',         label: 'AI Assistant',       icon: '🤖', badge: 'Live' },
+  { href: '/inbox',      label: 'Communications',     icon: '💬', badge: 14 },
+  { href: '/approvals',  label: 'Approval Center',    icon: '✅', badge: 8 },
+  { href: '/ventures',   label: 'Ventures',           icon: '🏢' },
+  { href: '/calendar',   label: 'Calendar',           icon: '📅' },
+  { href: '/social',     label: 'Social Command',     icon: '📣' },
 ]
 
 const OPERATIONS_NAV: NavItem[] = [
@@ -77,9 +78,10 @@ interface SidebarProps {
   pendingApprovals?: number
   pendingBookings?: number
   scheduledPosts?: number
+  newOperationsReports?: number
 }
 
-export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, scheduledPosts }: SidebarProps) {
+export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, scheduledPosts, newOperationsReports }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const commandNav = COMMAND_NAV.map(item => {
     if (item.href === '/inbox' && unreadMessages !== undefined)
@@ -90,6 +92,8 @@ export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, sch
       return { ...item, badge: pendingBookings }
     if (item.href === '/social' && scheduledPosts !== undefined && scheduledPosts > 0)
       return { ...item, badge: scheduledPosts }
+    if (item.href === '/operations' && newOperationsReports !== undefined && newOperationsReports > 0)
+      return { ...item, badge: newOperationsReports }
     return item
   })
 
