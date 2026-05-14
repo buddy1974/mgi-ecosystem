@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   const programs = [
@@ -32,16 +33,22 @@ export default function HomePage() {
     <main style={{ background: "#0a0414" }}>
 
       {/* ══ HERO ══════════════════════════════════════════ */}
-      <section style={{
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-wrapper { flex-direction: column !important; }
+          .hero-image-col { flex: none !important; height: 300px !important; width: 100% !important; }
+        }
+      `}</style>
+      <section className="hero-wrapper" style={{
         minHeight: "92vh",
-        display: "flex", alignItems: "center",
+        display: "flex", alignItems: "stretch",
         background: "linear-gradient(150deg, #060210 0%, #0a0414 40%, #160830 70%, #1a0a40 100%)",
-        padding: "6rem 2rem",
         position: "relative", overflow: "hidden",
       }}>
+        {/* Ambient glows */}
         <div style={{ position: "absolute", top: -100, right: -60, width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(67,97,238,0.14) 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: -80, left: "45%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(247,37,133,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-        {/* Doodle wavy line — brand element */}
+        {/* Doodle wavy lines */}
         <svg style={{ position: "absolute", top: "38%", right: "4%", opacity: 0.14, pointerEvents: "none" }} width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
           <path d="M0,30 C40,10 80,50 120,30 C160,10 200,50 240,30 C260,20 270,25 280,30" stroke="#4361ee" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
         </svg>
@@ -49,40 +56,60 @@ export default function HomePage() {
           <path d="M0,25 C30,5 60,45 90,25 C120,5 150,45 180,25 C190,18 195,22 200,25" stroke="#4361ee" strokeWidth="2" fill="none" strokeLinecap="round"/>
         </svg>
 
-        <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", position: "relative" }}>
-          <div style={{ maxWidth: 760 }}>
-            {/* Square bar brand element */}
-            <div style={{ display: "flex", gap: 0, marginBottom: 32, borderRadius: 3, overflow: "hidden", width: 68 }}>
-              <div style={{ width: 40, height: 6, background: "#3a0ca3" }} />
-              <div style={{ width: 28, height: 6, background: "#f72585" }} />
-            </div>
-            <p style={{ color: "#7b90f3", fontSize: 11, fontWeight: 700, letterSpacing: "0.45em", textTransform: "uppercase", marginBottom: 24 }}>
-              #Rogers Nforgwei
-            </p>
-            <h1 style={{ color: "#ffffff", fontSize: "clamp(3rem, 6.5vw, 6rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 0.95, marginBottom: 10 }}>
-              Switch on
-            </h1>
-            <h1 style={{ color: "#ffffff", fontSize: "clamp(3rem, 6.5vw, 6rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 0.95, marginBottom: 10 }}>
-              the better side
-            </h1>
-            <h1 style={{ background: "linear-gradient(90deg, #4361ee 0%, #f72585 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontSize: "clamp(3rem, 6.5vw, 6rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 0.95, marginBottom: 44 }}>
-              of the future.
-            </h1>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 18, lineHeight: 1.75, marginBottom: 16, maxWidth: 560, fontWeight: 300 }}>
-              Impacting and Changing lives and communities.
-            </p>
-            <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 13, marginBottom: 56, fontWeight: 300, letterSpacing: "0.04em" }}>
-              Business man · Development Director · Humanitarian · Coach and Mentor · CEO NMI Education · Man of God
-            </p>
-            <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <a href="#programs" style={{ background: "linear-gradient(90deg, #3a0ca3, #4361ee)", color: "white", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: "none", boxShadow: "0 4px 24px rgba(58,12,163,0.45)" }}>
-                Explore Programs
-              </a>
-              <a href="#about" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.75)", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
-                About Rogers
-              </a>
-            </div>
+        {/* Left — text content (55%) */}
+        <div style={{
+          flex: "0 0 55%",
+          display: "flex", flexDirection: "column", justifyContent: "center",
+          padding: "80px 60px 80px 80px",
+          position: "relative", zIndex: 2,
+        }}>
+          {/* Square bar brand element */}
+          <div style={{ display: "flex", gap: 0, marginBottom: 32, borderRadius: 3, overflow: "hidden", width: 68 }}>
+            <div style={{ width: 40, height: 6, background: "#3a0ca3" }} />
+            <div style={{ width: 28, height: 6, background: "#f72585" }} />
           </div>
+          <p style={{ color: "#7b90f3", fontSize: 11, fontWeight: 700, letterSpacing: "0.45em", textTransform: "uppercase", marginBottom: 24 }}>
+            #Rogers Nforgwei
+          </p>
+          <h1 style={{ color: "#ffffff", fontSize: "clamp(3rem, 6.5vw, 6rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 0.95, marginBottom: 10 }}>
+            Switch on
+          </h1>
+          <h1 style={{ color: "#ffffff", fontSize: "clamp(3rem, 6.5vw, 6rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 0.95, marginBottom: 10 }}>
+            the better side
+          </h1>
+          <h1 style={{ background: "linear-gradient(90deg, #4361ee 0%, #f72585 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontSize: "clamp(3rem, 6.5vw, 6rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 0.95, marginBottom: 44 }}>
+            of the future.
+          </h1>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 18, lineHeight: 1.75, marginBottom: 16, maxWidth: 560, fontWeight: 300 }}>
+            Impacting and Changing lives and communities.
+          </p>
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 13, marginBottom: 56, fontWeight: 300, letterSpacing: "0.04em" }}>
+            Business man · Development Director · Humanitarian · Coach and Mentor · CEO NMI Education · Man of God
+          </p>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <a href="#programs" style={{ background: "linear-gradient(90deg, #3a0ca3, #4361ee)", color: "white", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: "none", boxShadow: "0 4px 24px rgba(58,12,163,0.45)" }}>
+              Explore Programs
+            </a>
+            <a href="#about" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.75)", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+              About Rogers
+            </a>
+          </div>
+        </div>
+
+        {/* Right — Rogers hero photo (45%) */}
+        <div className="hero-image-col" style={{
+          flex: "0 0 45%",
+          position: "relative",
+          display: "flex", alignItems: "flex-end", justifyContent: "center",
+          overflow: "hidden",
+        }}>
+          <Image
+            src="/rogers-hero.png"
+            alt="Rogers Nforgwei"
+            fill
+            style={{ objectFit: "contain", objectPosition: "bottom center" }}
+            priority
+          />
         </div>
       </section>
 
