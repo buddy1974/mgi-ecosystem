@@ -33,10 +33,10 @@ const ventures: Array<{
   {
     name:     "Rogers Nforgwei Platform",
     domain:   "rogersnforgwei.com",
-    logo:     "/logos/mgi-main.png",
+    logo:     "/logos/rogers.png",
     color:    "#3a0ca3",
     accent:   "#f72585",
-    tag:      "Executive Development",
+    tag:      "Personal Platform & Leadership",
     tagline:  "Switch on the better side of the future.",
     programs: ["Dominion Life Men's Conference", "Men On Duty", "CEO On Mission"],
     comingSoon: false,
