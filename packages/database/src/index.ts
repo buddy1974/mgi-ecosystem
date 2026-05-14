@@ -32,4 +32,5 @@ export type {
   EventStatus,
   BookingRequest,
   BookingStatus,
+  RogersRegistration,
 } from '@prisma/client'

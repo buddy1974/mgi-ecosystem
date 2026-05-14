@@ -1,3 +1,5 @@
+import RegisterButton from '@/components/RegisterButton';
+
 export default function MenOnDutyPage() {
   const serif = "Georgia, 'Times New Roman', serif";
   const sans = "'Segoe UI', system-ui, sans-serif";
@@ -109,6 +111,25 @@ export default function MenOnDutyPage() {
               textDecoration: "none", letterSpacing: "0.2em", textTransform: "uppercase" }}>
             Apply for Membership
           </a>
+        </div>
+      </section>
+
+      {/* REGISTRATION */}
+      <section style={{
+        padding: '80px 40px', textAlign: 'center',
+        borderTop: '1px solid rgba(247,37,133,0.15)',
+      }}>
+        <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', marginBottom: '8px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          Secure your place
+        </p>
+        <h2 style={{ color: '#fff', fontSize: '2rem', marginBottom: '32px', fontFamily: serif }}>
+          Register Now
+        </h2>
+        <RegisterButton program="men-on-duty" />
+        <div style={{ marginTop: '40px', color: 'rgba(255,255,255,0.35)', fontSize: '0.8rem', lineHeight: 1.8 }}>
+          <p>Payment via MTN MoMo or Orange Money</p>
+          <p>Manual: MTN <strong style={{ color: 'rgba(255,255,255,0.6)' }}>*126*4*926667*AMOUNT#</strong> · Orange <strong style={{ color: 'rgba(255,255,255,0.6)' }}>#150*47*890422*AMOUNT#</strong></p>
+          <p>Proof via WhatsApp: <a href="https://wa.me/237683493220" style={{ color: '#f72585' }}>+237 683 493 220</a></p>
         </div>
       </section>
 
