@@ -486,3 +486,25 @@ model BookingRequest {
   @@index([status, requestedDate])
   @@map("booking_requests")
 }
+
+// ─── ROGERS REGISTRATIONS ─────────────────────────────────────────────────────
+
+model RogersRegistration {
+  id                   String    @id @default(cuid())
+  reference            String    @unique
+  program              String
+  programName          String
+  amount               Int
+  currency             String    @default("XAF")
+  status               String    @default("initiated") // initiated | confirmed | failed
+  payunitTransactionId String?
+  registrantName       String?
+  registrantEmail      String?
+  registrantPhone      String?
+  source               String?
+  createdAt            DateTime  @default(now())
+  confirmedAt          DateTime?
+
+  @@index([program, status, createdAt])
+  @@map("rogers_registrations")
+}
