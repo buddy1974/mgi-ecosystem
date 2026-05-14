@@ -3,9 +3,25 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "NMI Education — Bilingual Publishing Leader in Africa",
-  description:
-    "NMI Education — bilingual educational publisher. 1.5 million books annually. 60% local market coverage. Continental distribution across Africa. Led by Rogers Nforgwei.",
+  title: "NMI Education — Excellence in Education",
+  description: "NMI Education empowers the next generation through academic excellence, leadership formation, and values-based learning.",
+  metadataBase: new URL("https://nmieducation.com"),
+  openGraph: {
+    title: "NMI Education — Excellence in Education",
+    description: "NMI Education empowers the next generation through academic excellence, leadership formation, and values-based learning.",
+    url: "https://nmieducation.com",
+    siteName: "NMI Education",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "NMI Education — Excellence in Education",
+    description: "NMI Education empowers the next generation through academic excellence, leadership formation, and values-based learning.",
+  },
+  alternates: {
+    canonical: "https://nmieducation.com",
+  },
 };
 
 const serif = "'Libre Baskerville', Georgia, 'Times New Roman', serif";

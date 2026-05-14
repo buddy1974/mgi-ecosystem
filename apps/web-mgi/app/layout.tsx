@@ -5,14 +5,24 @@ import './globals.css'
 import ChatWidget from '@/components/ChatWidget'
 
 export const metadata: Metadata = {
-  title: 'MGI Ventures — Mina-Galeed Invest (MGI) Ltd',
-  description:
-    'A holding company accompanying businesses through their full development cycles. At the heart of SME performance since 2019.',
+  title: "MGI Ventures — Multi-Sector Venture Ecosystem",
+  description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
+  metadataBase: new URL("https://mgi-ventures.com"),
   openGraph: {
-    title: 'Mina-Galeed Invest (MGI) Ltd',
-    description: 'At the Heart of SME Performance',
-    url: 'https://mgi-ventures.com',
-    siteName: 'MGI Ventures',
+    title: "MGI Ventures — Multi-Sector Venture Ecosystem",
+    description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
+    url: "https://mgi-ventures.com",
+    siteName: "MGI Ventures",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "MGI Ventures — Multi-Sector Venture Ecosystem",
+    description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
+  },
+  alternates: {
+    canonical: "https://mgi-ventures.com",
   },
 }
 

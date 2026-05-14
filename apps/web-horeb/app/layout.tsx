@@ -3,9 +3,25 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Horeb Solutions Sarl — Votre partenaire de la distribution",
-  description:
-    "Horeb Solutions Sarl distribue vos manuels scolaires partout au Cameroun. Fiabilité en mouvement. Votre logistique, notre priorité.",
+  title: "Horeb Solutions — Faith-Inspired Transformation",
+  description: "Horeb Solutions delivers leadership development, strategic consulting, and organisational transformation rooted in faith-based principles.",
+  metadataBase: new URL("https://horebsolutions.org"),
+  openGraph: {
+    title: "Horeb Solutions — Faith-Inspired Transformation",
+    description: "Horeb Solutions delivers leadership development, strategic consulting, and organisational transformation rooted in faith-based principles.",
+    url: "https://horebsolutions.org",
+    siteName: "Horeb Solutions",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Horeb Solutions — Faith-Inspired Transformation",
+    description: "Horeb Solutions delivers leadership development, strategic consulting, and organisational transformation rooted in faith-based principles.",
+  },
+  alternates: {
+    canonical: "https://horebsolutions.org",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

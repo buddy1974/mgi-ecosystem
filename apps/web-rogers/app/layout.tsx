@@ -3,9 +3,25 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Rogers Nforgwei — Switch on the better side of the future",
-  description:
-    "Rogers Nforgwei — Business man, Humanitarian, Coach and Mentor, CEO NMI Education, Man of God. Impacting and Changing lives and communities.",
+  title: "Rogers Nforgwei — CEO · Apostle · Visionary",
+  description: "Rogers Nforgwei is a visionary leader, entrepreneur, and apostle driving transformation across business, faith, and community.",
+  metadataBase: new URL("https://rogersnforgwei.com"),
+  openGraph: {
+    title: "Rogers Nforgwei — CEO · Apostle · Visionary",
+    description: "Rogers Nforgwei is a visionary leader, entrepreneur, and apostle driving transformation across business, faith, and community.",
+    url: "https://rogersnforgwei.com",
+    siteName: "Rogers Nforgwei",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Rogers Nforgwei — CEO · Apostle · Visionary",
+    description: "Rogers Nforgwei is a visionary leader, entrepreneur, and apostle driving transformation across business, faith, and community.",
+  },
+  alternates: {
+    canonical: "https://rogersnforgwei.com",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
