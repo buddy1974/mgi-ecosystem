@@ -175,17 +175,18 @@ function LogoBadge({
     return (
       <div
         style={{
-          width: 40, height: 40,
-          borderRadius: 8,
-          background: color,
-          border: `1px solid ${accent}33`,
+          width: 140, height: 140,
+          borderRadius: 20,
+          background: `linear-gradient(145deg, ${color}30, ${color}18)`,
+          border: `1px solid ${color}45`,
+          boxShadow: `0 0 60px ${color}20, 0 8px 32px rgba(0,0,0,0.35)`,
           display: "flex", alignItems: "center", justifyContent: "center",
           flexShrink: 0,
         }}
       >
         <span style={{
           color: accent,
-          fontSize: initials.length > 2 ? 9 : 12,
+          fontSize: initials.length > 2 ? 22 : 30,
           fontWeight: 700,
           letterSpacing: "0.05em",
           fontFamily: "system-ui, sans-serif",
@@ -200,10 +201,11 @@ function LogoBadge({
   return (
     <div
       style={{
-        width: 40, height: 40,
-        borderRadius: 8,
-        background: "rgba(255,255,255,0.08)",
-        border: "1px solid rgba(255,255,255,0.1)",
+        width: 140, height: 140,
+        borderRadius: 20,
+        background: `linear-gradient(145deg, ${color}22, ${accent}14)`,
+        border: `1px solid ${color}35`,
+        boxShadow: `0 0 60px ${color}20, 0 8px 32px rgba(0,0,0,0.35)`,
         display: "flex", alignItems: "center", justifyContent: "center",
         overflow: "hidden", flexShrink: 0,
       }}
@@ -211,8 +213,8 @@ function LogoBadge({
       <img
         src={logo}
         alt={initials}
-        width={32}
-        height={32}
+        width={96}
+        height={96}
         style={{ objectFit: "contain" }}
         onError={() => setImgFailed(true)}
       />
@@ -431,14 +433,13 @@ export default function Home() {
                 <>
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: `radial-gradient(ellipse at 50% -10%, ${v.color}28 0%, transparent 65%)` }} />
                   <div className="h-[3px] w-full flex-shrink-0" style={{ background: `linear-gradient(90deg, ${v.color}, ${v.accent})` }} />
-                  <div className="flex flex-col flex-1 p-6 relative">
+                  <div className="flex flex-col flex-1 p-6 relative items-center text-center">
                     {v.comingSoon && (
                       <span className="absolute top-4 right-4 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}>
                         Coming soon
                       </span>
                     )}
-                    <div className="w-20 h-20 rounded-xl mb-5 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105" style={{ background: `linear-gradient(145deg, ${v.color}22, ${v.accent}14)`, border: `1px solid ${v.color}35`, boxShadow: `0 4px 20px ${v.color}18` }}>
-                      {/* Logo or text fallback */}
+                    <div className="mb-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
                       <LogoBadge logo={v.logo} initials={v.initials} color={v.color} accent={v.accent} />
                     </div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: v.accent }}>{v.tag}</p>
