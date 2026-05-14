@@ -3,9 +3,25 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "DROS Construction — Construire avec excellence",
-  description:
-    "DROS Construction — entreprise de construction, bâtiments et infrastructures au Cameroun. Qualité, fiabilité, expertise.",
+  title: "DROS Construction — Premier Real Estate Development",
+  description: "DROS Construction delivers high-quality construction and real estate development projects across Cameroon and beyond.",
+  metadataBase: new URL("https://drosconstruction.com"),
+  openGraph: {
+    title: "DROS Construction — Premier Real Estate Development",
+    description: "DROS Construction delivers high-quality construction and real estate development projects across Cameroon and beyond.",
+    url: "https://drosconstruction.com",
+    siteName: "DROS Construction",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "DROS Construction — Premier Real Estate Development",
+    description: "DROS Construction delivers high-quality construction and real estate development projects across Cameroon and beyond.",
+  },
+  alternates: {
+    canonical: "https://drosconstruction.com",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

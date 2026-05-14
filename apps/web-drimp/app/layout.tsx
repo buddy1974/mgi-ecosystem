@@ -2,9 +2,25 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Drimp Foundation — Transforming Communities. Restoring Dignity.",
-  description:
-    "Drimp Foundation is a humanitarian NGO dedicated to community transformation, social impact, and restoring dignity to vulnerable families across Africa. An MGI Ventures enterprise.",
+  title: "Drimp Foundation — Transforming Communities",
+  description: "Drimp Foundation works to restore dignity and transform communities across Africa through food security, education, and sustainable development.",
+  metadataBase: new URL("https://drimpfoundation.org"),
+  openGraph: {
+    title: "Drimp Foundation — Transforming Communities",
+    description: "Drimp Foundation works to restore dignity and transform communities across Africa through food security, education, and sustainable development.",
+    url: "https://drimpfoundation.org",
+    siteName: "Drimp Foundation",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Drimp Foundation — Transforming Communities",
+    description: "Drimp Foundation works to restore dignity and transform communities across Africa through food security, education, and sustainable development.",
+  },
+  alternates: {
+    canonical: "https://drimpfoundation.org",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -3,9 +3,25 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Librairie du Quartier — Livres, manuels et fournitures",
-  description:
-    "Librairie du Quartier — votre librairie de référence au Cameroun. Livres, manuels scolaires, fournitures. Deux agences : Yaoundé et Douala.",
+  title: "Librairie du Quartier — Culture & Knowledge",
+  description: "Librairie du Quartier is a community bookstore celebrating culture, literature, and the power of knowledge.",
+  metadataBase: new URL("https://librairieduquartier.org"),
+  openGraph: {
+    title: "Librairie du Quartier — Culture & Knowledge",
+    description: "Librairie du Quartier is a community bookstore celebrating culture, literature, and the power of knowledge.",
+    url: "https://librairieduquartier.org",
+    siteName: "Librairie du Quartier",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Librairie du Quartier — Culture & Knowledge",
+    description: "Librairie du Quartier is a community bookstore celebrating culture, literature, and the power of knowledge.",
+  },
+  alternates: {
+    canonical: "https://librairieduquartier.org",
+  },
 };
 
 const navFont = "'Helvetica Neue', Helvetica, Arial, sans-serif";

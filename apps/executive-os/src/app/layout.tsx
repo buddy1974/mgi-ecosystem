@@ -7,8 +7,25 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'MGI Executive OS',
-  description: 'MGI Ventures — Executive Operating System',
+  title: "MGI Executive OS",
+  description: "AI-powered Executive Operating System for the MGI Ventures ecosystem.",
+  metadataBase: new URL("https://os.mgi-ventures.com"),
+  openGraph: {
+    title: "MGI Executive OS",
+    description: "AI-powered Executive Operating System for the MGI Ventures ecosystem.",
+    url: "https://os.mgi-ventures.com",
+    siteName: "MGI Executive OS",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "MGI Executive OS",
+    description: "AI-powered Executive Operating System for the MGI Ventures ecosystem.",
+  },
+  alternates: {
+    canonical: "https://os.mgi-ventures.com",
+  },
 }
 
 export default function RootLayout({
