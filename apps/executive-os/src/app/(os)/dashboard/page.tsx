@@ -7,6 +7,7 @@ import {
   AiInsightsPanel,
   ApprovalsPreview,
   CalendarPreview,
+  PriorityWidget,
 } from '@/components/dashboard'
 
 export const dynamic = 'force-dynamic'
@@ -18,6 +19,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-6 p-6">
       <GreetingHeader />
+      <PriorityWidget />
       <AiBriefingCard nmiKpis={nmiKpis} openApprovals={openApprovals.length} aiBriefing={aiBriefing} />
       <KpiRow openApprovals={openApprovals.length} nmiKpis={nmiKpis} />
       <div className="grid grid-cols-[1fr_350px] gap-4">

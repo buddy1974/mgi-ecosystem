@@ -21,6 +21,7 @@ interface NavItem {
 }
 
 const COMMAND_NAV: NavItem[] = [
+  { href: '/priority',  label: 'Priority Tracker',   icon: '🎯' },
   { href: '/dashboard', label: 'Executive Overview', icon: '🏠' },
   { href: '/ai',        label: 'AI Assistant',       icon: '🤖', badge: 'Live' },
   { href: '/inbox',     label: 'Communications',     icon: '💬', badge: 14 },
