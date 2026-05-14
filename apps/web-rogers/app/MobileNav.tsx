@@ -5,9 +5,12 @@ export default function MobileNav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const accent = "#f72585";
   const links = [
-    { label: "About",    href: "#about"    },
-    { label: "Programs", href: "#programs" },
-    { label: "Contact",  href: "#contact"  },
+    { label: "Programs", href: "/#programs"                                         },
+    { label: "About",    href: "/about"                                             },
+    { label: "Stories",  href: "/testimonials"                                      },
+    { label: "Events",   href: "/#events"                                           },
+    { label: "Coaching", href: "/#coaching"                                         },
+    { label: "WhatsApp", href: "https://wa.me/237683493220"                         },
   ];
 
   return (
