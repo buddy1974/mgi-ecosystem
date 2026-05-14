@@ -1,6 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 
+const SquareBars = () => (
+  <div style={{ display: 'flex', gap: '4px', marginBottom: '12px' }}>
+    <div style={{ width: '20px', height: '6px', background: '#3a0ca3', borderRadius: '1px' }} />
+    <div style={{ width: '12px', height: '6px', background: '#f72585', borderRadius: '1px' }} />
+    <div style={{ width: '8px', height: '6px', background: '#4361ee', borderRadius: '1px' }} />
+  </div>
+);
+
 export default function HomePage() {
   const programs = [
     {
@@ -90,7 +98,7 @@ export default function HomePage() {
             <a href="#programs" style={{ background: "linear-gradient(90deg, #3a0ca3, #4361ee)", color: "white", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: "none", boxShadow: "0 4px 24px rgba(58,12,163,0.45)" }}>
               Explore Programs
             </a>
-            <a href="#about" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.75)", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+            <a href="#about" style={{ background: "rgba(67,97,238,0.08)", border: "2px solid #4361ee", color: "#4361ee", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
               About Rogers
             </a>
           </div>
@@ -186,15 +194,16 @@ export default function HomePage() {
       </section>
 
       {/* ══ PROGRAMS ═════════════════════════════════════ */}
-      <section id="programs" style={{ padding: "8rem 2rem", background: "#0a0414" }}>
+      <section id="programs" style={{ padding: "8rem 2rem", background: "#f1f1f1" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <div style={{ display: "flex", gap: 0, justifyContent: "center", marginBottom: 24, borderRadius: 3, overflow: "hidden", width: 68, margin: "0 auto 24px" }}>
-              <div style={{ width: 40, height: 5, background: "#3a0ca3" }} />
-              <div style={{ width: 28, height: 5, background: "#f72585" }} />
+            <div style={{ display: "flex", gap: "4px", justifyContent: "center", marginBottom: 16 }}>
+              <div style={{ width: 20, height: 6, background: "#3a0ca3", borderRadius: 1 }} />
+              <div style={{ width: 12, height: 6, background: "#f72585", borderRadius: 1 }} />
+              <div style={{ width: 8, height: 6, background: "#4361ee", borderRadius: 1 }} />
             </div>
-            <p style={{ color: "#7b90f3", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16 }}>Programs & Initiatives</p>
-            <h2 style={{ color: "#ffffff", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-0.03em", margin: 0 }}>
+            <p style={{ color: "#3a0ca3", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16 }}>Programs & Initiatives</p>
+            <h2 style={{ color: "#3a0ca3", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-0.03em", margin: 0, fontFamily: "var(--font-headline)" }}>
               Built to transform lives
             </h2>
           </div>
@@ -202,7 +211,7 @@ export default function HomePage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 28 }}>
             {programs.map((p) => (
               <Link key={p.name} href={p.href} style={{ textDecoration: "none", display: "block" }}>
-                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(58,12,163,0.28)", borderRadius: 20, overflow: "hidden", height: "100%" }}>
+                <div className="program-card" style={{ background: "#ffffff", border: "1px solid rgba(58,12,163,0.12)", borderRadius: 20, overflow: "hidden", height: "100%" }}>
                   {/* Square bar top — brand element */}
                   <div style={{ display: "flex" }}>
                     <div style={{ flex: 1, height: 4, background: p.color }} />
@@ -210,9 +219,9 @@ export default function HomePage() {
                   </div>
                   <div style={{ padding: "2.5rem 2rem" }}>
                     <span style={{ fontSize: 36, display: "block", marginBottom: 20 }}>{p.icon}</span>
-                    <h3 style={{ color: "#ffffff", fontWeight: 800, fontSize: 20, marginBottom: 16, letterSpacing: "-0.02em" }}>{p.name}</h3>
-                    <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, lineHeight: 1.75, margin: "0 0 20px", fontWeight: 300 }}>{p.description}</p>
-                    <span style={{ color: "#7b90f3", fontSize: 13, fontWeight: 600 }}>Learn more →</span>
+                    <h3 style={{ color: "#3a0ca3", fontWeight: 800, fontSize: 20, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "var(--font-headline)" }}>{p.name}</h3>
+                    <p style={{ color: "#4c4c4c", fontSize: 14, lineHeight: 1.75, margin: "0 0 20px", fontWeight: 300 }}>{p.description}</p>
+                    <span style={{ color: "#4361ee", fontSize: 13, fontWeight: 600 }}>Learn more →</span>
                   </div>
                 </div>
               </Link>

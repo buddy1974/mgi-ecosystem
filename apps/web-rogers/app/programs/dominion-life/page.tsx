@@ -28,15 +28,16 @@ export default function DominionLifePage() {
       {/* HERO */}
       <section style={{
         padding: "80px 3rem 96px", textAlign: "center",
-        background: `linear-gradient(160deg, #06010f 0%, #0d0520 55%, #06010f 100%)`,
+        background: "linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%)",
         position: "relative", overflow: "hidden",
       }}>
-        <div style={{
-          position: "absolute", top: -100, left: "50%", transform: "translateX(-50%)",
-          width: 600, height: 600, borderRadius: "50%",
-          background: `radial-gradient(circle, ${purple}25 0%, transparent 65%)`,
-          pointerEvents: "none",
-        }} />
+        {/* DoodleWave */}
+        <svg style={{ position: "absolute", right: "-40px", bottom: "20px", opacity: 0.08, pointerEvents: "none" }}
+          width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 100 Q75 20 150 100 Q225 180 300 100" stroke="#4361ee" strokeWidth="3" fill="none"/>
+          <path d="M0 130 Q75 50 150 130 Q225 210 300 130" stroke="#4361ee" strokeWidth="2" fill="none"/>
+          <path d="M0 70 Q75 -10 150 70 Q225 150 300 70" stroke="#4361ee" strokeWidth="2" fill="none"/>
+        </svg>
         <div style={{ position: "relative", zIndex: 2, maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: pink, fontSize: 10, letterSpacing: "0.55em",
             textTransform: "uppercase", marginBottom: 24, fontWeight: 600 }}>
@@ -66,25 +67,30 @@ export default function DominionLifePage() {
       </section>
 
       {/* ABOUT */}
-      <section style={{ padding: "80px 3rem", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "start" }}>
+      <section style={{ background: "#f1f1f1", padding: "80px 3rem" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "start" }}>
           <div>
-            <p style={{ color: pink, fontSize: 10, letterSpacing: "0.4em",
+            <div style={{ display: "flex", gap: "4px", marginBottom: 12 }}>
+              <div style={{ width: 20, height: 6, background: "#3a0ca3", borderRadius: 1 }} />
+              <div style={{ width: 12, height: 6, background: "#f72585", borderRadius: 1 }} />
+              <div style={{ width: 8, height: 6, background: "#4361ee", borderRadius: 1 }} />
+            </div>
+            <p style={{ color: "#3a0ca3", fontSize: 10, letterSpacing: "0.4em",
               textTransform: "uppercase", marginBottom: 16, fontWeight: 600 }}>
               About The Conference
             </p>
             <h2 style={{ fontFamily: serif, fontSize: "clamp(1.8rem, 2.5vw, 2.4rem)",
-              fontWeight: 400, color: "#f0eeff", lineHeight: 1.25, marginBottom: 24,
+              fontWeight: 700, color: "#3a0ca3", lineHeight: 1.25, marginBottom: 24,
               letterSpacing: "0.02em" }}>
               Built for Men Who<br />Refuse Mediocrity
             </h2>
-            <p style={{ color: "rgba(240,238,255,0.5)", lineHeight: 1.85, fontSize: 16, marginBottom: 20 }}>
+            <p style={{ color: "#4c4c4c", lineHeight: 1.85, fontSize: 16, marginBottom: 20 }}>
               Dominion Life is not a religious event. It is a leadership formation
               encounter. Every year, men from across Cameroon and beyond gather to
               confront what holds them back — and leave with renewed vision, unshakeable
               conviction, and practical tools for transformation.
             </p>
-            <p style={{ color: "rgba(240,238,255,0.5)", lineHeight: 1.85, fontSize: 16 }}>
+            <p style={{ color: "#4c4c4c", lineHeight: 1.85, fontSize: 16 }}>
               Led by Apostle Rogers Nforgwei, the conference fuses faith, executive
               thinking, and community — producing men who lead homes, businesses, and
               nations with dominion authority.
@@ -98,10 +104,10 @@ export default function DominionLifePage() {
               { title: "Spiritual Authority",  desc: "Walk in the understanding of your God-given dominion — over fear, limitation, and circumstance." },
             ].map((item) => (
               <div key={item.title} style={{ marginBottom: 28, paddingBottom: 28,
-                borderBottom: "1px solid rgba(240,238,255,0.06)" }}>
-                <p style={{ color: pink, fontWeight: 700, fontSize: 14,
+                borderBottom: "1px solid rgba(58,12,163,0.1)" }}>
+                <p style={{ color: "#f72585", fontWeight: 700, fontSize: 14,
                   marginBottom: 6, letterSpacing: "0.05em" }}>{item.title}</p>
-                <p style={{ color: "rgba(240,238,255,0.4)", fontSize: 14, lineHeight: 1.7 }}>
+                <p style={{ color: "#4c4c4c", fontSize: 14, lineHeight: 1.7 }}>
                   {item.desc}
                 </p>
               </div>
@@ -138,12 +144,12 @@ export default function DominionLifePage() {
       {/* REGISTRATION */}
       <section style={{
         padding: '80px 40px', textAlign: 'center',
-        borderTop: '1px solid rgba(247,37,133,0.15)',
+        background: '#3a0ca3',
       }}>
-        <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', marginBottom: '8px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+        <p style={{ color: '#7b90f3', fontSize: '0.8rem', marginBottom: '8px', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
           Secure your place
         </p>
-        <h2 style={{ color: '#fff', fontSize: '2rem', marginBottom: '32px', fontFamily: serif }}>
+        <h2 style={{ color: '#fff', fontSize: '2rem', marginBottom: '32px', fontFamily: serif, fontWeight: 800 }}>
           Register Now
         </h2>
         <RegisterButton program="dominion-life" />
