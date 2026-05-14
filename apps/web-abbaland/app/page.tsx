@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function HomePage() {
   const serif = "'Cormorant Garamond', Georgia, serif";
@@ -47,13 +48,14 @@ export default function HomePage() {
         maxWidth: 1280, margin: "0 auto", width: "100%", boxSizing: "border-box",
       }}>
         <div>
-          <p style={{
-            color: "#c8a96e", fontFamily: serif,
-            fontSize: 22, fontWeight: 500, letterSpacing: "0.12em",
-            margin: 0, textTransform: "uppercase",
-          }}>
-            Abba Land Place
-          </p>
+          <Image
+            src="/logos/abbaland.png"
+            alt="Abba Land Place"
+            width={140}
+            height={60}
+            style={{ objectFit: "contain", display: "block", marginBottom: 4 }}
+            priority
+          />
           <p style={{
             color: "rgba(200,169,110,0.4)", fontFamily: sans,
             fontSize: 9, fontWeight: 400, letterSpacing: "0.3em",

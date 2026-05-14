@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import Image from "next/image";
 import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
@@ -43,20 +44,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             padding: "0 2rem", height: 70,
             display: "flex", alignItems: "center", justifyContent: "space-between",
           }}>
-            <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12 }}>
-              {/* Square bar brand mark — purple + pink */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                <div style={{ width: 28, height: 5, background: "#3a0ca3", borderRadius: 2 }} />
-                <div style={{ width: 20, height: 5, background: "#f72585", borderRadius: 2 }} />
-              </div>
-              <div>
-                <p style={{ color: "#ffffff", fontWeight: 800, fontSize: 16, margin: 0, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
-                  Rogers Nforgwei
-                </p>
-                <p style={{ color: "#7b90f3", fontWeight: 300, fontSize: 10, margin: 0 }}>
-                  Switch on the better side of the future
-                </p>
-              </div>
+            <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+              <Image
+                src="/logos/rogers-nforgwei.png"
+                alt="Rogers Nforgwei"
+                width={120}
+                height={40}
+                style={{ objectFit: "contain" }}
+                priority
+              />
+              <p style={{ color: "#7b90f3", fontWeight: 300, fontSize: 10, margin: 0 }}>
+                Switch on the better side of the future
+              </p>
             </Link>
 
             <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
@@ -115,8 +114,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 16px" }}>
                   Programs
                 </p>
-                {["Dominion Life Men's Conference", "Men On Duty", "CEO On Mission"].map((p) => (
-                  <p key={p} style={{ color: "rgba(255,255,255,0.35)", fontSize: 13, margin: "0 0 10px", fontWeight: 300 }}>{p}</p>
+                {[
+                  { label: "Dominion Life Men's Conference", href: "/programs/dominion-life" },
+                  { label: "Men On Duty",                    href: "/programs/men-on-duty"   },
+                  { label: "CEO On Mission",                 href: "/programs/ceo-on-mission" },
+                ].map((p) => (
+                  <Link key={p.href} href={p.href} style={{ color: "rgba(255,255,255,0.35)", fontSize: 13, display: "block", margin: "0 0 10px", fontWeight: 300, textDecoration: "none" }}>{p.label}</Link>
                 ))}
               </div>
 

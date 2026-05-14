@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   const programs = [
     {
@@ -6,6 +8,7 @@ export default function HomePage() {
         "A transformative gathering equipping men to lead with purpose, faith, and excellence. Building men who impact their families, communities, and nations.",
       color: "#3a0ca3",
       icon: "🏛️",
+      href: "/programs/dominion-life",
     },
     {
       name: "Men On Duty",
@@ -13,6 +16,7 @@ export default function HomePage() {
         "A movement activating men to be present, responsible, and purposeful in every area of life — family, faith, career, and community.",
       color: "#4361ee",
       icon: "⚡",
+      href: "/programs/men-on-duty",
     },
     {
       name: "CEO On Mission",
@@ -20,6 +24,7 @@ export default function HomePage() {
         "Empowering business leaders and entrepreneurs to build enterprises driven by vision, values, and lasting impact beyond profit.",
       color: "#f72585",
       icon: "🎯",
+      href: "/programs/ceo-on-mission",
     },
   ];
 
@@ -169,18 +174,21 @@ export default function HomePage() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 28 }}>
             {programs.map((p) => (
-              <div key={p.name} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(58,12,163,0.28)", borderRadius: 20, overflow: "hidden" }}>
-                {/* Square bar top — brand element */}
-                <div style={{ display: "flex" }}>
-                  <div style={{ flex: 1, height: 4, background: p.color }} />
-                  <div style={{ flex: 1, height: 4, background: "#f72585", opacity: 0.55 }} />
+              <Link key={p.name} href={p.href} style={{ textDecoration: "none", display: "block" }}>
+                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(58,12,163,0.28)", borderRadius: 20, overflow: "hidden", height: "100%" }}>
+                  {/* Square bar top — brand element */}
+                  <div style={{ display: "flex" }}>
+                    <div style={{ flex: 1, height: 4, background: p.color }} />
+                    <div style={{ flex: 1, height: 4, background: "#f72585", opacity: 0.55 }} />
+                  </div>
+                  <div style={{ padding: "2.5rem 2rem" }}>
+                    <span style={{ fontSize: 36, display: "block", marginBottom: 20 }}>{p.icon}</span>
+                    <h3 style={{ color: "#ffffff", fontWeight: 800, fontSize: 20, marginBottom: 16, letterSpacing: "-0.02em" }}>{p.name}</h3>
+                    <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, lineHeight: 1.75, margin: "0 0 20px", fontWeight: 300 }}>{p.description}</p>
+                    <span style={{ color: "#7b90f3", fontSize: 13, fontWeight: 600 }}>Learn more →</span>
+                  </div>
                 </div>
-                <div style={{ padding: "2.5rem 2rem" }}>
-                  <span style={{ fontSize: 36, display: "block", marginBottom: 20 }}>{p.icon}</span>
-                  <h3 style={{ color: "#ffffff", fontWeight: 800, fontSize: 20, marginBottom: 16, letterSpacing: "-0.02em" }}>{p.name}</h3>
-                  <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, lineHeight: 1.75, margin: 0, fontWeight: 300 }}>{p.description}</p>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
