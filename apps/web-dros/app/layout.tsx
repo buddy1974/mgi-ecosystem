@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
   title: "DROS Construction — Premier Real Estate Development",
@@ -84,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }}>
                 Devis gratuit
               </a>
+              <MobileNav />
             </div>
           </div>
         </nav>

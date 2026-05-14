@@ -14,6 +14,9 @@ importers:
       turbo:
         specifier: ^2.1.0
         version: 2.9.9
+      turbo-ignore:
+        specifier: ^2.9.12
+        version: 2.9.12
       typescript:
         specifier: ^5.4.5
         version: 5.9.3
@@ -2967,6 +2970,10 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  turbo-ignore@2.9.12:
+    resolution: {integrity: sha512-xprct7SBl2l8WV2WhkowTcCwpdf8sM7RfJPWbaJ3fcOF72JGRnYSKN93l2j9+ubYN79F2A1DT2hiqScBFB/fcw==}
+    hasBin: true
+
   turbo@2.9.9:
     resolution: {integrity: sha512-3xfzXE/yTjhh0S5dIWlE+3E+J9A09REpLI1ZqVh2+HrNZoVzZn0pkvjiRgVK/Ev3PF9XnaTwCntTx+CADWXcyA==}
     hasBin: true
@@ -5735,6 +5742,10 @@ snapshots:
       get-tsconfig: 4.14.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  turbo-ignore@2.9.12:
+    dependencies:
+      json5: 2.2.3
 
   turbo@2.9.9:
     optionalDependencies:

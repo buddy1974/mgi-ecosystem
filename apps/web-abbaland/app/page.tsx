@@ -1,6 +1,10 @@
+"use client";
+import { useState } from "react";
+
 export default function HomePage() {
   const serif = "'Cormorant Garamond', Georgia, serif";
   const sans = "'DM Sans', sans-serif";
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const pillars = [
     {
@@ -65,7 +69,37 @@ export default function HomePage() {
         }}>
           An MGI Ventures Enterprise →
         </a>
+        {/* Hamburger — mobile only */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{ display: "flex", flexDirection: "column", gap: 5, padding: 8, background: "transparent", border: "none", cursor: "pointer" }}
+          className="md:hidden"
+          aria-label="Toggle menu"
+        >
+          <span style={{ display: "block", width: 22, height: 2, background: "#c8a96e", transition: "all 0.3s", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
+          <span style={{ display: "block", width: 22, height: 2, background: "#c8a96e", transition: "all 0.3s", opacity: menuOpen ? 0 : 1 }} />
+          <span style={{ display: "block", width: 22, height: 2, background: "#c8a96e", transition: "all 0.3s", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
+        </button>
       </header>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "#0a0706", zIndex: 999, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 40 }}
+          className="md:hidden"
+        >
+          <button onClick={() => setMenuOpen(false)} style={{ position: "absolute", top: 24, right: 24, background: "transparent", border: "none", color: "#c8a96e", fontSize: 28, cursor: "pointer", lineHeight: 1 }}>✕</button>
+          {[
+            { label: "Vision",            href: "#vision"   },
+            { label: "Experience",        href: "#pillars"  },
+            { label: "Register Interest", href: "#register" },
+          ].map((link) => (
+            <a key={link.label} href={link.href} onClick={() => setMenuOpen(false)} style={{ color: "rgba(247,242,232,0.85)", fontSize: 28, fontWeight: 600, textDecoration: "none", letterSpacing: "0.05em", fontFamily: "system-ui, sans-serif" }}>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
 
       {/* ── HERO ── */}
       <section style={{
