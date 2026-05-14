@@ -62,11 +62,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
               <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: 28 }}>
                 {[
-                  { label: "Programs",  href: "#programs"  },
-                  { label: "Events",    href: "#events"    },
-                  { label: "Community", href: "#community" },
-                  { label: "About",     href: "#story"     },
-                  { label: "Coaching",  href: "#coaching"  },
+                  { label: "Programs",    href: "/#programs"   },
+                  { label: "About",       href: "/about"       },
+                  { label: "Stories",     href: "/testimonials"},
+                  { label: "Events",      href: "/#events"     },
+                  { label: "Coaching",    href: "/#coaching"   },
                 ].map((item) => (
                   <Link key={item.label} href={item.href} style={{
                     color: "rgba(255,255,255,0.6)", fontSize: 13, textDecoration: "none", fontWeight: 500,
