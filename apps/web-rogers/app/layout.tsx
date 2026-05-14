@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, fontFamily: "'Plus Jakarta Sans', sans-serif", background: "#0a0414" }}>
+      <body style={{ margin: 0, fontFamily: "var(--font-body, 'Nunito', 'Plus Jakarta Sans', sans-serif)", background: "#0a0414" }}>
 
         {/* NAV */}
         <nav style={{
@@ -73,10 +73,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </Link>
               ))}
               <a href="#contact" style={{
-                background: "linear-gradient(90deg, #3a0ca3, #4361ee)",
+                background: "#f72585",
                 color: "white", padding: "9px 22px", borderRadius: 10,
                 fontSize: 13, fontWeight: 700, textDecoration: "none",
-                boxShadow: "0 2px 16px rgba(58,12,163,0.4)",
+                boxShadow: "0 2px 16px rgba(247,37,133,0.35)",
               }}>
                 Connect
               </a>
@@ -119,7 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   { label: "Men On Duty",                    href: "/programs/men-on-duty"   },
                   { label: "CEO On Mission",                 href: "/programs/ceo-on-mission" },
                 ].map((p) => (
-                  <Link key={p.href} href={p.href} style={{ color: "rgba(255,255,255,0.35)", fontSize: 13, display: "block", margin: "0 0 10px", fontWeight: 300, textDecoration: "none" }}>{p.label}</Link>
+                  <Link key={p.href} href={p.href} style={{ color: "#7b90f3", fontSize: 13, display: "block", margin: "0 0 10px", fontWeight: 300, textDecoration: "none" }}>{p.label}</Link>
                 ))}
               </div>
 

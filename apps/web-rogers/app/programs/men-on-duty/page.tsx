@@ -30,15 +30,15 @@ export default function MenOnDutyPage() {
       {/* HERO */}
       <section style={{
         padding: "80px 3rem 96px", textAlign: "center",
-        background: `linear-gradient(160deg, #06010f 0%, #0d0520 55%, #06010f 100%)`,
+        background: "linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%)",
         position: "relative", overflow: "hidden",
       }}>
-        <div style={{
-          position: "absolute", top: -100, left: "50%", transform: "translateX(-50%)",
-          width: 600, height: 600, borderRadius: "50%",
-          background: `radial-gradient(circle, ${purple}20 0%, transparent 65%)`,
-          pointerEvents: "none",
-        }} />
+        <svg style={{ position: "absolute", right: "-40px", bottom: "20px", opacity: 0.08, pointerEvents: "none" }}
+          width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 100 Q75 20 150 100 Q225 180 300 100" stroke="#4361ee" strokeWidth="3" fill="none"/>
+          <path d="M0 130 Q75 50 150 130 Q225 210 300 130" stroke="#4361ee" strokeWidth="2" fill="none"/>
+          <path d="M0 70 Q75 -10 150 70 Q225 150 300 70" stroke="#4361ee" strokeWidth="2" fill="none"/>
+        </svg>
         <div style={{ position: "relative", zIndex: 2, maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: pink, fontSize: 10, letterSpacing: "0.55em",
             textTransform: "uppercase", marginBottom: 24, fontWeight: 600 }}>
@@ -66,30 +66,38 @@ export default function MenOnDutyPage() {
       </section>
 
       {/* 6 PILLARS */}
-      <section style={{ padding: "80px 3rem", maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ color: pink, fontSize: 10, letterSpacing: "0.4em",
-          textTransform: "uppercase", marginBottom: 16, fontWeight: 600 }}>
-          The Six Pillars
-        </p>
-        <h2 style={{ fontFamily: serif, fontSize: "clamp(1.8rem, 2.5vw, 2.4rem)",
-          fontWeight: 400, color: "#f0eeff", lineHeight: 1.2, marginBottom: 48,
-          letterSpacing: "0.02em", maxWidth: 500 }}>
-          What Men On Duty<br />Holds You To
-        </h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
-          {pillars.map((p, i) => (
-            <div key={i} style={{
-              padding: "36px 32px",
-              background: "rgba(58,12,163,0.07)",
-              borderTop: `2px solid ${pink}30`,
-            }}>
-              <p style={{ color: pink, fontWeight: 700, fontSize: 14,
-                marginBottom: 10, letterSpacing: "0.04em" }}>{p.title}</p>
-              <p style={{ color: "rgba(240,238,255,0.4)", fontSize: 14, lineHeight: 1.75 }}>
-                {p.desc}
-              </p>
-            </div>
-          ))}
+      <section style={{ background: "#f1f1f1", padding: "80px 3rem" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "flex", gap: "4px", marginBottom: 12 }}>
+            <div style={{ width: 20, height: 6, background: "#3a0ca3", borderRadius: 1 }} />
+            <div style={{ width: 12, height: 6, background: "#f72585", borderRadius: 1 }} />
+            <div style={{ width: 8, height: 6, background: "#4361ee", borderRadius: 1 }} />
+          </div>
+          <p style={{ color: "#3a0ca3", fontSize: 10, letterSpacing: "0.4em",
+            textTransform: "uppercase", marginBottom: 16, fontWeight: 600 }}>
+            The Six Pillars
+          </p>
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(1.8rem, 2.5vw, 2.4rem)",
+            fontWeight: 700, color: "#3a0ca3", lineHeight: 1.2, marginBottom: 48,
+            letterSpacing: "0.02em", maxWidth: 500 }}>
+            What Men On Duty<br />Holds You To
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
+            {pillars.map((p, i) => (
+              <div key={i} style={{
+                padding: "36px 32px",
+                background: "#ffffff",
+                border: "1px solid rgba(58,12,163,0.1)",
+                borderTop: "2px solid #f72585",
+              }}>
+                <p style={{ color: "#3a0ca3", fontWeight: 700, fontSize: 14,
+                  marginBottom: 10, letterSpacing: "0.04em" }}>{p.title}</p>
+                <p style={{ color: "#4c4c4c", fontSize: 14, lineHeight: 1.75 }}>
+                  {p.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -117,12 +125,12 @@ export default function MenOnDutyPage() {
       {/* REGISTRATION */}
       <section style={{
         padding: '80px 40px', textAlign: 'center',
-        borderTop: '1px solid rgba(247,37,133,0.15)',
+        background: '#3a0ca3',
       }}>
-        <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', marginBottom: '8px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+        <p style={{ color: '#7b90f3', fontSize: '0.8rem', marginBottom: '8px', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
           Secure your place
         </p>
-        <h2 style={{ color: '#fff', fontSize: '2rem', marginBottom: '32px', fontFamily: serif }}>
+        <h2 style={{ color: '#fff', fontSize: '2rem', marginBottom: '32px', fontFamily: serif, fontWeight: 800 }}>
           Register Now
         </h2>
         <RegisterButton program="men-on-duty" />

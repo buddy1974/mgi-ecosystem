@@ -1,5 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Nunito:wght@300;400;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Nforgwei Brand Colors — Official Palette */
+  --color-purple-primary: #3a0ca3;
+  --color-purple-mid: #7554be;
+  --color-purple-light: #b09eda;
+  --color-sky-primary: #4361ee;
+  --color-sky-mid: #7b90f3;
+  --color-sky-light: #9aa4df;
+  --color-pink-primary: #f72585;
+  --color-pink-mid: #f966a9;
+  --color-pink-light: #fca8ce;
+  --color-black: #000000;
+  --color-gray: #4c4c4c;
+  --color-surface-light: #f1f1f1;
+  --color-surface-white: #ffffff;
+
+  /* Typography */
+  --font-headline: 'Nunito', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Nunito', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Program card hover — sky blue accent */
+.program-card {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.program-card:hover {
+  border-color: #4361ee !important;
+  box-shadow: 0 4px 20px rgba(67, 97, 238, 0.12) !important;
+}
