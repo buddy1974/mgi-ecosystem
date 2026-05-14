@@ -13,9 +13,10 @@
     "db:push": "cd packages/database && pnpm prisma db push"
   },
   "devDependencies": {
+    "prettier": "^3.3.0",
     "turbo": "^2.1.0",
-    "typescript": "^5.4.5",
-    "prettier": "^3.3.0"
+    "turbo-ignore": "^2.9.12",
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=20.0.0",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
   title: "Librairie du Quartier — Culture & Knowledge",
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }}>
                 Nous trouver
               </a>
+              <MobileNav />
             </div>
           </div>
         </nav>

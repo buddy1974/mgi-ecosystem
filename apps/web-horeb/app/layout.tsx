@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
   title: "Horeb Solutions — Faith-Inspired Transformation",
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }}>
                 Nous contacter
               </a>
+              <MobileNav />
             </div>
           </div>
         </nav>
