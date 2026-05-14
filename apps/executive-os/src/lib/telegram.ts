@@ -46,7 +46,7 @@ export function buildSubmissionAlert(params: {
     `📝 <b>Details:</b>`,
     params.body,
     '',
-    `<i>View &amp; reply at: executive-os.rogersnforgwei.com/operations</i>`,
+    `<i>View &amp; reply at: os.mgi-ventures.com/operations</i>`,
   ].join('\n')
 }
 
