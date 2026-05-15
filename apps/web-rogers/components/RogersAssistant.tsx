@@ -213,6 +213,10 @@ export default function RogersAssistant() {
   return (
     <>
       <style>{`
+        @keyframes rn-glow-pulse {
+          0%, 100% { box-shadow: 0 8px 32px rgba(247,37,133,0.45); }
+          50%       { box-shadow: 0 8px 52px rgba(247,37,133,0.75), 0 0 0 8px rgba(247,37,133,0.12); }
+        }
         @keyframes rn-bounce {
           0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
           30%            { transform: translateY(-4px); opacity: 1; }
@@ -242,9 +246,8 @@ export default function RogersAssistant() {
           cursor: 'pointer',
           fontFamily: hl, fontWeight: 700, fontSize: 14,
           letterSpacing: '0.02em',
-          boxShadow: open
-            ? '0 4px 20px rgba(0,0,0,0.4)'
-            : '0 8px 32px rgba(247,37,133,0.45)',
+          boxShadow: open ? '0 4px 20px rgba(0,0,0,0.4)' : undefined,
+          animation: open ? 'none' : 'rn-glow-pulse 2.8s ease-in-out infinite',
           display: 'flex', alignItems: 'center', gap: 8,
           transition: 'all 0.25s ease',
           whiteSpace: 'nowrap',

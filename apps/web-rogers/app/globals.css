@@ -5,48 +5,53 @@
 @tailwind utilities;
 
 :root {
-  /* Nforgwei Brand Colors — Official Palette */
   --color-purple-primary: #3a0ca3;
-  --color-purple-mid: #7554be;
-  --color-purple-light: #b09eda;
-  --color-sky-primary: #4361ee;
-  --color-sky-mid: #7b90f3;
-  --color-sky-light: #9aa4df;
-  --color-pink-primary: #f72585;
-  --color-pink-mid: #f966a9;
-  --color-pink-light: #fca8ce;
-  --color-black: #000000;
-  --color-gray: #4c4c4c;
-  --color-surface-light: #f1f1f1;
-  --color-surface-white: #ffffff;
-
-  /* Typography */
+  --color-purple-mid:     #7554be;
+  --color-purple-light:   #b09eda;
+  --color-sky-primary:    #4361ee;
+  --color-sky-mid:        #7b90f3;
+  --color-sky-light:      #9aa4df;
+  --color-pink-primary:   #f72585;
+  --color-pink-mid:       #f966a9;
+  --color-pink-light:     #fca8ce;
+  --color-black:          #000000;
+  --color-gray:           #4c4c4c;
+  --color-surface-light:  #f1f1f1;
+  --color-surface-white:  #ffffff;
   --font-headline: 'Nunito', 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-body: 'Nunito', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:     'Nunito', 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
-/* Program card hover — sky blue accent */
-.program-card {
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.program-card:hover {
-  border-color: #4361ee !important;
-  box-shadow: 0 4px 20px rgba(67, 97, 238, 0.12) !important;
+/* ── Base mobile-first typography ─────────────────────────────────────────── */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
-/* ── Premium Visual System ────────────────────────────────────────────────── */
+body {
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-/* Premium spacing — breathing room for authority content */
+/* ── Premium spacing ──────────────────────────────────────────────────────── */
 .section-premium {
   padding-top: 120px;
   padding-bottom: 120px;
 }
 
-.section-gap {
-  margin-top: 80px;
+.section-gap { margin-top: 80px; }
+
+@media (max-width: 768px) {
+  .section-premium {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+  .section-gap { margin-top: 48px; }
 }
 
-/* Premium card — elevation + lift on hover */
+/* ── Cards ────────────────────────────────────────────────────────────────── */
 .card-premium {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
@@ -54,13 +59,11 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.12);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
-
 .card-premium:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 50px rgba(0,0,0,0.18);
 }
 
-/* Warm editorial card — for light/white sections (NOT glass) */
 .card-editorial {
   background: #ffffff;
   border-radius: 20px;
@@ -68,13 +71,12 @@
   border: 1px solid rgba(58,12,163,0.07);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .card-editorial:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 48px rgba(58,12,163,0.14);
 }
 
-/* Glass micro panel */
+/* ── Glass micro panel ────────────────────────────────────────────────────── */
 .glass-panel {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -83,19 +85,16 @@
   border-radius: 22px;
 }
 
-/* Premium button — pill shape */
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
 .btn-premium {
   padding: 16px 30px;
   border-radius: 999px;
   font-weight: 600;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+.btn-premium:hover { transform: translateY(-2px); }
 
-.btn-premium:hover {
-  transform: translateY(-2px);
-}
-
-/* Subtle grain overlay for cinematic depth */
+/* ── Grain overlay ────────────────────────────────────────────────────────── */
 .depth-bg::before {
   content: '';
   position: absolute;
@@ -103,4 +102,46 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
+}
+
+/* ── Program card responsive grid ────────────────────────────────────────── */
+.programs-asymmetric {
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+}
+@media (max-width: 860px) {
+  .programs-asymmetric {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+/* ── Mobile CTA — full width ─────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .prog-cta {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+  .prog-cta-row {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+}
+
+/* ── Footer mobile ────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .rn-footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+/* ── Program card — desktop only hover on hover-only devices ─────────────── */
+@media (hover: none) {
+  .card-premium:hover,
+  .card-editorial:hover {
+    transform: none;
+  }
 }

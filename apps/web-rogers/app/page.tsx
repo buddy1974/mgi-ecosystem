@@ -395,6 +395,7 @@ export default function HomePage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '4px' }}>
                 <a
                   href="/programs/dominion-life?source=homepage"
+                  className="prog-cta"
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                     background: 'linear-gradient(135deg, #f72585, #7209b7)',
@@ -500,6 +501,7 @@ export default function HomePage() {
                 {/* CTA */}
                 <a
                   href="/programs/men-on-duty?source=homepage"
+                  className="prog-cta"
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                     background: 'rgba(67,97,238,0.25)', border: '1px solid rgba(67,97,238,0.5)',
@@ -600,6 +602,7 @@ export default function HomePage() {
                 {/* CTA */}
                 <a
                   href="/programs/ceo-on-mission?source=homepage"
+                  className="prog-cta"
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                     background: 'rgba(114,9,183,0.25)', border: '1px solid rgba(176,64,251,0.5)',
