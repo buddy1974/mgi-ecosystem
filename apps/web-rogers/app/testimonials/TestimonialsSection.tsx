@@ -217,29 +217,29 @@ export function TestimonialsSection() {
             {filtered.map((t, index) => (
               <motion.div
                 key={t.id}
-                className="card-premium"
+                className="card-editorial"
                 whileInView={{ opacity: 1, y: 0 }}
                 initial={{ opacity: 0, y: 20 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-                style={{ padding: '36px', position: 'relative', display: 'flex', flexDirection: 'column', background: '#ffffff' }}
+                style={{ padding: '36px', position: 'relative', display: 'flex', flexDirection: 'column' }}
               >
-                {/* Large quote icon — very faint */}
-                <div style={{ fontSize: 64, lineHeight: 1, opacity: 0.08, fontFamily: serif, position: 'absolute', top: 16, left: 20, color: purple }}>&ldquo;</div>
+                {/* Large quote icon — very faint, editorial */}
+                <div style={{ fontSize: 80, lineHeight: 0.8, opacity: 0.07, fontFamily: serif, position: 'absolute', top: 12, left: 18, color: purple }}>&ldquo;</div>
 
                 {/* Quote text */}
-                <p style={{ color: '#3a3a3a', fontFamily: serif, fontStyle: 'italic', fontSize: 15, lineHeight: 1.75, flex: 1, marginBottom: 24, position: 'relative', zIndex: 1 }}>
+                <p style={{ color: '#3a3a3a', fontFamily: serif, fontStyle: 'italic', fontSize: 15, lineHeight: 1.8, flex: 1, marginBottom: 24, position: 'relative', zIndex: 1 }}>
                   &ldquo;{t.quote}&rdquo;
                 </p>
 
                 {/* Profile row */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid rgba(58,12,163,0.08)', paddingTop: 16 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(58,12,163,0.08)', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 700, color: purple }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid rgba(58,12,163,0.07)', paddingTop: 16 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(58,12,163,0.10)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: purple }}>
                     {t.name[0]}
                   </div>
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: 14, color: purple }}>{t.name}</div>
-                    <div style={{ fontSize: 12, opacity: 0.5, color: '#374151' }}>{t.city} · {t.program} · {t.year}</div>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: purple }}>{t.name}</div>
+                    <div style={{ fontSize: 12, color: '#6b7280' }}>{t.city} · {t.program} · {t.year}</div>
                   </div>
                 </div>
               </motion.div>
