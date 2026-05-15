@@ -60,6 +60,20 @@
   box-shadow: 0 20px 50px rgba(0,0,0,0.18);
 }
 
+/* Warm editorial card — for light/white sections (NOT glass) */
+.card-editorial {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(58,12,163,0.08);
+  border: 1px solid rgba(58,12,163,0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-editorial:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(58,12,163,0.14);
+}
+
 /* Glass micro panel */
 .glass-panel {
   backdrop-filter: blur(20px);
