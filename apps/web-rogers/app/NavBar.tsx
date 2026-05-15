@@ -82,10 +82,10 @@ export default function NavBar() {
               }}
             >
               <Image
-                src="/logos/favicon.png"
+                src="/logos/rogers-nforgwei.png"
                 alt="Rogers Nforgwei"
-                width={120}
-                height={40}
+                width={160}
+                height={44}
                 style={{ objectFit: 'contain' }}
                 priority
               />
