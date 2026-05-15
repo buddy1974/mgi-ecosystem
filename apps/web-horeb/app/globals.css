@@ -7,12 +7,17 @@
 :root {
   --horeb-green: #007A3D;
   --horeb-dark-green: #005F32;
+  --horeb-deep-green: #004B29;
   --horeb-yellow: #FFC928;
+  --horeb-gold: #E6A51E;
   --horeb-yellow-light: #FFE08A;
+  --horeb-soft-cream: #FFF7D6;
   --horeb-white: #FFFFFF;
   --horeb-off-white: #F8F9F6;
   --horeb-text: #1A1A1A;
+  --horeb-text-dark: #111111;
   --horeb-text-muted: #4A5568;
+  --horeb-muted: #5F6B63;
 }
 
 *,
