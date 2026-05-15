@@ -1,5 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --horeb-green: #007A3D;
+  --horeb-dark-green: #005F32;
+  --horeb-yellow: #FFC928;
+  --horeb-yellow-light: #FFE08A;
+  --horeb-white: #FFFFFF;
+  --horeb-off-white: #F8F9F6;
+  --horeb-text: #1A1A1A;
+  --horeb-text-muted: #4A5568;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+  background: var(--horeb-white);
+  color: var(--horeb-text);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
