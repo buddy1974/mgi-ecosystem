@@ -3,12 +3,18 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
+// TODO Phase 38: add Programs dropdown for all 3 program pages
 const NAV_LINKS = [
-  { label: 'Programs', href: '/#programs'   },
-  { label: 'About',    href: '/about'        },
-  { label: 'Stories',  href: '/testimonials' },
-  { label: 'Events',   href: '/#events'      },
-  { label: 'Coaching', href: '/#coaching'    },
+  { label: 'Programs', href: '/programs/dominion-life' },
+  { label: 'Events',   href: '/events'                 },
+  { label: 'About',    href: '/about'                  },
+  { label: 'Stories',  href: '/testimonials'           },
+  { label: 'Coaching', href: '/coaching'               },
+]
+
+const MOBILE_EXTRA_LINKS = [
+  { label: 'Contact',  href: '/contact'                          },
+  { label: 'WhatsApp', href: 'https://wa.me/237683493220'        }, // TODO: confirm number with Rogers
 ]
 
 export default function NavBar() {
@@ -79,7 +85,7 @@ export default function NavBar() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <a
             className="rn-reserve-cta"
-            href="/#programs"
+            href="/programs/dominion-life#registration"
             style={{
               background: '#f72585',
               color: '#ffffff',
@@ -139,7 +145,7 @@ export default function NavBar() {
           >
             ✕
           </button>
-          {NAV_LINKS.map(link => (
+          {[...NAV_LINKS, ...MOBILE_EXTRA_LINKS].map(link => (
             <a
               key={link.href}
               href={link.href}
@@ -155,7 +161,7 @@ export default function NavBar() {
             </a>
           ))}
           <a
-            href="/#programs"
+            href="/programs/dominion-life#registration"
             onClick={() => setMenuOpen(false)}
             style={{
               marginTop: 16,
