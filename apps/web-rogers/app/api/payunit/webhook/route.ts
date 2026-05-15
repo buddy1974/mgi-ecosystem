@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma, PROGRAMS, resolveProgram } from '@/lib/programs';
 import { sendTelegramNotification, rogersPaymentMessage } from '@/lib/telegram';
+import { sendPaymentNotificationToAdmin } from '@/lib/email';
 
 export async function POST(req: NextRequest) {
   // Always return 200 immediately
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Telegram notification — fire and forget
+    // Notifications — fire and forget
     const program = PROGRAMS[programKey];
     sendTelegramNotification(rogersPaymentMessage({
       program: program.name,
@@ -51,6 +52,15 @@ export async function POST(req: NextRequest) {
       reference: registration.reference,
       transactionId,
     }));
+    sendPaymentNotificationToAdmin({
+      program: program.name,
+      amount,
+      reference: registration.reference,
+      registrantName: registration.registrantName,
+      registrantEmail: registration.registrantEmail,
+      registrantPhone: registration.registrantPhone,
+      transactionId,
+    });
 
   } catch (err) {
     console.error('[rogers/payunit/webhook]', err);
