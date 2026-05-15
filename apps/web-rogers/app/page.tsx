@@ -4,50 +4,14 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SquareBars } from '@/components/SquareBars'
+import { WaveDivider } from '@/components/WaveDivider'
+import { ScriptureDivider } from '@/components/ScriptureDivider'
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 const purple  = '#3a0ca3'
 const pink    = '#f72585'
 const sky     = '#4361ee'
 const hl      = "var(--font-headline, 'Nunito', system-ui, sans-serif)"
-
-// ── Helper components ─────────────────────────────────────────────────────────
-
-function WaveDivider({ fromColor, toColor }: { fromColor: string; toColor: string }) {
-  return (
-    <div style={{ background: fromColor, lineHeight: 0, overflow: 'hidden' }}>
-      <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-        style={{ display: 'block', width: '100%', height: 48 }}>
-        <path d="M0,32 C360,0 1080,64 1440,16 L1440,48 L0,48 Z" fill={toColor} />
-      </svg>
-    </div>
-  )
-}
-
-function ScriptureDivider({ verse, citation }: { verse: string; citation: string }) {
-  return (
-    <div style={{
-      textAlign: 'center', padding: '48px 20px',
-      borderTop: '1px solid rgba(255,255,255,0.06)',
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
-      background: '#0d0120',
-    }}>
-      <p style={{
-        fontFamily: hl, fontStyle: 'italic',
-        fontSize: '1.05rem', color: 'rgba(255,255,255,0.60)',
-        maxWidth: 520, margin: '0 auto 8px', lineHeight: 1.7,
-      }}>
-        &ldquo;{verse}&rdquo;
-      </p>
-      <p style={{
-        fontFamily: hl, fontWeight: 600, fontSize: '0.72rem',
-        color: '#7b90f3', letterSpacing: '0.12em', textTransform: 'uppercase',
-      }}>
-        — {citation}
-      </p>
-    </div>
-  )
-}
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
