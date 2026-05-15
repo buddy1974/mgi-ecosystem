@@ -233,8 +233,8 @@ export default function HomePage() {
           minHeight: 600,
         }}>
           <Image
-            src="/rogers-hero.png"
-            alt="Rogers Nforgwei"
+            src="/images/rogers-hero.png"
+            alt="Apostle Dr. Rogers Ngalla Nforgwei"
             fill
             style={{ objectFit: 'cover', objectPosition: 'top center' }}
             priority
@@ -306,7 +306,7 @@ export default function HomePage() {
           {/* Photo */}
           <div style={{ position: 'relative' }}>
             <div style={{ borderRadius: 20, overflow: 'hidden', background: purple, aspectRatio: '3/4', position: 'relative', maxHeight: 540 }}>
-              <Image src="/rogers-hero.png" alt="Rogers Nforgwei" fill style={{ objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.85 }} />
+              <Image src="/images/rogers-frontpage.png" alt="Apostle Dr. Rogers Ngalla Nforgwei" fill style={{ objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.85 }} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(to top, rgba(58,12,163,0.97) 0%, transparent 100%)' }}>
                 <p style={{ color: 'rgba(255,255,255,0.9)', fontStyle: 'italic', fontSize: 14, lineHeight: 1.65, margin: '0 0 8px' }}>
                   &ldquo;A man doesn&apos;t have a professional life and a spiritual life. He has one life.&rdquo;
