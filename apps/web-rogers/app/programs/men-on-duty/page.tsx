@@ -42,7 +42,7 @@ export default function MenOnDutyPage() {
         <div style={{ position: "relative", zIndex: 2, maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: pink, fontSize: 10, letterSpacing: "0.55em",
             textTransform: "uppercase", marginBottom: 24, fontWeight: 600 }}>
-            Year-Round Program
+            Seminar Format · Paid Registration
           </p>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(2.8rem, 6vw, 5rem)",
             fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1,
@@ -52,8 +52,7 @@ export default function MenOnDutyPage() {
           <div style={{ width: 48, height: 2, background: pink, margin: "32px auto 32px", opacity: 0.5 }} />
           <p style={{ fontSize: 18, lineHeight: 1.85, color: "rgba(240,238,255,0.55)",
             fontFamily: serif, fontStyle: "italic", maxWidth: 600, margin: "0 auto 40px" }}>
-            A year-round community of men committed to showing up — in their homes,
-            their work, and their world. Not occasionally. As a way of life.
+            Structured seminars for men who refuse to settle for half a life.
           </p>
           <a href="mailto:info@rogersnforgwei.com?subject=Men On Duty Membership"
             style={{ display: "inline-block", background: pink, color: "#fff",
@@ -110,8 +109,10 @@ export default function MenOnDutyPage() {
             Be a Man On Duty
           </h2>
           <p style={{ color: "rgba(240,238,255,0.4)", fontSize: 15, lineHeight: 1.8, marginBottom: 36 }}>
-            Membership is open to men who are ready to commit — not to a program,
-            but to a standard of life that honours God and serves others.
+            {/* TODO: Rogers to provide — dates, venue, price, schedule */}
+            Register online below. All bookings are digital — no phone calls required.
+            FAQs below answer the most common questions. If you&apos;re still stuck,
+            a contact option is available.
           </p>
           <a href="mailto:info@rogersnforgwei.com?subject=Men On Duty Membership"
             style={{ display: "inline-block", background: pink, color: "#fff",

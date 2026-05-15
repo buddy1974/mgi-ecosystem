@@ -41,7 +41,7 @@ export default function DominionLifePage() {
         <div style={{ position: "relative", zIndex: 2, maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: pink, fontSize: 10, letterSpacing: "0.55em",
             textTransform: "uppercase", marginBottom: 24, fontWeight: 600 }}>
-            Annual Conference
+            Conference Format · Paid Registration
           </p>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(2.8rem, 6vw, 5rem)",
             fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1,
@@ -52,8 +52,7 @@ export default function DominionLifePage() {
           <div style={{ width: 48, height: 2, background: pink, margin: "32px auto 32px", opacity: 0.5 }} />
           <p style={{ fontSize: 18, lineHeight: 1.85, color: "rgba(240,238,255,0.55)",
             fontFamily: serif, fontStyle: "italic", maxWidth: 600, margin: "0 auto 40px" }}>
-            A gathering of men called to lead with purpose, walk with integrity,
-            and build a legacy that outlasts them.
+            A gathering of men called to lead &mdash; in faith, family, and influence.
           </p>
           <a href="#register" style={{
             display: "inline-block", background: pink, color: "#fff",
@@ -91,9 +90,12 @@ export default function DominionLifePage() {
               conviction, and practical tools for transformation.
             </p>
             <p style={{ color: "#4c4c4c", lineHeight: 1.85, fontSize: 16 }}>
-              Led by Apostle Rogers Nforgwei, the conference fuses faith, executive
-              thinking, and community — producing men who lead homes, businesses, and
-              nations with dominion authority.
+              {/* Verified coach bio — Apostle Dr. Rogers Ngalla Nforgwei */}
+              Led by Apostle Dr. Rogers Ngalla Nforgwei — Doctor of Applied Theology
+              (Kingdom Life University, California), Business Development Manager for Africa at
+              Cambridge University Press overseeing 30+ countries, and Knight of the Order of
+              Valor (2016) &amp; Officer of the National Orders of Cameroon (2023). Rogers brings
+              executive-grade thinking to every kingdom-minded space he enters.
             </p>
           </div>
           <div style={{ paddingTop: 40 }}>
@@ -129,8 +131,10 @@ export default function DominionLifePage() {
             Reserve Your Place
           </h2>
           <p style={{ color: "rgba(240,238,255,0.4)", fontSize: 15, lineHeight: 1.8, marginBottom: 36 }}>
-            Registration opens annually. Contact us to be notified for the next edition
-            and to receive early access information.
+            {/* TODO: Rogers to provide — dates, venue, price, schedule */}
+            Register online below. All bookings are digital — no phone calls required.
+            FAQs below answer the most common questions. If you&apos;re still stuck,
+            a contact option is available.
           </p>
           <a href="mailto:info@rogersnforgwei.com?subject=Dominion Life Registration"
             style={{ display: "inline-block", background: pink, color: "#fff",

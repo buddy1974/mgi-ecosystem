@@ -42,7 +42,7 @@ export default function CEOOnMissionPage() {
         <div style={{ position: "relative", zIndex: 2, maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: pink, fontSize: 10, letterSpacing: "0.55em",
             textTransform: "uppercase", marginBottom: 24, fontWeight: 600 }}>
-            Executive Mentorship Program
+            One-to-One · Paid Coaching · Application Required
           </p>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(2.8rem, 6vw, 5rem)",
             fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1,
@@ -163,8 +163,10 @@ export default function CEOOnMissionPage() {
             Apply for the Next Cohort
           </h2>
           <p style={{ color: "rgba(240,238,255,0.4)", fontSize: 15, lineHeight: 1.8, marginBottom: 36 }}>
-            Cohort size is intentionally limited. Submit your application and our
-            team will be in touch with details on the next intake.
+            {/* TODO: Rogers to provide — dates, venue, price, schedule */}
+            This is an application-based engagement. Complete the form below to begin.
+            All communication is handled digitally. Rogers will review applications
+            and respond via the platform &mdash; no phone calls at this stage.
           </p>
           <a href="mailto:info@rogersnforgwei.com?subject=CEO On Mission Application"
             style={{ display: "inline-block", background: pink, color: "#fff",
