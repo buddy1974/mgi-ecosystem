@@ -23,6 +23,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://rogersnforgwei.com",
   },
+  icons: {
+    icon: "/logos/favicon.png",
+    shortcut: "/logos/favicon.png",
+    apple: "/logos/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
