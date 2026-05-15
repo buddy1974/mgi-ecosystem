@@ -304,9 +304,10 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
               style={{
-                background: 'linear-gradient(135deg, rgba(58,12,163,0.45) 0%, rgba(114,9,183,0.3) 100%)',
-                border: '1px solid rgba(247,37,133,0.25)',
+                background: 'linear-gradient(135deg, rgba(58,12,163,0.65) 0%, rgba(114,9,183,0.45) 100%)',
+                border: '1px solid rgba(247,37,133,0.35)',
                 borderRadius: '24px',
                 padding: 'clamp(32px, 4vw, 48px)',
                 position: 'relative',
@@ -314,7 +315,10 @@ export default function HomePage() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '24px',
+                boxShadow: '0 4px 32px rgba(58,12,163,0.25)',
+                cursor: 'pointer',
               }}
+              onHoverStart={undefined}
             >
               {/* Background glow */}
               <div style={{
@@ -394,13 +398,23 @@ export default function HomePage() {
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                     background: 'linear-gradient(135deg, #f72585, #7209b7)',
-                    color: '#ffffff', fontWeight: 700, fontSize: '0.95rem',
-                    padding: '14px 28px', borderRadius: '999px', textDecoration: 'none',
-                    letterSpacing: '0.02em', boxShadow: '0 8px 24px rgba(247,37,133,0.35)',
+                    color: '#ffffff', fontWeight: 700, fontSize: '1rem',
+                    padding: '16px 32px', borderRadius: '999px', textDecoration: 'none',
+                    letterSpacing: '0.02em', boxShadow: '0 8px 32px rgba(247,37,133,0.45)',
                     transition: 'transform 0.2s, box-shadow 0.2s', fontFamily: hl,
                   }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.transform = 'translateY(-2px)'
+                    el.style.boxShadow = '0 12px 40px rgba(247,37,133,0.6)'
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.transform = 'translateY(0)'
+                    el.style.boxShadow = '0 8px 32px rgba(247,37,133,0.45)'
+                  }}
                 >
-                  Register Your Interest →
+                  Reserve My Seat →
                 </a>
                 <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', textAlign: 'center' as const, fontFamily: hl }}>
                   Limited seats per conference · Next dates announced soon
@@ -417,36 +431,39 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, ease: 'easeOut', delay: 0.12 }}
+                whileHover={{ y: -5, transition: { duration: 0.22 } }}
                 style={{
-                  background: 'linear-gradient(135deg, rgba(13,1,32,0.8) 0%, rgba(58,12,163,0.2) 100%)',
-                  border: '1px solid rgba(67,97,238,0.25)',
+                  background: 'linear-gradient(150deg, rgba(20,5,60,0.9) 0%, rgba(58,12,163,0.4) 100%)',
+                  border: '1px solid rgba(67,97,238,0.35)',
                   borderRadius: '20px',
                   padding: 'clamp(24px, 3vw, 36px)',
-                  display: 'flex', flexDirection: 'column', gap: '18px',
+                  display: 'flex', flexDirection: 'column', gap: '16px',
                   position: 'relative', overflow: 'hidden', flex: 1,
+                  boxShadow: '0 4px 24px rgba(67,97,238,0.15)',
+                  cursor: 'pointer',
                 }}
               >
-                <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(67,97,238,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(67,97,238,0.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
                 {/* Number + badge */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '36px', fontWeight: 800, color: 'rgba(67,97,238,0.3)', lineHeight: 1 }}>02</span>
-                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, background: 'rgba(67,97,238,0.15)', border: '1px solid rgba(67,97,238,0.35)', borderRadius: '999px', padding: '3px 10px', color: '#4361ee' }}>Active Program</span>
+                  <span style={{ fontSize: '36px', fontWeight: 800, color: 'rgba(67,97,238,0.45)', lineHeight: 1 }}>02</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, background: 'rgba(67,97,238,0.2)', border: '1px solid rgba(67,97,238,0.45)', borderRadius: '999px', padding: '3px 10px', color: '#7b90f3' }}>Active Program</span>
                 </div>
 
                 {/* Title + tagline */}
                 <div>
-                  <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.7rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.2, marginBottom: '8px', letterSpacing: '-0.015em', fontFamily: hl }}>
+                  <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.7rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.2, marginBottom: '6px', letterSpacing: '-0.015em', fontFamily: hl }}>
                     Men On Duty
                   </h3>
-                  <p style={{ fontSize: '0.88rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.5)', lineHeight: 1.55 }}>
+                  <p style={{ fontSize: '0.85rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}>
                     &ldquo;Stand up. Show up. Be the man they need.&rdquo;
                   </p>
                 </div>
 
                 {/* FOR strip */}
                 <div style={{ borderLeft: '2px solid #4361ee', paddingLeft: '12px' }}>
-                  <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#4361ee', marginBottom: '4px', fontFamily: hl }}>For You If —</p>
+                  <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#7b90f3', marginBottom: '4px', fontFamily: hl }}>For You If —</p>
                   <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.55 }}>
                     You are a husband, father, or man of God who knows he has more to give —
                     and is ready to stop letting life lead him
@@ -462,7 +479,20 @@ export default function HomePage() {
                   ].map((item, i) => (
                     <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                       <span style={{ flexShrink: 0, width: '6px', height: '6px', borderRadius: '50%', background: '#4361ee', marginTop: '7px' }} />
-                      <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item}</span>
+                      <span style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Format line */}
+                <div style={{ display: 'flex', gap: '16px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '14px' }}>
+                  {[
+                    { label: 'Format', value: 'Seminar · Live Sessions' },
+                    { label: 'Community', value: 'Brotherhood Network' },
+                  ].map(({ label, value }) => (
+                    <div key={label}>
+                      <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.3)', marginBottom: '2px', fontFamily: hl }}>{label}</p>
+                      <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>{value}</p>
                     </div>
                   ))}
                 </div>
@@ -472,14 +502,26 @@ export default function HomePage() {
                   href="/programs/men-on-duty"
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                    background: 'rgba(67,97,238,0.15)', border: '1px solid rgba(67,97,238,0.4)',
-                    color: '#4361ee', fontWeight: 700, fontSize: '0.88rem',
+                    background: 'rgba(67,97,238,0.25)', border: '1px solid rgba(67,97,238,0.5)',
+                    color: '#7b90f3', fontWeight: 700, fontSize: '0.88rem',
                     padding: '12px 22px', borderRadius: '999px', textDecoration: 'none',
-                    letterSpacing: '0.02em', transition: 'background 0.2s, border-color 0.2s',
-                    marginTop: '4px', fontFamily: hl,
+                    letterSpacing: '0.02em', transition: 'background 0.2s, border-color 0.2s, color 0.2s',
+                    fontFamily: hl,
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.background = 'rgba(67,97,238,0.4)'
+                    el.style.borderColor = 'rgba(67,97,238,0.8)'
+                    el.style.color = '#ffffff'
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.background = 'rgba(67,97,238,0.25)'
+                    el.style.borderColor = 'rgba(67,97,238,0.5)'
+                    el.style.color = '#7b90f3'
                   }}
                 >
-                  Explore Program →
+                  Join The Brotherhood →
                 </a>
               </motion.div>
 
@@ -489,36 +531,39 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, ease: 'easeOut', delay: 0.24 }}
+                whileHover={{ y: -5, transition: { duration: 0.22 } }}
                 style={{
-                  background: 'linear-gradient(135deg, rgba(13,1,32,0.8) 0%, rgba(114,9,183,0.2) 100%)',
-                  border: '1px solid rgba(114,9,183,0.3)',
+                  background: 'linear-gradient(150deg, rgba(20,5,60,0.9) 0%, rgba(114,9,183,0.38) 100%)',
+                  border: '1px solid rgba(114,9,183,0.4)',
                   borderRadius: '20px',
                   padding: 'clamp(24px, 3vw, 36px)',
-                  display: 'flex', flexDirection: 'column', gap: '18px',
+                  display: 'flex', flexDirection: 'column', gap: '16px',
                   position: 'relative', overflow: 'hidden', flex: 1,
+                  boxShadow: '0 4px 24px rgba(114,9,183,0.15)',
+                  cursor: 'pointer',
                 }}
               >
-                <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '180px', height: '180px', background: 'radial-gradient(circle, rgba(114,9,183,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '180px', height: '180px', background: 'radial-gradient(circle, rgba(114,9,183,0.2) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
                 {/* Number + badge */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '36px', fontWeight: 800, color: 'rgba(114,9,183,0.35)', lineHeight: 1 }}>03</span>
-                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, background: 'rgba(114,9,183,0.15)', border: '1px solid rgba(114,9,183,0.4)', borderRadius: '999px', padding: '3px 10px', color: '#7209b7' }}>Executive Program</span>
+                  <span style={{ fontSize: '36px', fontWeight: 800, color: 'rgba(176,64,251,0.45)', lineHeight: 1 }}>03</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, background: 'rgba(114,9,183,0.25)', border: '1px solid rgba(176,64,251,0.45)', borderRadius: '999px', padding: '3px 10px', color: '#b040fb' }}>Executive Program</span>
                 </div>
 
                 {/* Title + tagline */}
                 <div>
-                  <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.7rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.2, marginBottom: '8px', letterSpacing: '-0.015em', fontFamily: hl }}>
+                  <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.7rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.2, marginBottom: '6px', letterSpacing: '-0.015em', fontFamily: hl }}>
                     CEO On Mission
                   </h3>
-                  <p style={{ fontSize: '0.88rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.5)', lineHeight: 1.55 }}>
+                  <p style={{ fontSize: '0.85rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}>
                     &ldquo;Business built on God&apos;s blueprint.&rdquo;
                   </p>
                 </div>
 
                 {/* FOR strip */}
-                <div style={{ borderLeft: '2px solid #7209b7', paddingLeft: '12px' }}>
-                  <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#7209b7', marginBottom: '4px', fontFamily: hl }}>For You If —</p>
+                <div style={{ borderLeft: '2px solid #b040fb', paddingLeft: '12px' }}>
+                  <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#b040fb', marginBottom: '4px', fontFamily: hl }}>For You If —</p>
                   <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.55 }}>
                     You are a CEO, executive, or entrepreneur who wants their business to
                     carry eternal weight — not just financial results
@@ -533,8 +578,21 @@ export default function HomePage() {
                     'Build a business that outlasts you',
                   ].map((item, i) => (
                     <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                      <span style={{ flexShrink: 0, width: '6px', height: '6px', borderRadius: '50%', background: '#7209b7', marginTop: '7px' }} />
-                      <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item}</span>
+                      <span style={{ flexShrink: 0, width: '6px', height: '6px', borderRadius: '50%', background: '#b040fb', marginTop: '7px' }} />
+                      <span style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Format line */}
+                <div style={{ display: 'flex', gap: '16px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '14px' }}>
+                  {[
+                    { label: 'Format', value: 'Private Mentorship' },
+                    { label: 'Access', value: 'By Application' },
+                  ].map(({ label, value }) => (
+                    <div key={label}>
+                      <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.3)', marginBottom: '2px', fontFamily: hl }}>{label}</p>
+                      <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>{value}</p>
                     </div>
                   ))}
                 </div>
@@ -544,14 +602,26 @@ export default function HomePage() {
                   href="/programs/ceo-on-mission"
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                    background: 'rgba(114,9,183,0.15)', border: '1px solid rgba(114,9,183,0.4)',
+                    background: 'rgba(114,9,183,0.25)', border: '1px solid rgba(176,64,251,0.5)',
                     color: '#b040fb', fontWeight: 700, fontSize: '0.88rem',
                     padding: '12px 22px', borderRadius: '999px', textDecoration: 'none',
-                    letterSpacing: '0.02em', transition: 'background 0.2s, border-color 0.2s',
-                    marginTop: '4px', fontFamily: hl,
+                    letterSpacing: '0.02em', transition: 'background 0.2s, border-color 0.2s, color 0.2s',
+                    fontFamily: hl,
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.background = 'rgba(114,9,183,0.45)'
+                    el.style.borderColor = 'rgba(176,64,251,0.8)'
+                    el.style.color = '#ffffff'
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.background = 'rgba(114,9,183,0.25)'
+                    el.style.borderColor = 'rgba(176,64,251,0.5)'
+                    el.style.color = '#b040fb'
                   }}
                 >
-                  Explore Program →
+                  Apply For Mentorship →
                 </a>
               </motion.div>
 
