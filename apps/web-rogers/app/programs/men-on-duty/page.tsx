@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import RegisterButton from '@/components/RegisterButton'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Men On Duty — Leadership Seminar',
+  description: "Men On Duty is for the man who knows he has more to give. Seminars on family leadership, husband identity, fatherhood, and community impact by Apostle Rogers Nforgwei.",
+  path: '/programs/men-on-duty',
+})
 import { SquareBars } from '@/components/SquareBars'
 import { WaveDivider } from '@/components/WaveDivider'
 import { ScrollReveal } from '@/components/ScrollReveal'

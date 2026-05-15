@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import RegisterButton from '@/components/RegisterButton'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'CEO On Mission — Executive Mentorship',
+  description: 'Private executive mentorship by Apostle Rogers Nforgwei for CEOs, executives, and Christian entrepreneurs. Align your business strategy with your God-given purpose. By application only.',
+  path: '/programs/ceo-on-mission',
+})
 import { SquareBars } from '@/components/SquareBars'
 import { WaveDivider } from '@/components/WaveDivider'
 import { ScrollReveal } from '@/components/ScrollReveal'

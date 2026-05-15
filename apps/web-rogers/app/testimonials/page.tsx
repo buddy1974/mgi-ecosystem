@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo'
 import { TestimonialsSection } from './TestimonialsSection'
 import { SquareBars } from '@/components/SquareBars'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Transformation Stories',
+  description: 'Real testimonials from men and leaders transformed by Apostle Rogers Nforgwei — through Dominion Life, Men On Duty, CEO On Mission, and personal coaching across Cameroon and 30+ nations.',
+  path: '/testimonials',
+})
 
 const serif = "Georgia, 'Times New Roman', serif"
 const purple = '#3a0ca3'

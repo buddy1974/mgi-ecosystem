@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo'
 import Image from 'next/image'
 import Link from 'next/link'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'About Rogers Nforgwei',
+  description: 'Apostle Dr. Rogers Ngalla Nforgwei — Knight and Officer of the National Order of Cameroon, former Cambridge University Press Business Development Manager for Africa, founder of NMI Education across 7 countries.',
+  path: '/about',
+})
 import { SquareBars } from '@/components/SquareBars'
 import { ScrollReveal } from '@/components/ScrollReveal'
 

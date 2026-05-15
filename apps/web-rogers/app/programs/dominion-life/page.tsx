@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import RegisterButton from '@/components/RegisterButton'
+
+export const metadata: Metadata = buildMetadata({
+  title: "Dominion Life Men's Conference",
+  description: "The flagship annual men's conference by Apostle Rogers Nforgwei. Discover your spiritual authority, lead with dominion, and join a brotherhood committed to their God-given assignment. 30+ nations, 26+ years.",
+  path: '/programs/dominion-life',
+})
 import { SquareBars } from '@/components/SquareBars'
 import { WaveDivider } from '@/components/WaveDivider'
 import { ScrollReveal } from '@/components/ScrollReveal'
