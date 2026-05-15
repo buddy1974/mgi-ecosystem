@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import NavBar from "./NavBar";
+import RogersAssistant from "@/components/RogersAssistant";
 
 export const metadata: Metadata = {
   title: "Rogers Nforgwei — CEO · Apostle · Visionary",
@@ -38,6 +39,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NavBar />
 
         {children}
+
+        <RogersAssistant />
 
         {/* FOOTER */}
         <footer style={{ background: "#0d0120", padding: "4rem 2rem 2rem", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
