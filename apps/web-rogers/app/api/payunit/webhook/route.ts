@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma, PROGRAMS, resolveProgram } from '@/lib/programs';
 import { sendTelegramNotification, rogersPaymentMessage } from '@/lib/telegram';
 import { sendPaymentNotificationToAdmin } from '@/lib/email';
+import { sendWhatsAppAlert, paymentConfirmedMessage } from '@/lib/whatsapp';
 
 export async function POST(req: NextRequest) {
   // Always return 200 immediately
@@ -61,6 +62,12 @@ export async function POST(req: NextRequest) {
       registrantPhone: registration.registrantPhone,
       transactionId,
     });
+    void sendWhatsAppAlert(paymentConfirmedMessage({
+      program: program.name,
+      amount,
+      reference: registration.reference,
+      name: registration.registrantName,
+    }));
 
   } catch (err) {
     console.error('[rogers/payunit/webhook]', err);

@@ -32,7 +32,7 @@ const TREE: Record<string, { content: string; options: Option[] }> = {
   executive: {
     content: "CEO On Mission was built for leaders like you — men who've built something but sense a deeper calling. It's Rogers' most intensive program: faith-integrated executive mentorship with limited seats.",
     options: [
-      { label: 'Apply for CEO On Mission →', type: 'link', href: '/programs/ceo-on-mission#registration' },
+      { label: 'Apply for CEO On Mission →', type: 'link', href: '/programs/ceo-on-mission?source=assistant#registration' },
       { label: 'Tell me more',               type: 'gpt',  value: 'Tell me more about the CEO On Mission program and what it involves.' },
       { label: 'Get priority updates',       type: 'lead', value: 'CEO On Mission' },
     ],
@@ -48,7 +48,7 @@ const TREE: Record<string, { content: string; options: Option[] }> = {
   dominion: {
     content: "Dominion Life is Rogers' flagship conference. It doesn't teach facts about manhood — it repositions you in the authority God gave you, so you lead your family and generation from identity, not insecurity.",
     options: [
-      { label: 'Reserve My Seat →',    type: 'link', href: '/programs/dominion-life#registration' },
+      { label: 'Reserve My Seat →',    type: 'link', href: '/programs/dominion-life?source=assistant#registration' },
       { label: 'Tell me more',         type: 'gpt',  value: "Tell me more about the Dominion Life Men's Conference — what happens there and what men experience." },
       { label: 'Get priority updates', type: 'lead', value: 'Dominion Life' },
     ],
@@ -56,7 +56,7 @@ const TREE: Record<string, { content: string; options: Option[] }> = {
   mod: {
     content: "Men On Duty is for the man done being busy but absent — equipped to show up fully in his home, his calling, and his community. Practical. Transformational. Brotherhood-driven.",
     options: [
-      { label: 'Join the Brotherhood →', type: 'link', href: '/programs/men-on-duty#registration' },
+      { label: 'Join the Brotherhood →', type: 'link', href: '/programs/men-on-duty?source=assistant#registration' },
       { label: 'Tell me more',           type: 'gpt',  value: 'Tell me more about the Men On Duty program and what makes it different.' },
       { label: 'Get priority updates',   type: 'lead', value: 'Men On Duty' },
     ],
@@ -64,7 +64,7 @@ const TREE: Record<string, { content: string; options: Option[] }> = {
   spiritual: {
     content: "Dominion Life is where you start. Rogers' signature conference — it's not a seminar. Men walk in carrying one identity and walk out standing in another. It's a repositioning.",
     options: [
-      { label: 'Reserve My Seat →',    type: 'link', href: '/programs/dominion-life#registration' },
+      { label: 'Reserve My Seat →',    type: 'link', href: '/programs/dominion-life?source=assistant#registration' },
       { label: 'Tell me more',         type: 'gpt',  value: 'Tell me more about the spiritual transformation that happens in Dominion Life.' },
       { label: 'Get priority updates', type: 'lead', value: 'Dominion Life' },
     ],
@@ -191,7 +191,7 @@ export default function RogersAssistant() {
         role: 'assistant',
         content: `You're on the list, ${leadName}. Rogers' team will be in touch. Seats fill fast — when you're ready, don't wait.`,
         options: [
-          { label: 'View Programs',    type: 'link', href: '/programs/dominion-life' },
+          { label: 'View Programs',    type: 'link', href: '/programs/dominion-life?source=assistant' },
           { label: 'WhatsApp Rogers',  type: 'link', href: 'https://wa.me/237683493220' },
         ],
       })
