@@ -76,7 +76,7 @@ export default function AcceptInvitePage() {
         <div className="mb-6">
           <h1 className="text-xl font-semibold text-[#F1F5F9]">Set your password</h1>
           <p className="text-sm text-[#64748B] mt-1">
-            You've been invited to MGI Executive OS. Create a password to get started.
+            You&apos;ve been invited to MGI Executive OS. Create a password to get started.
           </p>
         </div>
         <Suspense fallback={<p className="text-sm text-[#64748B]">Loading…</p>}>
