@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import Image from "next/image";
 import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
@@ -62,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "@type": "Organization",
               name: "Horeb Solutions Sarl",
               url: "https://horebsolutions.org",
-              logo: "https://horebsolutions.org/logos/horeb-logo.png",
+              logo: "https://horebsolutions.org/logos/horeb-solutions.png",
               description:
                 "Distribution de manuels scolaires, fournitures scolaires et matériels didactiques au Cameroun.",
               address: {
@@ -100,56 +101,52 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           >
             {/* Logo */}
-            <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12 }}>
+            <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
               <div
                 style={{
-                  padding: "6px 14px",
-                  borderRadius: 8,
-                  background: "rgba(255,255,255,0.12)",
-                  border: "1px solid rgba(255,255,255,0.2)",
+                  background: "var(--horeb-white)",
+                  borderRadius: 10,
+                  padding: "4px",
                   display: "flex",
                   alignItems: "center",
-                  gap: 8,
+                  justifyContent: "center",
+                  flexShrink: 0,
                 }}
               >
-                <span
+                <Image
+                  src="/logos/horeb-solutions.png"
+                  alt="Horeb Solutions Sarl"
+                  width={52}
+                  height={52}
+                  style={{ objectFit: "contain", display: "block" }}
+                  priority
+                />
+              </div>
+              <div>
+                <p
                   style={{
-                    fontWeight: 900,
                     color: "var(--horeb-white)",
-                    fontSize: 16,
-                    letterSpacing: "-0.04em",
+                    fontWeight: 700,
+                    fontSize: 13,
+                    margin: 0,
+                    lineHeight: 1.1,
                     fontFamily: "'Montserrat', sans-serif",
                   }}
                 >
-                  HS
-                </span>
-                <div style={{ width: 1, height: 20, background: "rgba(255,255,255,0.25)" }} />
-                <div>
-                  <p
-                    style={{
-                      color: "var(--horeb-white)",
-                      fontWeight: 700,
-                      fontSize: 13,
-                      margin: 0,
-                      lineHeight: 1.1,
-                      fontFamily: "'Montserrat', sans-serif",
-                    }}
-                  >
-                    Horeb Solutions Sarl
-                  </p>
-                  <p
-                    style={{
-                      color: "rgba(255,201,40,0.7)",
-                      fontWeight: 400,
-                      fontSize: 9,
-                      margin: 0,
-                      fontStyle: "italic",
-                      fontFamily: "'Roboto', sans-serif",
-                    }}
-                  >
-                    Votre partenaire de la distribution
-                  </p>
-                </div>
+                  Horeb Solutions Sarl
+                </p>
+                <p
+                  style={{
+                    color: "rgba(255,201,40,0.7)",
+                    fontWeight: 400,
+                    fontSize: 9,
+                    margin: 0,
+                    fontStyle: "italic",
+                    fontFamily: "'Roboto', sans-serif",
+                  }}
+                >
+                  Votre partenaire de la distribution
+                </p>
               </div>
             </Link>
 
@@ -217,24 +214,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             >
               {/* Col 1 — Brand */}
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-                  <div
-                    style={{
-                      padding: "5px 12px",
-                      borderRadius: 6,
-                      background: "rgba(255,255,255,0.1)",
-                      border: "1px solid rgba(255,255,255,0.15)",
-                      fontWeight: 900,
-                      color: "var(--horeb-white)",
-                      fontSize: 14,
-                      fontFamily: "'Montserrat', sans-serif",
-                    }}
-                  >
-                    HS
-                  </div>
-                  <p style={{ color: "var(--horeb-white)", fontWeight: 700, fontSize: 14, margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
-                    Horeb Solutions Sarl
-                  </p>
+                <div style={{ marginBottom: 12 }}>
+                  <Image
+                    src="/logos/horeb-solutions.png"
+                    alt="Horeb Solutions Sarl"
+                    width={80}
+                    height={80}
+                    style={{ objectFit: "contain", display: "block", background: "white", borderRadius: 10, padding: 4 }}
+                  />
                 </div>
                 <p style={{ color: "var(--horeb-yellow)", fontStyle: "italic", fontSize: 12, margin: "0 0 16px", fontFamily: "'Roboto', sans-serif" }}>
                   Votre partenaire de la distribution
