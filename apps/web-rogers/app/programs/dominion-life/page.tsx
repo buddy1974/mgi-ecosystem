@@ -287,7 +287,7 @@ export default function DominionLifePage() {
           <div className="prog-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {TESTIMONIALS.map((t, i) => (
               <ScrollReveal key={i} delay={i * 0.12}>
-                <div className="card-premium" style={{ padding: '2rem', position: 'relative' }}>
+                <div style={{ padding: '2rem', position: 'relative', background: 'rgba(255,255,255,0.08)', borderLeft: '3px solid rgba(247,37,133,0.55)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.10)', borderLeftWidth: 3 }}>
                   <div style={{ fontSize: 64, lineHeight: 1, opacity: 0.08, fontFamily: serif, position: 'absolute', top: 16, left: 20, color: '#ffffff' }}>&ldquo;</div>
                   <p style={{ color: 'rgba(255,255,255,0.80)', fontFamily: serif, fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 24, position: 'relative', zIndex: 1 }}>
                     &ldquo;{t.quote}&rdquo;
@@ -323,7 +323,7 @@ export default function DominionLifePage() {
           </ScrollReveal>
           {FAQ.map((item, i) => (
             <ScrollReveal key={i} delay={i * 0.06}>
-              <div className="card-premium" style={{ padding: '1.75rem 2rem', marginBottom: 16, background: '#f8f7ff' }}>
+              <div style={{ padding: '1.75rem 2rem', marginBottom: 12, borderBottom: '1px solid rgba(58,12,163,0.08)', background: 'transparent' }}>
                 <p style={{ color: purple, fontFamily: hl, fontWeight: 700, fontSize: 16, marginBottom: 10 }}>{item.q}</p>
                 <p style={{ color: '#4a4a6a', fontSize: 15, lineHeight: 1.8, margin: 0 }}>{item.a}</p>
               </div>
