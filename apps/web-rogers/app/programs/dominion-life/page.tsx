@@ -117,10 +117,10 @@ export default function DominionLifePage() {
             This conference does not teach you facts about manhood. It repositions you in the identity God intended — so you lead your family, your work, and your generation from a place of authority, not anxiety.
           </p>
           <a
-            href="/#contact" /* TODO: awaiting Rogers content — replace with actual registration URL */
+            href="#registration"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #f72585, #7209b7)', color: '#ffffff', fontWeight: 700, fontSize: '1rem', padding: '16px 32px', borderRadius: '999px', textDecoration: 'none', boxShadow: '0 8px 28px rgba(247,37,133,0.3)', letterSpacing: '0.02em', fontFamily: hl }}
           >
-            Register Your Interest →
+            Reserve My Seat →
           </a>
         </div>
       </section>

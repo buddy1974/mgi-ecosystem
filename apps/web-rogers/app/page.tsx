@@ -394,7 +394,7 @@ export default function HomePage() {
               {/* CTA */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '4px' }}>
                 <a
-                  href="/#contact" /* TODO: awaiting Rogers content — replace with real registration URL */
+                  href="/programs/dominion-life"
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                     background: 'linear-gradient(135deg, #f72585, #7209b7)',
@@ -653,7 +653,7 @@ export default function HomePage() {
               Register your interest now to be notified first.
             </p>
             <a
-              href="/#contact" /* TODO: awaiting Rogers content — replace with actual booking URL */
+              href="/programs/dominion-life"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '8px',
                 background: 'linear-gradient(135deg, #f72585, #7209b7)',
