@@ -2,6 +2,7 @@ import Link from 'next/link'
 import RegisterButton from '@/components/RegisterButton'
 import { SquareBars } from '@/components/SquareBars'
 import { WaveDivider } from '@/components/WaveDivider'
+import { ScrollReveal } from '@/components/ScrollReveal'
 
 const hl     = "var(--font-headline, 'Nunito', system-ui, sans-serif)"
 const serif  = "Georgia, 'Times New Roman', serif"
@@ -77,7 +78,7 @@ const FAQ = [
 
 export default function CEOOnMissionPage() {
   return (
-    <main style={{ background: '#0d0120', fontFamily: hl, paddingTop: 76 }}>
+    <main style={{ background: '#0d0120', fontFamily: hl, paddingTop: 140 }}>
       <style>{`
         @media (max-width: 768px) {
           .prog-grid-2 { grid-template-columns: 1fr !important; }
@@ -123,10 +124,10 @@ export default function CEOOnMissionPage() {
             ))}
           </div>
           <div className="prog-ctas" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="#registration" style={{ background: pink, color: '#fff', padding: '15px 40px', borderRadius: 8, fontFamily: hl, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', boxShadow: '0 6px 28px rgba(247,37,133,0.38)' }}>
+            <a href="#registration" className="btn-premium" style={{ background: pink, color: '#fff', padding: '16px 40px', borderRadius: '999px', fontFamily: hl, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', boxShadow: '0 6px 28px rgba(247,37,133,0.38)', display: 'inline-block' }}>
               Reserve Your Seat
             </a>
-            <a href="#schedule" style={{ border: '2px solid rgba(67,97,238,0.6)', color: 'rgba(255,255,255,0.85)', background: 'rgba(67,97,238,0.08)', padding: '13px 36px', borderRadius: 8, fontFamily: hl, fontWeight: 600, fontSize: '0.95rem', textDecoration: 'none' }}>
+            <a href="#schedule" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.14)', color: 'rgba(255,255,255,0.85)', padding: '16px 36px', borderRadius: '999px', fontFamily: hl, fontWeight: 600, fontSize: '0.95rem', textDecoration: 'none', backdropFilter: 'blur(10px)', display: 'inline-block' }}>
               Explore Schedule
             </a>
           </div>
@@ -224,56 +225,71 @@ export default function CEOOnMissionPage() {
       <WaveDivider fromColor="#ffffff" toColor="#f8f7ff" />
 
       {/* ── 5. SCHEDULE ──────────────────────────────────────────────────── */}
-      <section id="schedule" style={{ background: '#f8f7ff', padding: '5rem 2rem' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <SquareBars color={purple} />
-            <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12 }}>The Experience</p>
-            <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
-              Two days that shift how you lead.
-            </h2>
-          </div>
-          {SCHEDULE.map((day, i) => (
-            <div key={i} style={{ display: 'flex', gap: 32, padding: '2.5rem 0', borderBottom: '1px solid rgba(58,12,163,0.08)' }}>
-              <div style={{ flexShrink: 0, width: 80 }}>
-                <p style={{ color: pink, fontFamily: hl, fontWeight: 800, fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 4 }}>{day.day}</p>
-                <p style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 18, margin: 0 }}>{day.theme}</p>
-              </div>
-              <div style={{ flex: 1 }}>
-                <p style={{ color: '#4a4a6a', fontStyle: 'italic', fontSize: 15, marginBottom: 16 }}>{day.subtitle}</p>
-                {day.points.map((pt, j) => (
-                  <div key={j} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10 }}>
-                    <span style={{ color: sky, fontSize: 14, flexShrink: 0, marginTop: 2 }}>·</span>
-                    <p style={{ color: '#1a1a2e', fontSize: 14, lineHeight: 1.75, margin: 0 }}>{/* TODO: real schedule content */}{pt}</p>
-                  </div>
-                ))}
-              </div>
+      <section id="schedule" className="section-premium" style={{ background: '#f8f7ff' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 2rem' }}>
+          <ScrollReveal>
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <SquareBars color={purple} />
+              <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12 }}>The Experience</p>
+              <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
+                Two days that shift how you lead.
+              </h2>
             </div>
-          ))}
+          </ScrollReveal>
+          <div style={{ background: 'rgba(58,12,163,0.03)', borderRadius: 16, border: '1px solid rgba(58,12,163,0.08)', display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {SCHEDULE.map((day, i) => (
+              <div key={i} style={{ display: 'flex', gap: 32, padding: '2.5rem', borderBottom: i < SCHEDULE.length - 1 ? '1px solid rgba(58,12,163,0.08)' : 'none' }}>
+                <div style={{ flexShrink: 0, width: 80 }}>
+                  <p style={{ color: pink, fontFamily: hl, fontWeight: 800, fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 4 }}>{day.day}</p>
+                  <p style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 18, margin: 0 }}>{day.theme}</p>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ color: '#4a4a6a', fontStyle: 'italic', fontSize: 15, marginBottom: 16 }}>{day.subtitle}</p>
+                  {day.points.map((pt, j) => (
+                    <div key={j} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10 }}>
+                      <span style={{ color: sky, fontSize: 14, flexShrink: 0, marginTop: 2 }}>·</span>
+                      <p style={{ color: '#1a1a2e', fontSize: 14, lineHeight: 1.75, margin: 0 }}>{/* TODO: real schedule content */}{pt}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       <WaveDivider fromColor="#f8f7ff" toColor={purple} />
 
       {/* ── 6. TESTIMONIALS ──────────────────────────────────────────────── */}
-      <section style={{ background: purple, padding: '5rem 2rem' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 44 }}>
-            <SquareBars color={pink} />
-            <h2 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
-              What executives who attended say.
-            </h2>
-          </div>
+      <section className="section-premium" style={{ background: purple }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem' }}>
+          <ScrollReveal>
+            <div style={{ textAlign: 'center', marginBottom: 44 }}>
+              <SquareBars color={pink} />
+              <h2 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
+                What executives who attended say.
+              </h2>
+            </div>
+          </ScrollReveal>
           <div className="prog-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} style={{ background: 'rgba(255,255,255,0.07)', borderLeft: `3px solid ${pink}`, borderRadius: 16, padding: '2rem', border: '1px solid rgba(255,255,255,0.10)', borderLeftWidth: 3, borderLeftColor: pink }}>
-                <p style={{ color: 'rgba(247,37,133,0.25)', fontFamily: serif, fontSize: '3.5rem', lineHeight: 0.8, marginBottom: 12 }}>&ldquo;</p>
-                <p style={{ color: 'rgba(255,255,255,0.80)', fontFamily: serif, fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 20 }}>{t.quote}</p>
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.10)', paddingTop: 14 }}>
-                  <p style={{ color: '#7b90f3', fontFamily: hl, fontWeight: 700, fontSize: 14, margin: '0 0 3px' }}>{t.name}</p>
-                  <p style={{ color: 'rgba(255,255,255,0.45)', fontFamily: hl, fontSize: '0.8rem', margin: 0 }}>{t.city} · CEO On Mission {t.year}</p>
+              <ScrollReveal key={i} delay={i * 0.12}>
+                <div style={{ padding: '2rem', position: 'relative', background: 'rgba(255,255,255,0.08)', borderLeft: '3px solid rgba(247,37,133,0.55)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.10)', borderLeftWidth: 3 }}>
+                  <div style={{ fontSize: 64, lineHeight: 1, opacity: 0.08, fontFamily: serif, position: 'absolute', top: 16, left: 20, color: '#ffffff' }}>&ldquo;</div>
+                  <p style={{ color: 'rgba(255,255,255,0.80)', fontFamily: serif, fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 24, position: 'relative', zIndex: 1 }}>
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 16 }}>
+                    <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.12)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#ffffff', fontFamily: hl }}>
+                      {t.name[0]}
+                    </div>
+                    <div>
+                      <p style={{ color: '#7b90f3', fontFamily: hl, fontWeight: 700, fontSize: 14, margin: '0 0 2px' }}>{t.name}</p>
+                      <p style={{ color: 'rgba(255,255,255,0.45)', fontFamily: hl, fontSize: '0.8rem', margin: 0 }}>{t.city} · CEO On Mission {t.year}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -282,19 +298,23 @@ export default function CEOOnMissionPage() {
       <WaveDivider fromColor={purple} toColor="#ffffff" />
 
       {/* ── 7. FAQ ───────────────────────────────────────────────────────── */}
-      <section style={{ background: '#ffffff', padding: '5rem 2rem' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 44 }}>
-            <SquareBars color={purple} />
-            <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
-              Questions you probably have.
-            </h2>
-          </div>
-          {FAQ.map((item, i) => (
-            <div key={i} style={{ padding: '1.75rem 0', borderBottom: '1px solid #f0f0f0' }}>
-              <p style={{ color: purple, fontFamily: hl, fontWeight: 700, fontSize: 16, marginBottom: 10 }}>{item.q}</p>
-              <p style={{ color: '#4a4a6a', fontSize: 15, lineHeight: 1.8, margin: 0 }}>{item.a}</p>
+      <section className="section-premium" style={{ background: '#ffffff' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 2rem' }}>
+          <ScrollReveal>
+            <div style={{ textAlign: 'center', marginBottom: 44 }}>
+              <SquareBars color={purple} />
+              <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
+                Questions you probably have.
+              </h2>
             </div>
+          </ScrollReveal>
+          {FAQ.map((item, i) => (
+            <ScrollReveal key={i} delay={i * 0.06}>
+              <div style={{ padding: '1.75rem 2rem', marginBottom: 12, borderBottom: '1px solid rgba(58,12,163,0.08)', background: 'transparent' }}>
+                <p style={{ color: purple, fontFamily: hl, fontWeight: 700, fontSize: 16, marginBottom: 10 }}>{item.q}</p>
+                <p style={{ color: '#4a4a6a', fontSize: 15, lineHeight: 1.8, margin: 0 }}>{item.a}</p>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </section>

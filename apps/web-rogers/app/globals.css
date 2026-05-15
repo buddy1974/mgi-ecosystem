@@ -33,3 +33,74 @@
   border-color: #4361ee !important;
   box-shadow: 0 4px 20px rgba(67, 97, 238, 0.12) !important;
 }
+
+/* ── Premium Visual System ────────────────────────────────────────────────── */
+
+/* Premium spacing — breathing room for authority content */
+.section-premium {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+.section-gap {
+  margin-top: 80px;
+}
+
+/* Premium card — elevation + lift on hover */
+.card-premium {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card-premium:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+}
+
+/* Warm editorial card — for light/white sections (NOT glass) */
+.card-editorial {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(58,12,163,0.08);
+  border: 1px solid rgba(58,12,163,0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-editorial:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(58,12,163,0.14);
+}
+
+/* Glass micro panel */
+.glass-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 22px;
+}
+
+/* Premium button — pill shape */
+.btn-premium {
+  padding: 16px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn-premium:hover {
+  transform: translateY(-2px);
+}
+
+/* Subtle grain overlay for cinematic depth */
+.depth-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
