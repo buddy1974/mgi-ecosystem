@@ -38,14 +38,32 @@ const PATHWAYS = [
 ]
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', type: 'general', message: '' })
+  const [form, setForm]         = useState({ name: '', email: '', phone: '', type: 'general', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading]     = useState(false)
+  const [error, setError]         = useState('')
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    // TODO Phase 39: wire to n8n
-    console.log('Contact inquiry:', form)
-    setSubmitted(true)
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        const data = await res.json()
+        setError(data.error ?? 'Something went wrong. Please try WhatsApp instead.')
+      }
+    } catch {
+      setError('Network error. Please try WhatsApp instead.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -96,7 +114,7 @@ export default function ContactPage() {
                         background: a.style === 'primary' ? pink : 'transparent',
                         border: a.style === 'secondary' ? `2px solid ${purple}` : 'none',
                         color: a.style === 'primary' ? '#fff' : purple,
-                        padding: '11px 20px', borderRadius: 8,
+                        padding: '11px 20px', borderRadius: '999px',
                         fontFamily: hl, fontWeight: 700, fontSize: 13, textDecoration: 'none',
                         textAlign: 'center', display: 'block',
                         ...(a.style === 'primary' ? { boxShadow: '0 4px 16px rgba(247,37,133,0.25)' } : {}),
@@ -164,8 +182,11 @@ export default function ContactPage() {
                   style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 8, color: '#ffffff', fontFamily: hl, fontSize: 14, outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
                 />
               </div>
-              <button type="submit" style={{ background: pink, color: '#fff', padding: '15px', borderRadius: 8, fontFamily: hl, fontWeight: 700, fontSize: '1rem', border: 'none', cursor: 'pointer', boxShadow: '0 6px 28px rgba(247,37,133,0.38)', marginTop: 8 }}>
-                Send Message
+              {error && (
+                <p style={{ color: '#f72585', fontSize: 13, margin: '0', fontFamily: hl }}>{error}</p>
+              )}
+              <button type="submit" disabled={loading} style={{ background: pink, color: '#fff', padding: '15px', borderRadius: '999px', fontFamily: hl, fontWeight: 700, fontSize: '1rem', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: '0 6px 28px rgba(247,37,133,0.38)', marginTop: 8, opacity: loading ? 0.7 : 1, transition: 'opacity 0.2s' }}>
+                {loading ? 'Sending…' : 'Send Message →'}
               </button>
             </form>
           )}
