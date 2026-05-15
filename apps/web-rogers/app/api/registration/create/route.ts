@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma, PROGRAMS, buildReference } from '@/lib/programs'
 import { sendRegistrationConfirmation } from '@/lib/email'
+import { sendWhatsAppAlert, newRegistrationMessage } from '@/lib/whatsapp'
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    // Confirmation email — fire and forget, never block response
+    // Notifications — fire and forget, never block response
     if (registrantEmail) {
       sendRegistrationConfirmation({
         to: registrantEmail,
@@ -34,6 +35,13 @@ export async function POST(req: NextRequest) {
         reference,
       })
     }
+
+    void sendWhatsAppAlert(newRegistrationMessage({
+      program: config.name,
+      reference,
+      name: registrantName || null,
+      source: source || null,
+    }))
 
     return NextResponse.json({ reference })
   } catch (err) {

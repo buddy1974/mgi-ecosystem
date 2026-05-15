@@ -120,7 +120,7 @@ export default function NavBar() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <a
               className="rn-reserve-cta btn-premium"
-              href="/programs/dominion-life#registration"
+              href="/programs/dominion-life?source=navbar#registration"
               style={{
                 background: '#f72585',
                 color: '#ffffff',
@@ -200,7 +200,7 @@ export default function NavBar() {
             </a>
           ))}
           <a
-            href="/programs/dominion-life#registration"
+            href="/programs/dominion-life?source=navbar#registration"
             onClick={() => setMenuOpen(false)}
             style={{
               marginTop: 16,

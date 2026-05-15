@@ -84,7 +84,11 @@ const FAQ = [
   },
 ]
 
-export default function MenOnDutyPage() {
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function MenOnDutyPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams
+  const source = typeof params.source === 'string' ? params.source : 'direct'
   return (
     <main style={{ background: '#0d0120', fontFamily: hl, paddingTop: 140 }}>
       <style>{`
@@ -392,7 +396,7 @@ export default function MenOnDutyPage() {
             ))}
           </div>
           {/* PayUnit button — preserved from Phase 33 */}
-          <RegisterButton program="men-on-duty" />
+          <RegisterButton program="men-on-duty" source={source} />
           <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8 }}>
             <p style={{ color: 'rgba(255,255,255,0.40)', fontFamily: hl, fontSize: 13, margin: 0 }}>Payment via MTN MoMo or Orange Money</p>
             <p style={{ color: 'rgba(255,255,255,0.30)', fontFamily: hl, fontSize: 12, margin: 0 }}>
