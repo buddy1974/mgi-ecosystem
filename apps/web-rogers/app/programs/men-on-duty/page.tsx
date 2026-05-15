@@ -115,10 +115,10 @@ export default function MenOnDutyPage() {
             Most men are busy. Few are present. Men On Duty is for the man who is done being absent in his own life — and is ready to show up fully in his home, his calling, and his community.
           </p>
           <a
-            href="/#contact" /* TODO: awaiting Rogers content — replace with actual registration URL */
+            href="#registration"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #f72585, #7209b7)', color: '#ffffff', fontWeight: 700, fontSize: '1rem', padding: '16px 32px', borderRadius: '999px', textDecoration: 'none', boxShadow: '0 8px 28px rgba(247,37,133,0.3)', letterSpacing: '0.02em', fontFamily: hl }}
           >
-            Register Your Interest →
+            Join The Brotherhood →
           </a>
         </div>
       </section>

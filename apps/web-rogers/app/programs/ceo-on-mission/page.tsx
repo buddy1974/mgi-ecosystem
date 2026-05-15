@@ -107,10 +107,10 @@ export default function CEOOnMissionPage() {
             Success without alignment is exhaustion. CEO On Mission exists for the leader who has built something but senses there is more — a dimension of purpose that makes the business eternal, not just profitable.
           </p>
           <a
-            href="/#contact" /* TODO: awaiting Rogers content — replace with actual registration URL */
+            href="#registration"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #f72585, #7209b7)', color: '#ffffff', fontWeight: 700, fontSize: '1rem', padding: '16px 32px', borderRadius: '999px', textDecoration: 'none', boxShadow: '0 8px 28px rgba(247,37,133,0.3)', letterSpacing: '0.02em', fontFamily: hl }}
           >
-            Register Your Interest →
+            Apply For Mentorship →
           </a>
         </div>
       </section>
