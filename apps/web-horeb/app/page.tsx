@@ -1,282 +1,815 @@
+import Image from "next/image";
+import {
+  HOREB_SERVICES,
+  HOREB_STATS,
+  HOREB_AGENCIES,
+  HOREB_PARTNERS_RELAY,
+  HOREB_PARTNERS_RETAIL,
+  HOREB_VISION_MISSION,
+  HOREB_MGI,
+  HOREB_CONTACT,
+} from "../data/horeb-content";
+
+// ── Agency region grouping for section display ─────────────────
+const REGION_GROUPS = [
+  { label: "Au Centre", key: "Centre" },
+  { label: "Au Littoral", key: "Littoral" },
+  { label: "À l'Ouest", key: "Ouest" },
+  { label: "Au Nord", key: "Nord" },
+];
+
+// ── Shared yellow CTA style ────────────────────────────────────
+const ctaYellow: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 8,
+  background: "var(--horeb-yellow)",
+  color: "var(--horeb-deep-green)",
+  fontFamily: "'Montserrat', sans-serif",
+  fontWeight: 700,
+  fontSize: "clamp(0.85rem,2vw,0.95rem)",
+  padding: "clamp(12px,3vw,15px) clamp(20px,5vw,30px)",
+  borderRadius: 999,
+  textDecoration: "none",
+  minHeight: 44,
+  letterSpacing: "0.01em",
+  whiteSpace: "nowrap" as const,
+};
+
+const sectionPad: React.CSSProperties = {
+  padding: "clamp(3.5rem,7vw,7rem) clamp(1rem,5vw,2rem)",
+};
+
 export default function HomePage() {
-  const products = [
-    {
-      icon: "📚",
-      title: "Manuels scolaires",
-      description: "Distribution nationale de manuels scolaires agréés. Nous couvrons l'ensemble du territoire camerounais pour assurer la disponibilité des ouvrages dans toutes les régions.",
-      tag: "Core",
-      color: "#0a8348",
-    },
-    {
-      icon: "🖊️",
-      title: "Fournitures scolaires",
-      description: "Cahiers, stylos, cartables et tout le matériel nécessaire à la réussite scolaire, distribués avec la même fiabilité que nos manuels.",
-      tag: "Distribution",
-      color: "#15a3eb",
-    },
-    {
-      icon: "🎓",
-      title: "Matériels didactiques",
-      description: "Outils pédagogiques et matériels d'enseignement pour établissements scolaires, distribués à travers notre réseau national d'agents agréés.",
-      tag: "Éducation",
-      color: "#fdda2b",
-    },
-    {
-      icon: "🗂️",
-      title: "Fournitures de bureau",
-      description: "Papeterie et fournitures de bureau pour entreprises et administrations, livrées efficacement grâce à notre infrastructure logistique.",
-      tag: "B2B",
-      color: "#ce9c66",
-    },
-  ];
-
-  const strengths = [
-    {
-      icon: "🚛",
-      title: "Flotte logistique",
-      body: "Logistique de qualité composée d'une dizaine de véhicules et de grands camions opérant dans les métropoles de Yaoundé et Douala.",
-    },
-    {
-      icon: "🌍",
-      title: "Réseau national agréé",
-      body: "Réseau d'une dizaine d'agents distributeurs agréés couvrant l'ensemble du territoire national du Cameroun.",
-    },
-    {
-      icon: "👥",
-      title: "Personnel expérimenté",
-      body: "Une équipe de professionnels de la logistique et de la distribution, expérimentée et engagée au service de vos opérations.",
-    },
-    {
-      icon: "📊",
-      title: "Suivi en temps réel",
-      body: "Dispositif de vente et suivi des stocks en temps réel — visibilité totale sur votre chaîne d'approvisionnement.",
-    },
-  ];
-
-  const offices = [
-    { city: "Yaoundé — Gare",    tel: "(+237) 676 165 716" },
-    { city: "Yaoundé — Acacias", tel: "(+237) 699 276 185" },
-    { city: "Douala — Ville",    tel: "(+237) 674 879 647" },
-    { city: "Douala — Bonaberi", tel: "(+237) 683 318 223" },
-    { city: "Bafoussam",         tel: "(+237) 650 121 811" },
-  ];
-
   return (
-    <main>
+    <main style={{ overflowX: "hidden" }}>
 
-      {/* ══ HERO ══════════════════════════════════════════ */}
-      <section style={{
-        minHeight: "90vh",
-        display: "flex", alignItems: "center",
-        background: "linear-gradient(135deg, #052e16 0%, #0a5c30 50%, #0a8348 100%)",
-        padding: "6rem 2rem",
-        position: "relative", overflow: "hidden",
-      }}>
-        <div style={{ position: "absolute", top: -120, right: -80, width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(253,218,43,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 30% 60%, rgba(10,131,72,0.3) 0%, transparent 60%)", pointerEvents: "none" }} />
-        {/* Decorative wavy line — from charte */}
-        <svg style={{ position: "absolute", bottom: 60, right: "10%", opacity: 0.12, pointerEvents: "none" }} width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10,40 C30,10 60,70 90,40 C110,20 120,55 140,40 C155,28 165,50 180,40" stroke="#0a8348" strokeWidth="3" fill="none" strokeLinecap="round"/>
-          <path d="M20,60 C35,40 55,80 80,60 C95,48 105,68 120,60" stroke="#0a8348" strokeWidth="2" fill="none" strokeLinecap="round"/>
-        </svg>
-
-        <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", position: "relative" }}>
-          <div style={{ maxWidth: 720 }}>
-            <p style={{ color: "#fdda2b", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 24, fontFamily: "'Montserrat', sans-serif" }}>
-              Logistique · Distribution · Cameroun
-            </p>
-            <h1 style={{ color: "#ffffff", fontSize: "clamp(2.8rem, 6vw, 5.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: 12, fontFamily: "'Roboto', sans-serif" }}>
-              Vos manuels scolaires
-            </h1>
-            <h1 style={{ color: "#fdda2b", fontSize: "clamp(2.8rem, 6vw, 5.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: 32, fontFamily: "'Roboto', sans-serif" }}>
+      {/* ══ 1. HERO ════════════════════════════════════════════════ */}
+      <section
+        id="accueil"
+        style={{
+          background: "linear-gradient(135deg, var(--horeb-dark-green) 0%, var(--horeb-green) 100%)",
+          minHeight: "88vh",
+          display: "flex",
+          alignItems: "center",
+          padding: "clamp(4rem,8vw,6rem) clamp(1rem,5vw,2rem)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(2rem,5vw,4rem)", alignItems: "center" }} className="hero-grid">
+          {/* Left — text */}
+          <div style={{ position: "relative", zIndex: 2 }}>
+            <h1
+              style={{
+                color: "var(--horeb-white)",
+                fontSize: "clamp(1.9rem,5vw,3.6rem)",
+                fontWeight: 900,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.08,
+                marginBottom: 20,
+                fontFamily: "'Montserrat', sans-serif",
+              }}
+            >
+              Vos manuels scolaires,{" "}
+              <span style={{ color: "var(--horeb-yellow)" }}>fournitures et matériels didactiques</span>{" "}
               partout au Cameroun
             </h1>
-            <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 18, lineHeight: 1.7, marginBottom: 16, maxWidth: 560, fontFamily: "'Roboto', sans-serif" }}>
-              Horeb Solutions Sarl — votre partenaire de la distribution.
+            <p
+              style={{
+                color: "rgba(255,255,255,0.75)",
+                fontSize: "clamp(0.95rem,2vw,1.05rem)",
+                lineHeight: 1.75,
+                marginBottom: 36,
+                maxWidth: 540,
+                fontFamily: "'Roboto', sans-serif",
+              }}
+            >
+              Horeb Solutions Sarl assure la diffusion et la distribution de manuels scolaires,
+              fournitures scolaires et matériels didactiques grâce à un réseau d&apos;agences, de
+              partenaires relais et de détaillants répartis sur le territoire camerounais.
             </p>
-            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, fontStyle: "italic", marginBottom: 48, maxWidth: 560 }}>
-              Notre mission est d&apos;offrir une logistique fiable et dynamique,
-              en plaçant votre succès au cœur de nos priorités.
-            </p>
-            <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <a href="#products" style={{ background: "#fdda2b", color: "#052e16", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 800, textDecoration: "none", fontFamily: "'Roboto', sans-serif" }}>
-                Nos produits
+
+            {/* CTAs */}
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 48 }}>
+              <a href="#contact" style={ctaYellow}>Contacter Horeb Solutions →</a>
+              <a
+                href="#reseau"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: "transparent",
+                  border: "2px solid rgba(255,255,255,0.5)",
+                  color: "var(--horeb-white)",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "clamp(0.85rem,2vw,0.9rem)",
+                  padding: "clamp(10px,3vw,13px) clamp(18px,5vw,26px)",
+                  borderRadius: 999,
+                  textDecoration: "none",
+                  minHeight: 44,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Découvrir notre réseau
               </a>
-              <a href="#contact" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: "white", padding: "16px 36px", borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: "none" }}>
-                Nous contacter
-              </a>
+            </div>
+
+            {/* Trust badges strip */}
+            <div
+              style={{
+                display: "flex",
+                gap: 0,
+                flexWrap: "wrap",
+                borderTop: "1px solid rgba(255,255,255,0.15)",
+                paddingTop: 24,
+              }}
+            >
+              {HOREB_STATS.map((stat, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "8px 16px 8px 0",
+                    marginRight: 16,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "var(--horeb-yellow)",
+                      fontWeight: 900,
+                      fontSize: "clamp(1rem,2.5vw,1.25rem)",
+                      fontFamily: "'Montserrat', sans-serif",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {stat.value}
+                  </span>
+                  {stat.label && (
+                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 10, fontFamily: "'Roboto', sans-serif", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                      {stat.label}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — image + floating trust card */}
+          <div style={{ position: "relative" }}>
+            {/* Floating trust card */}
+            <div
+              style={{
+                position: "absolute",
+                top: -16,
+                right: 0,
+                zIndex: 10,
+                background: "var(--horeb-white)",
+                borderRadius: 12,
+                padding: "12px 18px",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+                maxWidth: 180,
+              }}
+            >
+              <p style={{ color: "var(--horeb-green)", fontWeight: 700, fontSize: 12, margin: "0 0 4px", fontFamily: "'Montserrat', sans-serif" }}>
+                Votre partenaire de confiance pour l&apos;éducation
+              </p>
+              <p style={{ color: "var(--horeb-muted)", fontSize: 11, margin: 0, fontFamily: "'Roboto', sans-serif" }}>
+                📅 Depuis 2019
+              </p>
+            </div>
+
+            {/* Hero image */}
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "clamp(320px,45vw,540px)",
+                borderRadius: 20,
+                overflow: "hidden",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+              }}
+            >
+              <Image
+                src="/hero.png"
+                alt="Manuels scolaires et fournitures — Horeb Solutions Cameroun"
+                fill
+                style={{ objectFit: "cover" }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(0,95,50,0.15) 0%, transparent 60%)" }} />
             </div>
           </div>
         </div>
+
+        {/* Mobile: stack hero image below text */}
+        <style>{`
+          @media (max-width: 768px) {
+            .hero-grid {
+              grid-template-columns: 1fr !important;
+            }
+          }
+        `}</style>
       </section>
 
-      {/* ══ MISSION BAR ══════════════════════════════════ */}
-      <section style={{ background: "#0a8348", padding: "2rem" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", justifyContent: "center", alignItems: "center", gap: "3rem", flexWrap: "wrap" }}>
-          <p style={{ color: "#fdda2b", fontWeight: 800, fontSize: 16, margin: 0, fontStyle: "italic", fontFamily: "'Roboto', sans-serif" }}>Fiabilité en mouvement.</p>
-          <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 24 }}>·</span>
-          <p style={{ color: "#ffffff", fontWeight: 600, fontSize: 16, margin: 0, fontFamily: "'Roboto', sans-serif" }}>Votre logistique, notre priorité.</p>
-          <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 24 }}>·</span>
-          <p style={{ color: "rgba(255,255,255,0.65)", fontWeight: 500, fontSize: 14, margin: 0, fontFamily: "'Montserrat', sans-serif" }}>5 agences · Yaoundé · Douala · Bafoussam</p>
-        </div>
-      </section>
-
-      {/* ══ ABOUT ════════════════════════════════════════ */}
-      <section id="about" style={{ padding: "8rem 2rem", background: "#ffffff" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
-          <div>
-            <p style={{ color: "#0a8348", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16, fontFamily: "'Montserrat', sans-serif" }}>Qui sommes-nous</p>
-            <h2 style={{ color: "#111827", fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 28, fontFamily: "'Roboto', sans-serif" }}>
-              Votre partenaire<br />de la distribution
-            </h2>
-            <p style={{ color: "#374151", fontSize: 16, lineHeight: 1.85, marginBottom: 24, fontFamily: "'Roboto', sans-serif" }}>
-              Notre mission est d&apos;offrir une logistique fiable et dynamique,
-              en plaçant votre succès au cœur de nos priorités. Nous sommes votre
-              partenaire en mouvement, garantissant l&apos;efficacité et la durabilité
-              de vos opérations.
-            </p>
-            <div style={{ padding: "1.5rem 2rem", background: "#f0fdf4", borderRadius: 16, borderLeft: "4px solid #fdda2b" }}>
-              <p style={{ color: "#0a8348", fontWeight: 700, fontSize: 16, margin: "0 0 6px", fontStyle: "italic", fontFamily: "'Roboto', sans-serif" }}>
-                &ldquo;Fiabilité en mouvement.&rdquo;
-              </p>
-              <p style={{ color: "#6B7280", fontSize: 13, margin: 0, fontFamily: "'Roboto', sans-serif" }}>
-                Votre logistique, notre priorité. — Horeb Solutions Sarl
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            {[
-              { icon: "⚡", title: "Fiabilité",   desc: "Des opérations logistiques fiables, partout au Cameroun" },
-              { icon: "🎯", title: "Efficacité",  desc: "Optimisation continue pour des délais de livraison maîtrisés" },
-              { icon: "🤝", title: "Partenariat", desc: "Votre succès est au cœur de nos priorités" },
-              { icon: "🔄", title: "Durabilité",  desc: "Des solutions logistiques durables pour votre croissance" },
-            ].map((v) => (
-              <div key={v.title} style={{ padding: "1.5rem", background: "#f9fafb", borderRadius: 16, border: "1px solid #e5e7eb" }}>
-                <span style={{ fontSize: 28, display: "block", marginBottom: 12 }}>{v.icon}</span>
-                <p style={{ color: "#111827", fontWeight: 700, fontSize: 14, margin: "0 0 6px", fontFamily: "'Roboto', sans-serif" }}>{v.title}</p>
-                <p style={{ color: "#6B7280", fontSize: 12, margin: 0, fontFamily: "'Roboto', sans-serif" }}>{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ PRODUCTS ═════════════════════════════════════ */}
-      <section id="products" style={{ padding: "8rem 2rem", background: "#f0fdf4" }}>
+      {/* ══ 2. SERVICES ════════════════════════════════════════════ */}
+      <section id="services" style={{ ...sectionPad, background: "var(--horeb-off-white)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <p style={{ color: "#0a8348", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16, fontFamily: "'Montserrat', sans-serif" }}>Nos produits</p>
-            <h2 style={{ color: "#111827", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, letterSpacing: "-0.03em", margin: 0, fontFamily: "'Roboto', sans-serif" }}>
+          <div style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3.5rem)" }}>
+            <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              CE QUE NOUS DISTRIBUONS
+            </p>
+            <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
               Ce que nous distribuons
             </h2>
+            <p style={{ color: "var(--horeb-muted)", fontSize: "clamp(0.9rem,2vw,1rem)", maxWidth: 600, margin: "0 auto", fontFamily: "'Roboto', sans-serif", lineHeight: 1.7 }}>
+              Nous accompagnons les établissements, librairies, partenaires commerciaux et acteurs de l&apos;éducation avec une offre adaptée aux besoins du terrain.
+            </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-            {products.map((p) => (
-              <div key={p.title} style={{ background: "#ffffff", borderRadius: 20, border: "1px solid #e5e7eb", overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-                <div style={{ height: 4, background: `linear-gradient(90deg, #0a8348, ${p.color})` }} />
-                <div style={{ padding: "2rem" }}>
-                  <span style={{ background: "#f0fdf4", color: "#0a8348", fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, letterSpacing: "0.1em", textTransform: "uppercase", border: "1px solid #bbf7d0", display: "inline-block", marginBottom: 20, fontFamily: "'Montserrat', sans-serif" }}>
-                    {p.tag}
-                  </span>
-                  <span style={{ fontSize: 32, display: "block", marginBottom: 16 }}>{p.icon}</span>
-                  <h3 style={{ color: "#111827", fontWeight: 800, fontSize: 18, marginBottom: 12, fontFamily: "'Roboto', sans-serif" }}>{p.title}</h3>
-                  <p style={{ color: "#6B7280", fontSize: 14, lineHeight: 1.7, margin: 0, fontFamily: "'Roboto', sans-serif" }}>{p.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ══ DISTRIBUTION STRENGTHS ═══════════════════════ */}
-      <section id="distribution" style={{ padding: "8rem 2rem", background: "#052e16" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <p style={{ color: "#fdda2b", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16, fontFamily: "'Montserrat', sans-serif" }}>Notre force</p>
-            <h2 style={{ color: "#ffffff", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, letterSpacing: "-0.03em", margin: 0, fontFamily: "'Roboto', sans-serif" }}>
-              Une logistique nationale de qualité
-            </h2>
-          </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
-            {strengths.map((s) => (
-              <div key={s.title} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(10,131,72,0.3)", borderRadius: 20, padding: "2rem" }}>
-                <span style={{ fontSize: 36, display: "block", marginBottom: 20 }}>{s.icon}</span>
-                <h3 style={{ color: "#fdda2b", fontWeight: 800, fontSize: 16, marginBottom: 12, fontFamily: "'Roboto', sans-serif" }}>{s.title}</h3>
-                <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 14, lineHeight: 1.7, margin: 0, fontFamily: "'Roboto', sans-serif" }}>{s.body}</p>
+            {HOREB_SERVICES.map((service) => (
+              <div
+                key={service.id}
+                style={{
+                  background: "var(--horeb-white)",
+                  borderRadius: 16,
+                  overflow: "hidden",
+                  boxShadow: "0 2px 20px rgba(0,0,0,0.07)",
+                  border: "1px solid rgba(0,122,61,0.07)",
+                }}
+              >
+                {/* Card image */}
+                <div style={{ position: "relative", width: "100%", height: 200 }}>
+                  <Image
+                    src={service.image}
+                    alt={service.imageAlt}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.18))" }} />
+                  {/* Green icon badge at image/text boundary */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: -18,
+                      left: 20,
+                      width: 40,
+                      height: 40,
+                      borderRadius: "50%",
+                      background: "var(--horeb-green)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 18,
+                      boxShadow: "0 4px 12px rgba(0,122,61,0.3)",
+                      border: "3px solid var(--horeb-white)",
+                    }}
+                  >
+                    {service.icon}
+                  </div>
+                </div>
+                {/* Card content */}
+                <div style={{ padding: "2rem 1.5rem 1.5rem" }}>
+                  <h3 style={{ color: "var(--horeb-green)", fontWeight: 800, fontSize: 17, marginBottom: 10, fontFamily: "'Montserrat', sans-serif" }}>
+                    {service.title}
+                  </h3>
+                  <p style={{ color: "var(--horeb-muted)", fontSize: 14, lineHeight: 1.7, margin: 0, fontFamily: "'Roboto', sans-serif" }}>
+                    {service.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ OFFICES ══════════════════════════════════════ */}
-      <section style={{ padding: "6rem 2rem", background: "#ffffff" }}>
+      {/* ══ 3. ABOUT + VISION & MISSION ════════════════════════════ */}
+      <section id="a-propos" style={{ ...sectionPad, background: "var(--horeb-white)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <p style={{ color: "#0a8348", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16, fontFamily: "'Montserrat', sans-serif" }}>Nos agences</p>
-            <h2 style={{ color: "#111827", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 900, letterSpacing: "-0.02em", margin: 0, fontFamily: "'Roboto', sans-serif" }}>
-              Présents partout au Cameroun
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(2rem,5vw,5rem)", alignItems: "start" }}>
+
+            {/* Left — About text + image */}
+            <div>
+              <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+                À PROPOS DE NOUS
+              </p>
+              <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 20, fontFamily: "'Montserrat', sans-serif" }}>
+                Une entreprise engagée pour l&apos;accès aux ressources éducatives
+              </h2>
+              <p style={{ color: "var(--horeb-muted)", fontSize: "clamp(0.9rem,2vw,1rem)", lineHeight: 1.8, marginBottom: 16, fontFamily: "'Roboto', sans-serif" }}>
+                Horeb Solutions Sarl est une entreprise camerounaise spécialisée dans la diffusion et la
+                distribution de manuels scolaires, fournitures scolaires et matériels didactiques. Créée
+                en 2019, l&apos;entreprise s&apos;est donnée pour mission de rapprocher les ressources éducatives
+                des établissements, librairies, familles et utilisateurs finaux à travers un réseau
+                structuré de distribution.
+              </p>
+              <p style={{ color: "var(--horeb-muted)", fontSize: "clamp(0.9rem,2vw,1rem)", lineHeight: 1.8, marginBottom: 28, fontFamily: "'Roboto', sans-serif" }}>
+                Grâce à ses agences et partenaires répartis sur le territoire national, Horeb Solutions
+                facilite l&apos;accès aux manuels scolaires et accompagne les acteurs de l&apos;éducation avec
+                un service de proximité, fiable et organisé.
+              </p>
+              <div style={{ position: "relative", width: "100%", height: 260, borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.1)" }}>
+                <Image
+                  src="/kids-with-books.png"
+                  alt="Élèves avec manuels scolaires — Horeb Solutions Cameroun"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+
+            {/* Right — Vision & Mission cards */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {[HOREB_VISION_MISSION.vision, HOREB_VISION_MISSION.mission].map((card) => (
+                <div
+                  key={card.title}
+                  style={{
+                    background: "var(--horeb-white)",
+                    border: "1px solid rgba(0,122,61,0.12)",
+                    borderRadius: 16,
+                    padding: "clamp(1.5rem,3vw,2rem)",
+                    boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginBottom: 14 }}>
+                    <div
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: "50%",
+                        background: "rgba(0,122,61,0.08)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 20,
+                        flexShrink: 0,
+                        border: "2px solid rgba(0,122,61,0.15)",
+                      }}
+                    >
+                      {card.icon}
+                    </div>
+                    <h3 style={{ color: "var(--horeb-green)", fontWeight: 800, fontSize: 17, margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
+                      {card.title}
+                    </h3>
+                  </div>
+                  <p style={{ color: "var(--horeb-muted)", fontSize: "clamp(0.9rem,2vw,0.95rem)", lineHeight: 1.75, margin: 0, fontFamily: "'Roboto', sans-serif" }}>
+                    {card.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 4. DISTRIBUTION NETWORK MAP ════════════════════════════ */}
+      <section id="reseau" style={{ ...sectionPad, background: "var(--horeb-off-white)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3.5rem)" }}>
+            <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              NOTRE RÉSEAU
+            </p>
+            <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.6rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              Un réseau de distribution présent sur le territoire camerounais
+            </h2>
+            <p style={{ color: "var(--horeb-muted)", fontSize: "clamp(0.9rem,2vw,1rem)", maxWidth: 640, margin: "0 auto", fontFamily: "'Roboto', sans-serif", lineHeight: 1.7 }}>
+              Pour atteindre ses objectifs de distribution, Horeb Solutions s&apos;appuie sur un vaste réseau
+              d&apos;agences, de partenaires relais et de partenaires détaillants répartis sur l&apos;ensemble du
+              territoire camerounais.
+            </p>
+          </div>
+
+          {/* Stats row */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 20, marginBottom: "clamp(2.5rem,5vw,4rem)" }}>
+            {[
+              { value: "6", label: "Agences Horeb" },
+              { value: "10", label: "Partenaires relais" },
+              { value: "6", label: "Partenaires détaillants" },
+              { value: "✓", label: "Présence dans les principales régions du Cameroun" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                style={{
+                  background: "var(--horeb-white)",
+                  borderRadius: 14,
+                  padding: "1.5rem",
+                  textAlign: "center",
+                  border: "1px solid rgba(0,122,61,0.1)",
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
+                }}
+              >
+                <p style={{ color: "var(--horeb-green)", fontSize: "clamp(1.8rem,4vw,2.5rem)", fontWeight: 900, margin: "0 0 6px", fontFamily: "'Montserrat', sans-serif" }}>
+                  {stat.value}
+                </p>
+                <p style={{ color: "var(--horeb-muted)", fontSize: 13, margin: 0, fontFamily: "'Roboto', sans-serif", lineHeight: 1.4 }}>
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* City grid by region — no external map library */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
+            {[
+              { region: "Centre", agencies: ["Yaoundé — Simbock", "Yaoundé — Etoa Meki", "Yaoundé — Elig-Edzoa"], relay: ["Yaoundé Emia"] },
+              { region: "Littoral", agencies: ["Douala — Bonabéri", "Douala — Ndogsibi"], relay: ["Douala Mbopi", "Nkongsamba"] },
+              { region: "Ouest", agencies: ["Bafoussam"], relay: ["Dschang"] },
+              { region: "Nord", agencies: ["Garoua"], relay: [] },
+              { region: "Adamaoua", agencies: [], relay: ["Ngaoundéré"] },
+              { region: "Extrême-Nord", agencies: [], relay: ["Maroua"] },
+              { region: "Est", agencies: [], relay: ["Bertoua"] },
+              { region: "Nord-Ouest", agencies: [], relay: ["Bamenda"] },
+              { region: "Sud-Ouest", agencies: [], relay: ["Buea", "Limbe"] },
+            ].map((r) => (
+              <div
+                key={r.region}
+                style={{
+                  background: "var(--horeb-white)",
+                  borderRadius: 12,
+                  padding: "1rem 1.25rem",
+                  border: "1px solid rgba(0,122,61,0.1)",
+                }}
+              >
+                <p style={{ color: "var(--horeb-green)", fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 8px", fontFamily: "'Montserrat', sans-serif" }}>
+                  {r.region}
+                </p>
+                {r.agencies.map((a) => (
+                  <div key={a} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+                    <span style={{ fontSize: 10 }}>🟢</span>
+                    <span style={{ color: "var(--horeb-text)", fontSize: 12, fontFamily: "'Roboto', sans-serif", fontWeight: 500 }}>{a}</span>
+                  </div>
+                ))}
+                {r.relay.map((c) => (
+                  <div key={c} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+                    <span style={{ fontSize: 10 }}>🟡</span>
+                    <span style={{ color: "var(--horeb-muted)", fontSize: 12, fontFamily: "'Roboto', sans-serif" }}>{c}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Legend */}
+          <div style={{ display: "flex", gap: 24, justifyContent: "center", flexWrap: "wrap", marginTop: 24 }}>
+            {[["🟢", "Agences Horeb"], ["🟡", "Partenaires relais"], ["🔵", "Partenaires détaillants"]].map(([icon, label]) => (
+              <div key={label} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>{icon}</span>
+                <span style={{ color: "var(--horeb-muted)", fontSize: 13, fontFamily: "'Roboto', sans-serif" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 5. AGENCIES ════════════════════════════════════════════ */}
+      <section id="agences" style={{ ...sectionPad, background: "var(--horeb-white)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3.5rem)" }}>
+            <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              NOS AGENCES
+            </p>
+            <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.6rem)", fontWeight: 900, letterSpacing: "-0.03em", fontFamily: "'Montserrat', sans-serif" }}>
+              Présents au plus près de vous
             </h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
-            {offices.map((o) => (
-              <div key={o.city} style={{ padding: "1.5rem", background: "#f0fdf4", borderRadius: 16, border: "1px solid #bbf7d0", textAlign: "center" }}>
-                {/* Green circle icon — brand element */}
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#0a8348", margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ color: "white", fontSize: 16 }}>📍</span>
+
+          {REGION_GROUPS.map((group) => {
+            const agencies = HOREB_AGENCIES.filter((a) => a.region === group.key);
+            if (agencies.length === 0) return null;
+            return (
+              <div key={group.key} style={{ marginBottom: 40 }}>
+                <p style={{ color: "var(--horeb-green)", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 16, fontFamily: "'Montserrat', sans-serif", borderBottom: "2px solid rgba(0,122,61,0.12)", paddingBottom: 8 }}>
+                  {group.label}
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+                  {agencies.map((agency) => (
+                    <div
+                      key={agency.id}
+                      style={{
+                        background: "var(--horeb-off-white)",
+                        borderRadius: 14,
+                        overflow: "hidden",
+                        border: "1px solid rgba(0,122,61,0.1)",
+                      }}
+                    >
+                      <div style={{ height: 4, background: "var(--horeb-green)" }} />
+                      <div style={{ padding: "1.25rem" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                          <div>
+                            <p style={{ color: "var(--horeb-text-dark)", fontWeight: 800, fontSize: 16, margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
+                              {agency.city}
+                            </p>
+                            <p style={{ color: "var(--horeb-muted)", fontSize: 13, margin: "2px 0 0", fontFamily: "'Roboto', sans-serif" }}>
+                              {agency.zone}
+                            </p>
+                          </div>
+                          <span style={{ background: "rgba(0,122,61,0.08)", color: "var(--horeb-green)", fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 999, letterSpacing: "0.06em", fontFamily: "'Montserrat', sans-serif", flexShrink: 0, marginLeft: 8 }}>
+                            {agency.region}
+                          </span>
+                        </div>
+
+                        {agency.note && (
+                          <p style={{ color: "var(--horeb-gold)", fontSize: 11, margin: "0 0 10px", fontStyle: "italic", fontFamily: "'Roboto', sans-serif" }}>
+                            ℹ️ {agency.note}
+                          </p>
+                        )}
+
+                        {agency.phone && agency.phoneTel ? (
+                          <a
+                            href={agency.phoneTel}
+                            style={{ color: "var(--horeb-green)", fontWeight: 600, fontSize: 14, textDecoration: "none", display: "block", fontFamily: "'Roboto', sans-serif" }}
+                          >
+                            📞 {agency.phone}
+                          </a>
+                        ) : (
+                          <div>
+                            <p style={{ color: "var(--horeb-muted)", fontSize: 12, margin: "0 0 4px", fontStyle: "italic", fontFamily: "'Roboto', sans-serif" }}>
+                              Numéro non communiqué
+                            </p>
+                            <a
+                              href={HOREB_CONTACT.phoneTel}
+                              style={{ color: "var(--horeb-green)", fontWeight: 600, fontSize: 13, textDecoration: "none", fontFamily: "'Roboto', sans-serif" }}
+                            >
+                              📞 Contactez le siège : {HOREB_CONTACT.phoneFull}
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <p style={{ color: "#0a8348", fontWeight: 700, fontSize: 14, margin: "0 0 8px", fontFamily: "'Roboto', sans-serif" }}>{o.city}</p>
-                <a href={`tel:${o.tel.replace(/\s|\(|\)/g, "")}`} style={{ color: "#374151", fontSize: 13, textDecoration: "none", fontFamily: "'Roboto', sans-serif" }}>{o.tel}</a>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ══ 6. PARTENAIRES RELAIS ══════════════════════════════════ */}
+      <section style={{ ...sectionPad, background: "var(--horeb-off-white)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3rem)" }}>
+            <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              PARTENAIRES RELAIS
+            </p>
+            <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              10 partenaires relais agréés sur le territoire
+            </h2>
+            <p style={{ color: "var(--horeb-muted)", fontSize: "clamp(0.9rem,2vw,1rem)", maxWidth: 540, margin: "0 auto", fontFamily: "'Roboto', sans-serif" }}>
+              Nos partenaires relais étendent notre réseau de distribution dans les villes secondaires du Cameroun.
+            </p>
+          </div>
+
+          {/* Scroll strip — mobile horizontal, desktop flex wrap */}
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              overflowX: "auto",
+              scrollSnapType: "x mandatory",
+              paddingBottom: 12,
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            {HOREB_PARTNERS_RELAY.map((partner) => (
+              <div
+                key={partner.city}
+                style={{
+                  flexShrink: 0,
+                  scrollSnapAlign: "start",
+                  border: "2px solid var(--horeb-green)",
+                  borderRadius: 12,
+                  padding: "12px 22px",
+                  textAlign: "center",
+                  minWidth: 130,
+                  background: "var(--horeb-white)",
+                }}
+              >
+                <p style={{ color: "var(--horeb-text-dark)", fontWeight: 700, fontSize: 15, margin: "0 0 3px", fontFamily: "'Roboto', sans-serif" }}>
+                  {partner.city}
+                </p>
+                <p style={{ color: "var(--horeb-green)", fontSize: 10, margin: 0, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Montserrat', sans-serif" }}>
+                  {partner.region}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ MGI ECOSYSTEM ════════════════════════════════ */}
-      <section style={{ padding: "4rem 2rem", background: "#f9fafb", borderTop: "1px solid #e5e7eb" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ color: "#9CA3AF", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 12, fontFamily: "'Montserrat', sans-serif" }}>Groupe MGI</p>
-          <p style={{ color: "#374151", fontSize: 15, marginBottom: 24, fontFamily: "'Roboto', sans-serif" }}>
-            Horeb Solutions Sarl est une entreprise du groupe{" "}
-            <strong>Mina-Galeed Invest (MGI) Ltd</strong> — Start well, Grow well.
-          </p>
-          <a href="https://mgi-ventures.com" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#0a8348", padding: "10px 24px", borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: "none", fontFamily: "'Roboto', sans-serif" }}>
-            mgi-ventures.com →
-          </a>
+      {/* ══ 7. PARTENAIRES DÉTAILLANTS ═════════════════════════════ */}
+      <section style={{ ...sectionPad, background: "var(--horeb-white)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3rem)" }}>
+            <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              PARTENAIRES DÉTAILLANTS
+            </p>
+            <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              Trouvez nos produits dans votre quartier
+            </h2>
+            <p style={{ color: "var(--horeb-muted)", fontSize: "clamp(0.9rem,2vw,1rem)", maxWidth: 540, margin: "0 auto", fontFamily: "'Roboto', sans-serif" }}>
+              Nos partenaires détaillants distribuent directement dans les quartiers et marchés locaux.
+            </p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16 }}>
+            {HOREB_PARTNERS_RETAIL.map((partner) => (
+              <div
+                key={`${partner.city}-${partner.zone}`}
+                style={{
+                  background: "var(--horeb-off-white)",
+                  borderRadius: 14,
+                  padding: "1.25rem 1.5rem",
+                  border: "1px solid rgba(0,122,61,0.1)",
+                  textAlign: "center",
+                }}
+              >
+                <p style={{ color: "var(--horeb-text-dark)", fontWeight: 700, fontSize: 16, margin: "0 0 4px", fontFamily: "'Roboto', sans-serif" }}>
+                  {partner.city}
+                </p>
+                <p style={{ color: "var(--horeb-green)", fontSize: 13, margin: 0, fontFamily: "'Roboto', sans-serif", fontWeight: 600 }}>
+                  {partner.zone}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ══ CONTACT ══════════════════════════════════════ */}
-      <section id="contact" style={{ padding: "8rem 2rem", background: "#0a8348" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16, fontFamily: "'Montserrat', sans-serif" }}>Contactez-nous</p>
-          <h2 style={{ color: "#ffffff", fontWeight: 900, fontSize: "clamp(2rem, 4vw, 2.8rem)", letterSpacing: "-0.02em", marginBottom: 16, fontFamily: "'Roboto', sans-serif" }}>
-            Parlons de vos besoins
-          </h2>
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, maxWidth: 480, margin: "0 auto 12px", fontFamily: "'Roboto', sans-serif" }}>
-            Votre logistique, notre priorité. Contactez l&apos;agence la plus proche
-            ou écrivez-nous directement.
-          </p>
-          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, marginBottom: 48, fontStyle: "italic" }}>
-            Siège social : Immeuble CCA, Marché Central Yaoundé — BP 31750
-          </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginBottom: 36 }}>
-            <a href="mailto:info@horebsolutions.org" style={{ background: "white", color: "#0a8348", padding: "16px 32px", borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: "none", fontFamily: "'Roboto', sans-serif" }}>
-              info@horebsolutions.org
-            </a>
-            <a href="tel:+237222233560" style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: "white", padding: "16px 32px", borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: "none" }}>
-              +237 222 23 35 60
-            </a>
+      {/* ══ 8. GALLERY ═════════════════════════════════════════════ */}
+      <section style={{ ...sectionPad, background: "var(--horeb-off-white)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3rem)" }}>
+            <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+              GALERIE
+            </p>
+            <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.03em", fontFamily: "'Montserrat', sans-serif" }}>
+              La distribution en action
+            </h2>
           </div>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            {offices.map((o) => (
-              <a key={o.city} href={`tel:${o.tel.replace(/\s|\(|\)/g, "")}`} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)", color: "rgba(255,255,255,0.65)", padding: "8px 16px", borderRadius: 8, fontSize: 12, textDecoration: "none", fontFamily: "'Roboto', sans-serif" }}>
-                {o.city}: {o.tel}
-              </a>
+
+          {/* Horizontal scroll on mobile, grid on desktop */}
+          <div
+            style={{
+              display: "flex",
+              gap: 16,
+              overflowX: "auto",
+              scrollSnapType: "x mandatory",
+              paddingBottom: 12,
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            {[
+              { src: "/truck-loading.png", alt: "Chargement camion Horeb Solutions — logistique scolaire Cameroun" },
+              { src: "/warehouse-books.png", alt: "Entrepôt manuels scolaires — stock Horeb Solutions" },
+              { src: "/workers.png", alt: "Équipe Horeb Solutions — distribution scolaire Cameroun" },
+            ].map((img) => (
+              <div
+                key={img.src}
+                style={{
+                  flexShrink: 0,
+                  scrollSnapAlign: "start",
+                  position: "relative",
+                  width: "clamp(260px,35vw,380px)",
+                  height: 260,
+                  borderRadius: 14,
+                  overflow: "hidden",
+                  border: "2px solid rgba(0,122,61,0.1)",
+                }}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 640px) 280px, 380px"
+                />
+              </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ══ 9. B2B CTA ═════════════════════════════════════════════ */}
+      <section
+        style={{
+          background: "linear-gradient(135deg, var(--horeb-dark-green) 0%, var(--horeb-green) 100%)",
+          padding: "clamp(3.5rem,7vw,6rem) clamp(1rem,5vw,2rem)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem,5vw,4rem)", alignItems: "center" }}>
+          {/* Left — text */}
+          <div>
+            <h2
+              style={{
+                color: "var(--horeb-white)",
+                fontSize: "clamp(1.5rem,3.5vw,2.4rem)",
+                fontWeight: 900,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.2,
+                marginBottom: 20,
+                fontFamily: "'Montserrat', sans-serif",
+              }}
+            >
+              Vous êtes une école, une librairie, un éditeur ou un partenaire commercial ?
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "clamp(0.9rem,2vw,1rem)", lineHeight: 1.75, marginBottom: 32, fontFamily: "'Roboto', sans-serif" }}>
+              Horeb Solutions vous accompagne dans la diffusion et la distribution de manuels scolaires,
+              fournitures scolaires et matériels didactiques à travers un réseau structuré au Cameroun.
+            </p>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              <a href={HOREB_CONTACT.emailLink} style={ctaYellow}>Écrire à Horeb Solutions →</a>
+              <a
+                href={HOREB_CONTACT.phoneTel}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: "transparent",
+                  border: "2px solid rgba(255,255,255,0.5)",
+                  color: "var(--horeb-white)",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "clamp(0.85rem,2vw,0.9rem)",
+                  padding: "clamp(10px,3vw,13px) clamp(18px,5vw,26px)",
+                  borderRadius: 999,
+                  textDecoration: "none",
+                  minHeight: 44,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Appeler maintenant
+              </a>
+            </div>
+          </div>
+
+          {/* Right — image */}
+          <div style={{ position: "relative", height: "clamp(240px,30vw,380px)", borderRadius: 18, overflow: "hidden", boxShadow: "0 16px 48px rgba(0,0,0,0.25)" }}>
+            <Image
+              src="/book-deal.png"
+              alt="Partenariat Horeb Solutions — distribution scolaire Cameroun"
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,75,41,0.2)" }} />
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 10. CONTACT ════════════════════════════════════════════ */}
+      <section id="contact" style={{ ...sectionPad, background: "var(--horeb-white)" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+            CONTACT
+          </p>
+          <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 40, fontFamily: "'Montserrat', sans-serif" }}>
+            Contactez-nous
+          </h2>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20, marginBottom: 40 }}>
+            {[
+              { icon: "📍", label: HOREB_CONTACT.address, href: undefined },
+              { icon: "📮", label: HOREB_CONTACT.bp, href: undefined },
+              { icon: "📞", label: HOREB_CONTACT.phoneFull, href: HOREB_CONTACT.phoneTel },
+              { icon: "📧", label: HOREB_CONTACT.email, href: HOREB_CONTACT.emailLink },
+            ].map((item) => (
+              <div
+                key={item.label}
+                style={{
+                  background: "var(--horeb-off-white)",
+                  borderRadius: 14,
+                  padding: "1.5rem",
+                  border: "1px solid rgba(0,122,61,0.1)",
+                }}
+              >
+                <span style={{ fontSize: 24, display: "block", marginBottom: 10 }}>{item.icon}</span>
+                {item.href ? (
+                  <a href={item.href} style={{ color: "var(--horeb-green)", fontSize: 15, textDecoration: "none", fontWeight: 600, fontFamily: "'Roboto', sans-serif" }}>
+                    {item.label}
+                  </a>
+                ) : (
+                  <span style={{ color: "var(--horeb-muted)", fontSize: 14, fontFamily: "'Roboto', sans-serif", lineHeight: 1.5 }}>
+                    {item.label}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <p style={{ color: "var(--horeb-muted)", fontSize: 14, marginBottom: 8, fontFamily: "'Roboto', sans-serif" }}>
+            Suivez-nous sur
+          </p>
+          <p style={{ color: "var(--horeb-green)", fontSize: 16, fontWeight: 700, margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
+            {HOREB_CONTACT.social}
+          </p>
         </div>
       </section>
 
