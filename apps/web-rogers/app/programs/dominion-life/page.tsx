@@ -109,8 +109,7 @@ export default function DominionLifePage() {
             <SquareBars color={sky} />
           </div>
           <p style={{ color: sky, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 20 }}>
-            {/* TODO: confirm program type label */}
-            Dominion Life Men&apos;s Conference · Annual Conference
+            Dominion Life Men&apos;s Conference · Conference Format · Paid Registration
           </p>
           <h1 style={{ color: '#ffffff', fontFamily: serif, fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', fontWeight: 400, letterSpacing: '0.02em', lineHeight: 1.1, marginBottom: 24 }}>
             {/* TODO: replace with real headline from Rogers */}
@@ -118,8 +117,7 @@ export default function DominionLifePage() {
           </h1>
           <div style={{ width: 60, height: 2, background: pink, margin: '0 auto 24px', opacity: 0.7 }} />
           <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 18, lineHeight: 1.8, maxWidth: 600, margin: '0 auto 36px', fontWeight: 300 }}>
-            {/* TODO: confirm subheadline */}
-            For men who feel the pull between who they are and who they were built to be. Three days that reorganize everything.
+            A gathering of men called to lead &mdash; in faith, family, and influence.
           </p>
           {/* Stats row */}
           <div className="prog-stat-row" style={{ display: 'flex', gap: 32, justifyContent: 'center', marginBottom: 40 }}>
@@ -175,8 +173,11 @@ export default function DominionLifePage() {
             <p style={{ color: sky, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12 }}>What Changes</p>
             <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: 24 }}>What you leave with.</h2>
             <p style={{ color: '#1a1a2e', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: 480, fontWeight: 300 }}>
-              {/* TODO: replace with real transformation promise from Rogers */}
               Dominion Life is not a motivational conference. It is a structured confrontation with the version of yourself that keeps choosing comfort over calling. Over three days, you will work through the frameworks, conversations, and decisions that most men avoid for years. You leave with clarity, a plan, and a community.
+            </p>
+            <p style={{ color: '#4a4a6a', fontSize: 15, lineHeight: 1.8, maxWidth: 480, fontWeight: 300, marginTop: 16 }}>
+              {/* Verified coach bio — Apostle Dr. Rogers Ngalla Nforgwei */}
+              Led by Apostle Dr. Rogers Ngalla Nforgwei — Doctor of Applied Theology (Kingdom Life University, California), Business Development Manager for Africa at Cambridge University Press overseeing 30+ countries, Knight of the Order of Valor (2016) and Officer of the National Orders of Cameroon (2023).
             </p>
           </div>
           <div style={{ paddingTop: 16 }}>
@@ -334,9 +335,9 @@ export default function DominionLifePage() {
           {/* Value anchors */}
           <div style={{ marginBottom: 32 }}>
             {[
-              'Less than 3 months of an unused gym membership.',
-              'Less than one evening out for dinner.',
-              'One decision can redirect the next 10 years.',
+              'Register online below. All bookings are digital — no phone calls required.', // TODO: Rogers to provide — dates, venue, price, schedule
+              'FAQs below answer the most common questions.',
+              "If you're still stuck, use the contact page for general enquiries.",
             ].map((line, i) => (
               <p key={i} style={{ color: 'rgba(255,255,255,0.55)', fontFamily: hl, fontSize: 14, margin: '4px 0' }}>{line}</p>
             ))}

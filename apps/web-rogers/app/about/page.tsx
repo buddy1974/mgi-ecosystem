@@ -11,33 +11,34 @@ const sky    = '#4361ee'
 const light  = '#f1f1f1'
 
 const STAT_CARDS = [
-  { number: '12+',  label: 'Years of Ministry'        },
-  { number: '500+', label: 'Leaders Mentored'          },
-  { number: '8',    label: 'Nations Reached'           },
-  { number: '3',    label: 'Transformation Programs'   },
+  { number: '47+',  label: 'Families Supported with Scholarships' }, // Across 5 Regions of Cameroon
+  { number: '30+',  label: 'Countries — Cambridge University Press' }, // Cambridge University Press Mid Africa Region
+  { number: '7',    label: 'Nations — NMI Education'              }, // CEMAC + Senegal, Gabon, Chad, Guinea Conakry, Rwanda
+  { number: '1999', label: 'Joined Cambridge University Press'    }, // 26+ Years of Global Leadership
 ]
 
 const PROGRAMS = [
   {
     name: "Dominion Life Men's Conference",
     who:  'For men ready to stop drifting and start leading.',
-    promise: 'A transformative gathering where men step into God-given authority — as fathers, leaders, and builders.',
+    promise: 'A gathering of men called to lead with faith, vision, and authority. Conference format — register online.',
     href: '/programs/dominion-life',
   },
   {
     name: 'Men On Duty',
     who:  'For men who want their faith, family, and career to move as one.',
-    promise: 'Stop being present in body and absent in spirit. Start showing up fully — everywhere it counts.',
+    promise: 'Structured seminars for men ready to step fully into their purpose in family, work, and community.',
     href: '/programs/men-on-duty',
   },
   {
     name: 'CEO On Mission',
     who:  'For executives and entrepreneurs who lead from conviction.',
-    promise: 'Build an enterprise anchored in purpose — and scale it without losing your soul.',
+    promise: 'Private one-to-one executive coaching for leaders building organisations with kingdom values.',
     href: '/programs/ceo-on-mission',
   },
 ]
 
+// TODO: Replace ALL testimonials below with real testimonials from Rogers
 const TEASE_TESTIMONIALS = [
   {
     quote: "I came to Dominion Life skeptical. I left with a clarity I had been searching for over ten years. Rogers doesn't motivate you — he recalibrates you.",
@@ -98,7 +99,7 @@ export default function AboutPage() {
             lineHeight: 1.15,
             marginBottom: 24,
           }}>
-            The story behind the mission.
+            Apostle. Executive. Nation Builder.
           </h1>
           <div style={{ width: 64, height: 2, background: pink, margin: '0 auto 28px', opacity: 0.7 }} />
           <p style={{
@@ -109,8 +110,7 @@ export default function AboutPage() {
             maxWidth: 600,
             margin: '0 auto',
           }}>
-            Not credentials. Not a CV. The real journey — from where he started
-            to what he now builds in men across 8 nations.
+            Rogers Ngalla Nforgwei &mdash; Apostle &middot; Doctor of Applied Theology &middot; Knight &amp; Officer of the National Orders of Cameroon
           </p>
         </div>
       </section>
@@ -126,7 +126,7 @@ export default function AboutPage() {
             <div style={{ borderRadius: 20, overflow: 'hidden', background: purple, aspectRatio: '3/4', position: 'relative', maxHeight: 560 }}>
               <Image
                 src="/rogers-hero.png"
-                alt="Rogers Nforgwei"
+                alt="Apostle Dr. Rogers Ngalla Nforgwei — Publisher, Minister, Nation Builder, Yaoundé, Cameroon"
                 fill
                 style={{ objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.82 }}
               />
@@ -154,23 +154,23 @@ export default function AboutPage() {
               He didn&apos;t start with authority.<br />He started with a question.
             </h2>
             <p style={{ color: '#4c4c4c', fontSize: 16, lineHeight: 1.9, marginBottom: 20, fontWeight: 300 }}>
-              Rogers Nforgwei grew up understanding one truth about men: potential
-              without direction becomes frustration. He watched men around him —
-              capable, gifted, carrying something real — drift without a framework
-              for who they were called to be. That tension never left him.
+              Rogers Ngalla Nforgwei grew up in Mbabi, Wat village, Donga Mantung Division,
+              in the Northwest Region of Cameroon. He joined Cambridge University Press in
+              1999 and steadily rose to become Business Development Manager for Africa —
+              directing business across more than 30 countries. He is the only Black African
+              from sub-Saharan Africa to have held that level of responsibility within the
+              organisation.
             </p>
             <p style={{ color: '#4c4c4c', fontSize: 16, lineHeight: 1.9, marginBottom: 20, fontWeight: 300 }}>
-              The shift came when faith and leadership collided in his own life.
-              Not as a theological concept, but as a lived confrontation. He found
-              himself leading organizations, raising a family, building a business —
-              and realizing that none of those arenas could be separated. A man
-              doesn&apos;t have a professional life and a spiritual life and a family life.
-              He has one life. And it either has a center, or it doesn&apos;t.
+              In 2007, he founded NMI Education in Yaound&eacute;, now one of the leading school
+              textbook publishing companies in Cameroon, with a footprint spanning the CEMAC
+              sub-region, Senegal, Gabon, Chad, Guinea Conakry, and Rwanda &mdash; and more than
+              100 people earning their livelihood through the company.
             </p>
             <p style={{ color: '#4c4c4c', fontSize: 16, lineHeight: 1.9, marginBottom: 36, fontWeight: 300 }}>
-              That discovery became Dominion Life. Then Men On Duty. Then CEO On Mission.
-              Not programs he designed from a whiteboard, but frameworks forged from
-              the questions he lived with — and the answers that changed everything.
+              A Doctorate in Applied Theology (Kingdom Life University, California), keynote speaker
+              at CCBP24, and co-founder of the DRIMP Foundation with his wife Delphine &mdash; Rogers
+              brings the same kingdom-minded conviction to every program he leads.
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               <a href="#about-work" style={{ background: purple, color: '#fff', padding: '12px 28px', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
@@ -201,9 +201,11 @@ export default function AboutPage() {
             fontStyle: 'italic',
             marginBottom: 40,
           }}>
-            &ldquo;A pastor who thinks like a CEO.<br />
-            An entrepreneur who leads from faith.<br />
-            A mentor who builds men who build nations.&rdquo;
+            A faith leader who thinks like a CEO.<br />
+            A publisher who builds nations.<br />
+            A mentor who was once mentored only by hardship.<br />
+            Rogers Ngalla Nforgwei is the embodiment of what happens when faith,
+            discipline, and relentless work occupy the same man.
           </h2>
           <div style={{ display: 'flex', gap: 4, justifyContent: 'center' }}>
             <div style={{ width: 20, height: 6, background: pink, borderRadius: 1 }} />
@@ -266,10 +268,10 @@ export default function AboutPage() {
             &ldquo;
           </p>
           <blockquote style={{ fontFamily: serif, fontStyle: 'italic', color: '#ffffff', fontSize: 'clamp(1.4rem, 2.8vw, 2.2rem)', lineHeight: 1.55, fontWeight: 400, margin: '0 0 32px' }}>
-            The greatest threat to a man is not failure. It is succeeding at the wrong thing.
+            I came from nothing and I think today I am impacting a lot of people.
           </blockquote>
           <p style={{ color: pink, fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>
-            — Rogers Nforgwei, Dominion Life 2024
+            — Rogers Ngalla Nforgwei
           </p>
         </div>
       </section>

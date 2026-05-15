@@ -99,7 +99,7 @@ export default function CEOOnMissionPage() {
             <SquareBars color={sky} />
           </div>
           <p style={{ color: sky, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 20 }}>
-            CEO On Mission · Executive Mentorship Program {/* TODO: confirm label */}
+            One-to-One · Paid Coaching · Application Required
           </p>
           <h1 style={{ color: '#ffffff', fontFamily: serif, fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', fontWeight: 400, letterSpacing: '0.02em', lineHeight: 1.1, marginBottom: 24 }}>
             {/* TODO: replace with real headline from Rogers */}
@@ -314,7 +314,11 @@ export default function CEOOnMissionPage() {
             <p style={{ color: 'rgba(255,255,255,0.50)', fontFamily: hl, fontSize: '0.8rem', margin: 0 }}>Per executive · Both days + meals included</p>
           </div>
           <div style={{ marginBottom: 32 }}>
-            {['Less than one business dinner.', 'Two days that re-align the next decade.', 'The seat is limited. The opportunity is not.'].map((line, i) => (
+            {[
+              'This is an application-based engagement. Complete the form to begin.', // TODO: Rogers to provide — dates, venue, price, schedule
+              'All communication is handled digitally — no phone calls at this stage.',
+              'Rogers will review each application and respond via the platform.',
+            ].map((line, i) => (
               <p key={i} style={{ color: 'rgba(255,255,255,0.55)', fontFamily: hl, fontSize: 14, margin: '4px 0' }}>{line}</p>
             ))}
           </div>

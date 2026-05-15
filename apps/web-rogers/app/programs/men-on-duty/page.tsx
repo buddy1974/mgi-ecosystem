@@ -107,7 +107,7 @@ export default function MenOnDutyPage() {
             <SquareBars color={sky} />
           </div>
           <p style={{ color: sky, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 20 }}>
-            Men On Duty · 6-Week Cohort {/* TODO: confirm program type */}
+            Seminar Format · Paid Registration
           </p>
           <h1 style={{ color: '#ffffff', fontFamily: serif, fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', fontWeight: 400, letterSpacing: '0.02em', lineHeight: 1.1, marginBottom: 24 }}>
             {/* TODO: replace with real headline from Rogers */}
@@ -115,8 +115,7 @@ export default function MenOnDutyPage() {
           </h1>
           <div style={{ width: 60, height: 2, background: pink, margin: '0 auto 24px', opacity: 0.7 }} />
           <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 18, lineHeight: 1.8, maxWidth: 600, margin: '0 auto 36px', fontWeight: 300 }}>
-            {/* TODO: confirm subheadline */}
-            For men ready to stop managing their responsibilities and start leading from them. Duty is not a burden — it is the arena where great men are made.
+            Structured seminars for men who refuse to settle for half a life.
           </p>
           <div className="prog-stat-row" style={{ display: 'flex', gap: 32, justifyContent: 'center', marginBottom: 40 }}>
             {[
@@ -324,7 +323,11 @@ export default function MenOnDutyPage() {
             <p style={{ color: 'rgba(255,255,255,0.50)', fontFamily: hl, fontSize: '0.8rem', margin: 0 }}>Per cohort participant · 6 weeks included</p>
           </div>
           <div style={{ marginBottom: 32 }}>
-            {['Less than one month of streaming subscriptions.', 'Six weeks that change how you show up for life.', 'The men who are waiting for the right moment never arrive.'].map((line, i) => (
+            {[
+              'Register online below. All bookings are digital — no phone calls required.', // TODO: Rogers to provide — dates, venue, price, schedule
+              'FAQs below answer the most common questions.',
+              "If you're still stuck, use the contact page for general enquiries.",
+            ].map((line, i) => (
               <p key={i} style={{ color: 'rgba(255,255,255,0.55)', fontFamily: hl, fontSize: 14, margin: '4px 0' }}>{line}</p>
             ))}
           </div>
