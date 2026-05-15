@@ -4,25 +4,12 @@ import Link from "next/link";
 import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
-  title: "Horeb Solutions — Faith-Inspired Transformation",
-  description: "Horeb Solutions delivers leadership development, strategic consulting, and organisational transformation rooted in faith-based principles.",
-  metadataBase: new URL("https://horebsolutions.org"),
-  openGraph: {
-    title: "Horeb Solutions — Faith-Inspired Transformation",
-    description: "Horeb Solutions delivers leadership development, strategic consulting, and organisational transformation rooted in faith-based principles.",
-    url: "https://horebsolutions.org",
-    siteName: "Horeb Solutions",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary",
-    title: "Horeb Solutions — Faith-Inspired Transformation",
-    description: "Horeb Solutions delivers leadership development, strategic consulting, and organisational transformation rooted in faith-based principles.",
-  },
-  alternates: {
-    canonical: "https://horebsolutions.org",
-  },
+  title: { default: 'Horeb Solutions — Faith-Based Business Solutions', template: '%s | Horeb Solutions' },
+  description: 'Horeb Solutions provides faith-centered business consulting and organizational services rooted in biblical principles, serving organizations across Cameroon and beyond.',
+  metadataBase: new URL('https://www.horebsolutions.org'),
+  openGraph: { title: 'Horeb Solutions — Faith-Based Business Solutions', description: 'Horeb Solutions provides faith-centered business consulting and organizational services.', siteName: 'Horeb Solutions', locale: 'en_US', type: 'website' },
+  twitter: { card: 'summary', title: 'Horeb Solutions', description: 'Faith-centered business consulting and organizational services.' },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

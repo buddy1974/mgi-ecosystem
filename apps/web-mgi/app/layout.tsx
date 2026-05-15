@@ -5,25 +5,12 @@ import './globals.css'
 import ChatWidget from '@/components/ChatWidget'
 
 export const metadata: Metadata = {
-  title: "MGI Ventures — Multi-Sector Venture Ecosystem",
-  description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
-  metadataBase: new URL("https://mgi-ventures.com"),
-  openGraph: {
-    title: "MGI Ventures — Multi-Sector Venture Ecosystem",
-    description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
-    url: "https://mgi-ventures.com",
-    siteName: "MGI Ventures",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary",
-    title: "MGI Ventures — Multi-Sector Venture Ecosystem",
-    description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
-  },
-  alternates: {
-    canonical: "https://mgi-ventures.com",
-  },
+  title: { default: 'MGI — Multi-Company Investment Group', template: '%s | MGI' },
+  description: 'MGI is a multi-entity ecosystem of ventures in education, construction, hospitality, and leadership development — led by Apostle Rogers Nforgwei from Yaoundé, Cameroon.',
+  metadataBase: new URL('https://www.mgi-ventures.com'),
+  openGraph: { title: 'MGI — Multi-Company Investment Group', description: 'MGI is a multi-entity ecosystem of ventures in education, construction, hospitality, and leadership development.', siteName: 'MGI', locale: 'en_US', type: 'website' },
+  twitter: { card: 'summary_large_image', title: 'MGI — Multi-Company Investment Group', description: 'MGI is a multi-entity ecosystem of ventures in education, construction, hospitality, and leadership development.' },
+  robots: { index: true, follow: true },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -4,25 +4,12 @@ import Link from "next/link";
 import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
-  title: "Librairie du Quartier — Culture & Knowledge",
-  description: "Librairie du Quartier is a community bookstore celebrating culture, literature, and the power of knowledge.",
-  metadataBase: new URL("https://librairieduquartier.org"),
-  openGraph: {
-    title: "Librairie du Quartier — Culture & Knowledge",
-    description: "Librairie du Quartier is a community bookstore celebrating culture, literature, and the power of knowledge.",
-    url: "https://librairieduquartier.org",
-    siteName: "Librairie du Quartier",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary",
-    title: "Librairie du Quartier — Culture & Knowledge",
-    description: "Librairie du Quartier is a community bookstore celebrating culture, literature, and the power of knowledge.",
-  },
-  alternates: {
-    canonical: "https://librairieduquartier.org",
-  },
+  title: { default: 'Librairie du Quartier — Livres & Ressources | Cameroun', template: '%s | Librairie du Quartier' },
+  description: 'Librairie du Quartier — votre librairie de confiance au Cameroun. Livres chrétiens, ressources de développement personnel, et matériel éducatif.',
+  metadataBase: new URL('https://www.librairieduquartier.org'),
+  openGraph: { title: 'Librairie du Quartier — Livres & Ressources', description: 'Librairie du Quartier — votre librairie de confiance au Cameroun.', siteName: 'Librairie du Quartier', locale: 'fr_FR', type: 'website' },
+  twitter: { card: 'summary', title: 'Librairie du Quartier', description: 'Livres et ressources au Cameroun.' },
+  robots: { index: true, follow: true },
 };
 
 const navFont = "'Helvetica Neue', Helvetica, Arial, sans-serif";

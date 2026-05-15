@@ -4,25 +4,12 @@ import Link from "next/link";
 import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
-  title: "NMI Education — Excellence in Education",
-  description: "NMI Education empowers the next generation through academic excellence, leadership formation, and values-based learning.",
-  metadataBase: new URL("https://nmieducation.com"),
-  openGraph: {
-    title: "NMI Education — Excellence in Education",
-    description: "NMI Education empowers the next generation through academic excellence, leadership formation, and values-based learning.",
-    url: "https://nmieducation.com",
-    siteName: "NMI Education",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary",
-    title: "NMI Education — Excellence in Education",
-    description: "NMI Education empowers the next generation through academic excellence, leadership formation, and values-based learning.",
-  },
-  alternates: {
-    canonical: "https://nmieducation.com",
-  },
+  title: { default: 'NMI Education — Learning Across 7 Countries', template: '%s | NMI Education' },
+  description: 'NMI Education is a faith-driven educational institution operating across 7 countries in Africa, committed to academic excellence, character formation, and transformational learning.',
+  metadataBase: new URL('https://www.nmieducation.com'),
+  openGraph: { title: 'NMI Education — Learning Across 7 Countries', description: 'Faith-driven education across 7 countries in Africa.', siteName: 'NMI Education', locale: 'en_US', type: 'website' },
+  twitter: { card: 'summary', title: 'NMI Education', description: 'Faith-driven education across 7 countries.' },
+  robots: { index: true, follow: true },
 };
 
 const serif = "'Libre Baskerville', Georgia, 'Times New Roman', serif";

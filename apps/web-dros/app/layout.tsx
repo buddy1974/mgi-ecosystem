@@ -4,25 +4,12 @@ import Link from "next/link";
 import MobileNav from "./MobileNav";
 
 export const metadata: Metadata = {
-  title: "DROS Construction — Premier Real Estate Development",
-  description: "DROS Construction delivers high-quality construction and real estate development projects across Cameroon and beyond.",
-  metadataBase: new URL("https://drosconstruction.com"),
-  openGraph: {
-    title: "DROS Construction — Premier Real Estate Development",
-    description: "DROS Construction delivers high-quality construction and real estate development projects across Cameroon and beyond.",
-    url: "https://drosconstruction.com",
-    siteName: "DROS Construction",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary",
-    title: "DROS Construction — Premier Real Estate Development",
-    description: "DROS Construction delivers high-quality construction and real estate development projects across Cameroon and beyond.",
-  },
-  alternates: {
-    canonical: "https://drosconstruction.com",
-  },
+  title: { default: 'DROS Construction — Building Excellence in Cameroon', template: '%s | DROS Construction' },
+  description: 'DROS Construction delivers high-quality construction and civil engineering projects in Cameroon. Professional. Reliable. Excellence-driven.',
+  metadataBase: new URL('https://www.drosconstruction.com'),
+  openGraph: { title: 'DROS Construction — Building Excellence in Cameroon', description: 'High-quality construction and civil engineering in Cameroon.', siteName: 'DROS Construction', locale: 'en_US', type: 'website' },
+  twitter: { card: 'summary', title: 'DROS Construction', description: 'High-quality construction in Cameroon.' },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
