@@ -236,7 +236,7 @@ export default function HomePage() {
       <SectionDivider />
 
       {/* ══ 4. PROGRAMS ══════════════════════════════════════════════════════ */}
-      <section id="programs" className="section-premium" style={{ background: '#0d0120' }}>
+      <section id="programs" className="section-premium" style={{ background: '#f1f1f1' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 2rem' }}>
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -246,10 +246,10 @@ export default function HomePage() {
             style={{ textAlign: 'center', marginBottom: 56 }}
           >
             <SquareBars color={purple} />
-            <p style={{ color: '#7b90f3', fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
+            <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
               Programs &amp; Initiatives
             </p>
-            <h2 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 auto', maxWidth: 480 }}>
+            <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 auto', maxWidth: 480 }}>
               Choose your transformation.
             </h2>
           </motion.div>
@@ -261,7 +261,7 @@ export default function HomePage() {
           >
             {/* Large card — Dominion Life */}
             <motion.div
-              className="card-premium"
+              className="card-editorial"
               whileInView={{ opacity: 1, y: 0 }}
               initial={{ opacity: 0, y: 24 }}
               viewport={{ once: true, margin: '-80px' }}
@@ -273,9 +273,9 @@ export default function HomePage() {
                   <div style={{ height: 4, width: 40, background: PROGRAMS[0].color, borderRadius: 2 }} />
                   <div style={{ height: 4, width: 28, background: pink, opacity: 0.5, borderRadius: 2, marginLeft: 4 }} />
                 </div>
-                <span style={{ background: 'rgba(58,12,163,0.18)', color: '#7b90f3', fontFamily: hl, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '4px 12px', borderRadius: 4, display: 'inline-block', marginBottom: 20 }}>{PROGRAMS[0].tag}</span>
-                <h3 style={{ color: '#ffffff', fontFamily: hl, fontWeight: 800, fontSize: 24, marginBottom: 16, letterSpacing: '-0.02em', lineHeight: 1.2 }}>{PROGRAMS[0].name}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.60)', fontSize: 15, lineHeight: 1.8, fontWeight: 300, flex: 1, marginBottom: 28 }}>{PROGRAMS[0].outcome}</p>
+                <span style={{ background: 'rgba(58,12,163,0.08)', color: purple, fontFamily: hl, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '4px 12px', borderRadius: 4, display: 'inline-block', marginBottom: 20 }}>{PROGRAMS[0].tag}</span>
+                <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 24, marginBottom: 16, letterSpacing: '-0.02em', lineHeight: 1.2 }}>{PROGRAMS[0].name}</h3>
+                <p style={{ color: '#4a4a6a', fontSize: 15, lineHeight: 1.8, fontWeight: 300, flex: 1, marginBottom: 28 }}>{PROGRAMS[0].outcome}</p>
                 <span style={{ color: pink, fontFamily: hl, fontSize: '0.9rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                   Secure your place <span style={{ fontSize: '1.1em' }}>→</span>
                 </span>
@@ -287,7 +287,7 @@ export default function HomePage() {
               {PROGRAMS.slice(1).map((p, idx) => (
                 <motion.div
                   key={p.name}
-                  className="card-premium"
+                  className="card-editorial"
                   whileInView={{ opacity: 1, y: 0 }}
                   initial={{ opacity: 0, y: 24 }}
                   viewport={{ once: true, margin: '-80px' }}
@@ -299,9 +299,9 @@ export default function HomePage() {
                       <div style={{ height: 3, width: 32, background: p.color, borderRadius: 2 }} />
                       <div style={{ height: 3, width: 20, background: pink, opacity: 0.5, borderRadius: 2, marginLeft: 4 }} />
                     </div>
-                    <span style={{ background: 'rgba(58,12,163,0.18)', color: '#7b90f3', fontFamily: hl, fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 4, display: 'inline-block', marginBottom: 14 }}>{p.tag}</span>
-                    <h3 style={{ color: '#ffffff', fontFamily: hl, fontWeight: 800, fontSize: 18, marginBottom: 10, letterSpacing: '-0.02em', lineHeight: 1.3 }}>{p.name}</h3>
-                    <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 14, lineHeight: 1.75, fontWeight: 300, flex: 1, marginBottom: 20 }}>{p.outcome}</p>
+                    <span style={{ background: 'rgba(58,12,163,0.08)', color: purple, fontFamily: hl, fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 4, display: 'inline-block', marginBottom: 14 }}>{p.tag}</span>
+                    <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 18, marginBottom: 10, letterSpacing: '-0.02em', lineHeight: 1.3 }}>{p.name}</h3>
+                    <p style={{ color: '#4a4a6a', fontSize: 14, lineHeight: 1.75, fontWeight: 300, flex: 1, marginBottom: 20 }}>{p.outcome}</p>
                     <span style={{ color: sky, fontFamily: hl, fontSize: '0.85rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 5 }}>
                       Secure your place →
                     </span>
@@ -350,16 +350,24 @@ export default function HomePage() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-80px' }}
-                className="card-premium"
-                style={{ padding: '2rem', position: 'relative' }}
+                style={{
+                  padding: '2rem',
+                  position: 'relative',
+                  background: 'rgba(255,255,255,0.08)',
+                  borderLeft: '3px solid rgba(247,37,133,0.55)',
+                  borderRadius: 16,
+                  border: '1px solid rgba(255,255,255,0.10)',
+                  borderLeftWidth: 3,
+                  borderLeftColor: 'rgba(247,37,133,0.55)',
+                }}
               >
-                {/* Faint quote icon */}
-                <div style={{ fontSize: 64, lineHeight: 1, opacity: 0.08, fontFamily: 'Georgia, serif', position: 'absolute', top: 16, left: 20, color: '#ffffff' }}>&ldquo;</div>
-                <p style={{ color: 'rgba(255,255,255,0.80)', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 24, position: 'relative', zIndex: 1 }}>
-                  &ldquo;{t.quote}&rdquo;
+                {/* Faint serif quote icon */}
+                <p style={{ color: 'rgba(247,37,133,0.20)', fontFamily: 'Georgia, serif', fontSize: '4rem', lineHeight: 0.8, marginBottom: 16 }}>&ldquo;</p>
+                <p style={{ color: 'rgba(255,255,255,0.85)', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 24 }}>
+                  {t.quote}
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 16 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.12)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#ffffff', fontFamily: hl }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid rgba(255,255,255,0.10)', paddingTop: 16 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(247,37,133,0.18)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 700, color: pink, fontFamily: hl }}>
                     {t.name[0]}
                   </div>
                   <div>
@@ -418,8 +426,7 @@ export default function HomePage() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-80px' }}
-                className="card-premium"
-                style={{ padding: '2rem' }}
+                style={{ padding: '2rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, transition: 'border-color 0.25s ease' }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
                   <span style={{
@@ -567,8 +574,8 @@ export default function HomePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-80px' }}
-              className="card-premium"
-              style={{ padding: '2.5rem', background: '#ffffff' }}
+              className="card-editorial"
+              style={{ padding: '2.5rem' }}
             >
               <div style={{ width: 48, height: 48, background: 'rgba(58,12,163,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, marginBottom: 20 }}>🎯</div>
               <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 20, marginBottom: 12 }}>Personal Coaching</h3>
@@ -597,8 +604,8 @@ export default function HomePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-80px' }}
-              className="card-premium"
-              style={{ padding: '2.5rem', background: '#ffffff' }}
+              className="card-editorial"
+              style={{ padding: '2.5rem' }}
             >
               <div style={{ width: 48, height: 48, background: 'rgba(247,37,133,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, marginBottom: 20 }}>🎙️</div>
               <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 20, marginBottom: 12 }}>Speaking &amp; Events</h3>
