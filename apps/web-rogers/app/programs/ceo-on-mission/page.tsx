@@ -88,6 +88,33 @@ export default function CEOOnMissionPage() {
         }
       `}</style>
 
+      {/* ── TRANSFORMATION HERO BLOCK ─────────────────────────────────────── */}
+      <section style={{
+        padding: 'clamp(80px, 8vw, 120px) clamp(20px, 5vw, 80px) 60px',
+        background: 'linear-gradient(180deg, rgba(58,12,163,0.3) 0%, transparent 100%)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+      }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div style={{ display: 'inline-block', background: 'rgba(247,37,133,0.12)', border: '1px solid rgba(247,37,133,0.3)', borderRadius: '999px', padding: '5px 16px', marginBottom: '24px' }}>
+            <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase' as const, color: '#f72585', fontFamily: hl }}>
+              For Executives · Entrepreneurs · Christian leaders
+            </span>
+          </div>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.1, marginBottom: '20px', letterSpacing: '-0.025em', fontFamily: hl }}>
+            CEO On Mission
+          </h1>
+          <p style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, marginBottom: '36px', maxWidth: '640px', fontWeight: 300 }}>
+            Success without alignment is exhaustion. CEO On Mission exists for the leader who has built something but senses there is more — a dimension of purpose that makes the business eternal, not just profitable.
+          </p>
+          <a
+            href="/#contact" /* TODO: awaiting Rogers content — replace with actual registration URL */
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #f72585, #7209b7)', color: '#ffffff', fontWeight: 700, fontSize: '1rem', padding: '16px 32px', borderRadius: '999px', textDecoration: 'none', boxShadow: '0 8px 28px rgba(247,37,133,0.3)', letterSpacing: '0.02em', fontFamily: hl }}
+          >
+            Register Your Interest →
+          </a>
+        </div>
+      </section>
+
       {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
       <section style={{
         background: `linear-gradient(150deg, #0a0120 0%, ${purple} 45%, ${indigo} 100%)`,
