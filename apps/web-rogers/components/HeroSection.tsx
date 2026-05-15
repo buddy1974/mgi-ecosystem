@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useMediaQuery } from '@/components/useMediaQuery'
 
 const hl = "var(--font-headline, 'Nunito', system-ui, sans-serif)"
 const purple = '#3a0ca3'
@@ -24,6 +25,8 @@ const FLOAT_CARDS = [
 ]
 
 export function HeroSection() {
+  const isMobile = useMediaQuery('(max-width: 900px)')
+
   return (
     <>
       <style>{`
@@ -51,10 +54,10 @@ export function HeroSection() {
             maxWidth: '1280px',
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '80px',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: isMobile ? '48px' : '80px',
             alignItems: 'center',
-            padding: '120px 48px',
+            padding: isMobile ? '80px 24px' : '120px 48px',
             position: 'relative',
             zIndex: 1,
           }}
@@ -186,7 +189,7 @@ export function HeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
             className="hero-portrait-col"
-            style={{ position: 'relative', height: '580px' }}
+            style={{ position: 'relative', height: isMobile ? '380px' : '580px' }}
           >
             {/* Portrait image */}
             <div style={{ position: 'relative', height: '100%', borderRadius: '28px', overflow: 'hidden' }}>
