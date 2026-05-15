@@ -86,7 +86,11 @@ const FAQ = [
   },
 ]
 
-export default function DominionLifePage() {
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function DominionLifePage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams
+  const source = typeof params.source === 'string' ? params.source : 'direct'
   return (
     <main style={{ background: '#0d0120', fontFamily: hl, paddingTop: 140 }}>
       <style>{`
@@ -117,10 +121,10 @@ export default function DominionLifePage() {
             This conference does not teach you facts about manhood. It repositions you in the identity God intended — so you lead your family, your work, and your generation from a place of authority, not anxiety.
           </p>
           <a
-            href="/#contact" /* TODO: awaiting Rogers content — replace with actual registration URL */
+            href="#registration"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #f72585, #7209b7)', color: '#ffffff', fontWeight: 700, fontSize: '1rem', padding: '16px 32px', borderRadius: '999px', textDecoration: 'none', boxShadow: '0 8px 28px rgba(247,37,133,0.3)', letterSpacing: '0.02em', fontFamily: hl }}
           >
-            Register Your Interest →
+            Reserve My Seat →
           </a>
         </div>
       </section>
@@ -405,7 +409,7 @@ export default function DominionLifePage() {
           </div>
 
           {/* PayUnit button — preserved from Phase 33 */}
-          <RegisterButton program="dominion-life" />
+          <RegisterButton program="dominion-life" source={source} />
 
           <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8 }}>
             <p style={{ color: 'rgba(255,255,255,0.40)', fontFamily: hl, fontSize: 13, margin: 0 }}>Payment via MTN MoMo or Orange Money</p>

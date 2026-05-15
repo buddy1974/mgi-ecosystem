@@ -76,7 +76,11 @@ const FAQ = [
   },
 ]
 
-export default function CEOOnMissionPage() {
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function CEOOnMissionPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams
+  const source = typeof params.source === 'string' ? params.source : 'direct'
   return (
     <main style={{ background: '#0d0120', fontFamily: hl, paddingTop: 140 }}>
       <style>{`
@@ -107,10 +111,10 @@ export default function CEOOnMissionPage() {
             Success without alignment is exhaustion. CEO On Mission exists for the leader who has built something but senses there is more — a dimension of purpose that makes the business eternal, not just profitable.
           </p>
           <a
-            href="/#contact" /* TODO: awaiting Rogers content — replace with actual registration URL */
+            href="#registration"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #f72585, #7209b7)', color: '#ffffff', fontWeight: 700, fontSize: '1rem', padding: '16px 32px', borderRadius: '999px', textDecoration: 'none', boxShadow: '0 8px 28px rgba(247,37,133,0.3)', letterSpacing: '0.02em', fontFamily: hl }}
           >
-            Register Your Interest →
+            Apply For Mentorship →
           </a>
         </div>
       </section>
@@ -385,7 +389,7 @@ export default function CEOOnMissionPage() {
             ))}
           </div>
           {/* PayUnit button — preserved from Phase 33 */}
-          <RegisterButton program="ceo-on-mission" />
+          <RegisterButton program="ceo-on-mission" source={source} />
           <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8 }}>
             <p style={{ color: 'rgba(255,255,255,0.40)', fontFamily: hl, fontSize: 13, margin: 0 }}>Payment via MTN MoMo or Orange Money</p>
             <p style={{ color: 'rgba(255,255,255,0.30)', fontFamily: hl, fontSize: 12, margin: 0 }}>
