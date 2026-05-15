@@ -311,7 +311,7 @@ export default function AboutPage() {
           >
             {PROGRAMS.map((p, i) => (
               <ScrollReveal key={p.name} delay={i * 0.12}>
-                <div className="card-premium" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%', background: 'rgba(255,255,255,0.08)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.12)' }}>
                   <h3 style={{ color: '#ffffff', fontSize: 17, fontWeight: 700, marginBottom: 10, lineHeight: 1.3 }}>{p.name}</h3>
                   <p style={{ color: sky, fontSize: 13, fontWeight: 500, marginBottom: 12, lineHeight: 1.5 }}>{p.who}</p>
                   <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13, lineHeight: 1.7, fontWeight: 300, flex: 1, marginBottom: 20 }}>{p.promise}</p>
@@ -346,7 +346,7 @@ export default function AboutPage() {
           >
             {TEASE_TESTIMONIALS.map((t, i) => (
               <ScrollReveal key={t.name} delay={i * 0.12}>
-                <div className="card-premium" style={{ padding: '2rem', background: '#ffffff', position: 'relative' }}>
+                <div className="card-editorial" style={{ padding: '2rem', position: 'relative' }}>
                   <div style={{ fontSize: 64, lineHeight: 1, opacity: 0.06, fontFamily: serif, position: 'absolute', top: 12, left: 16, color: purple }}>&ldquo;</div>
                   <p style={{ color: pink, fontFamily: serif, fontSize: '2.5rem', lineHeight: 1, marginBottom: 12 }}>&ldquo;</p>
                   <p style={{ color: '#3a3a3a', fontFamily: serif, fontStyle: 'italic', fontSize: 15, lineHeight: 1.75, marginBottom: 20, position: 'relative', zIndex: 1 }}>
