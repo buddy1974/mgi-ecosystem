@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
-// TODO Phase 38: add Programs dropdown for all 3 program pages
 const NAV_LINKS = [
   { label: 'Programs', href: '/programs/dominion-life' },
   { label: 'Events',   href: '/events'                 },
@@ -13,9 +12,11 @@ const NAV_LINKS = [
 ]
 
 const MOBILE_EXTRA_LINKS = [
-  { label: 'Contact',  href: '/contact'                          },
-  { label: 'WhatsApp', href: 'https://wa.me/237683493220'        }, // TODO: confirm number with Rogers
+  { label: 'Contact',  href: '/contact'           },
+  { label: 'WhatsApp', href: 'https://wa.me/237683493220' },
 ]
+
+const hl = "var(--font-headline, 'Nunito', system-ui, sans-serif)"
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,116 +28,154 @@ export default function NavBar() {
           .rn-nav-links   { display: none !important; }
           .rn-reserve-cta { display: none !important; }
           .rn-hamburger   { display: flex !important; }
+          .rn-pill        { padding: 8px 16px !important; }
+          .rn-logo-wrap   { padding: 6px 12px !important; }
         }
         @media (min-width: 861px) {
           .rn-hamburger   { display: none !important; }
         }
       `}</style>
 
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-        height: '76px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 48px',
-        background: 'rgba(8, 2, 30, 0.92)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-        boxShadow: '0 1px 24px rgba(0,0,0,0.4)',
+      {/* Sticky outer wrapper — positions the pill in the page flow */}
+      <div style={{
+        position: 'sticky',
+        top: '16px',
+        zIndex: 1000,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '0 24px',
+        pointerEvents: 'none',
       }}>
-
-        {/* LOGO */}
-        <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Image
-            src="/logos/rogers-nforgwei.png"
-            alt="Rogers Nforgwei"
-            width={130}
-            height={42}
-            style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
-            priority
-          />
-        </a>
-
-        {/* DESKTOP LINKS */}
-        <div className="rn-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-          {NAV_LINKS.map(link => (
-            <a
-              key={link.href}
-              href={link.href}
+        {/* The glass pill */}
+        <nav
+          className="rn-pill"
+          style={{
+            maxWidth: '1280px',
+            width: '100%',
+            minHeight: '68px',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            background: 'rgba(13,1,32,0.80)',
+            border: '1px solid rgba(255,255,255,0.12)',
+            borderRadius: '999px',
+            padding: '10px 20px',
+            boxShadow: '0 10px 35px rgba(0,0,0,0.30)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            pointerEvents: 'all',
+          }}
+        >
+          {/* Logo capsule */}
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <div
+              className="rn-logo-wrap"
               style={{
-                color: 'rgba(255,255,255,0.65)',
-                textDecoration: 'none',
-                fontFamily: "var(--font-headline, 'Nunito', system-ui, sans-serif)",
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                letterSpacing: '0.03em',
-                transition: 'color 0.18s ease',
-                whiteSpace: 'nowrap',
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: '999px',
+                padding: '10px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.12)',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#ffffff' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.65)' }}
             >
-              {link.label}
-            </a>
-          ))}
-        </div>
-
-        {/* RIGHT SIDE: CTA + Hamburger */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <a
-            className="rn-reserve-cta"
-            href="/programs/dominion-life#registration"
-            style={{
-              background: '#f72585',
-              color: '#ffffff',
-              padding: '11px 28px',
-              borderRadius: 7,
-              textDecoration: 'none',
-              fontFamily: "var(--font-headline, 'Nunito', system-ui, sans-serif)",
-              fontWeight: 700,
-              fontSize: '0.875rem',
-              letterSpacing: '0.02em',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.18s ease',
-              boxShadow: '0 4px 18px rgba(247,37,133,0.35)',
-            }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.transform = 'translateY(-1px)'
-              el.style.boxShadow = '0 6px 24px rgba(247,37,133,0.5)'
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.transform = 'translateY(0)'
-              el.style.boxShadow = '0 4px 18px rgba(247,37,133,0.35)'
-            }}
-          >
-            Reserve Your Seat
+              <Image
+                src="/logos/favicon.png"
+                alt="Rogers Nforgwei"
+                width={120}
+                height={40}
+                style={{ objectFit: 'contain' }}
+                priority
+              />
+            </div>
           </a>
 
-          {/* HAMBURGER */}
-          <button
-            className="rn-hamburger"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-            style={{
-              display: 'none',
-              flexDirection: 'column', gap: 5,
-              padding: 8, background: 'transparent', border: 'none', cursor: 'pointer',
-            }}
-          >
-            <span style={{ display: 'block', width: 22, height: 2, background: '#f72585', transition: 'all 0.3s', transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
-            <span style={{ display: 'block', width: 22, height: 2, background: '#f72585', transition: 'all 0.3s', opacity: menuOpen ? 0 : 1 }} />
-            <span style={{ display: 'block', width: 22, height: 2, background: '#f72585', transition: 'all 0.3s', transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
-          </button>
-        </div>
-      </nav>
+          {/* Desktop nav links */}
+          <div className="rn-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
+            {NAV_LINKS.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                style={{
+                  color: 'rgba(255,255,255,0.65)',
+                  textDecoration: 'none',
+                  fontFamily: hl,
+                  fontWeight: 600,
+                  fontSize: '0.875rem',
+                  letterSpacing: '0.03em',
+                  transition: 'color 0.18s ease',
+                  whiteSpace: 'nowrap',
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#ffffff' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.65)' }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
 
-      {/* MOBILE OVERLAY */}
+          {/* CTA + Hamburger */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <a
+              className="rn-reserve-cta btn-premium"
+              href="/programs/dominion-life#registration"
+              style={{
+                background: '#f72585',
+                color: '#ffffff',
+                padding: '11px 28px',
+                borderRadius: '999px',
+                textDecoration: 'none',
+                fontFamily: hl,
+                fontWeight: 700,
+                fontSize: '0.875rem',
+                letterSpacing: '0.02em',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.25s ease',
+                boxShadow: '0 4px 18px rgba(247,37,133,0.38)',
+                display: 'inline-block',
+              }}
+              onMouseEnter={e => {
+                const el = e.currentTarget as HTMLAnchorElement
+                el.style.transform = 'translateY(-2px)'
+                el.style.boxShadow = '0 8px 28px rgba(247,37,133,0.55)'
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget as HTMLAnchorElement
+                el.style.transform = 'translateY(0)'
+                el.style.boxShadow = '0 4px 18px rgba(247,37,133,0.38)'
+              }}
+            >
+              Reserve Your Seat
+            </a>
+
+            {/* Hamburger — mobile only */}
+            <button
+              className="rn-hamburger"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+              style={{
+                display: 'none',
+                flexDirection: 'column', gap: 5,
+                padding: 8, background: 'transparent', border: 'none', cursor: 'pointer',
+              }}
+            >
+              <span style={{ display: 'block', width: 22, height: 2, background: '#f72585', transition: 'all 0.3s', transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: '#f72585', transition: 'all 0.3s', opacity: menuOpen ? 0 : 1 }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: '#f72585', transition: 'all 0.3s', transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
+            </button>
+          </div>
+        </nav>
+      </div>
+
+      {/* Mobile fullscreen overlay */}
       {menuOpen && (
         <div style={{
           position: 'fixed', inset: 0, zIndex: 999,
-          background: '#0a0219',
+          background: 'rgba(10,2,25,0.97)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 36,
         }}>
           <button
@@ -154,7 +193,7 @@ export default function NavBar() {
                 color: 'rgba(255,255,255,0.85)',
                 fontSize: 26, fontWeight: 600, textDecoration: 'none',
                 letterSpacing: '0.05em',
-                fontFamily: "var(--font-headline, 'Nunito', system-ui, sans-serif)",
+                fontFamily: hl,
               }}
             >
               {link.label}
@@ -166,8 +205,8 @@ export default function NavBar() {
             style={{
               marginTop: 16,
               background: '#f72585', color: '#fff',
-              padding: '14px 36px', borderRadius: 8,
-              fontFamily: "var(--font-headline, 'Nunito', system-ui, sans-serif)",
+              padding: '14px 40px', borderRadius: '999px',
+              fontFamily: hl,
               fontWeight: 700, fontSize: '1rem', textDecoration: 'none',
               boxShadow: '0 4px 18px rgba(247,37,133,0.4)',
             }}
