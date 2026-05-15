@@ -21,21 +21,21 @@ export default function HomePage() {
   const programs = [
     {
       name: "Dominion Life Men's Conference",
-      outcome: "Walk away knowing exactly who you are, what you're built for, and how to lead — without apology.",
+      outcome: "A gathering of men called to lead with faith, vision, and authority. Conference format — register online.",
       color: '#3a0ca3',
       href: '/programs/dominion-life',
       tag: 'Annual Conference',
     },
     {
       name: 'Men On Duty',
-      outcome: 'Stop drifting. Start leading — in your home, your faith, your work, and your community.',
+      outcome: 'Structured seminars for men ready to step fully into their purpose in family, work, and community.',
       color: '#4361ee',
       href: '/programs/men-on-duty',
       tag: 'Movement',
     },
     {
       name: 'CEO On Mission',
-      outcome: 'Build a business that serves a higher purpose — and scale it without losing your soul.',
+      outcome: 'Private one-to-one executive coaching for leaders building organisations with kingdom values.',
       color: '#f72585',
       href: '/programs/ceo-on-mission',
       tag: 'Executive Mentorship',
@@ -118,7 +118,7 @@ export default function HomePage() {
             this.
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 18, lineHeight: 1.75, marginBottom: 48, maxWidth: 520, fontWeight: 300 }}>
-            Join thousands of men and leaders across Africa stepping into purpose, clarity, and lasting impact — through programs, mentorship, and a transformational community.
+            Faith-Based Coaching &amp; Mentorship in Leadership, Business and Personal Development
           </p>
           <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="#programs" style={{ background: 'linear-gradient(90deg, #3a0ca3, #4361ee)', color: 'white', padding: '16px 36px', borderRadius: 12, fontSize: 14, fontWeight: 700, textDecoration: 'none', boxShadow: '0 4px 24px rgba(58,12,163,0.45)' }}>
@@ -155,8 +155,8 @@ export default function HomePage() {
           {[
             { number: '15+',  label: 'Years of Ministry'   },
             { number: '3',    label: 'Active Programs'     },
-            { number: '500+', label: 'Lives Transformed'   },
-            { number: '3',    label: 'Countries Reached'   },
+            { number: '500+', label: 'Lives Transformed'   }, // TODO: Rogers to confirm exact mentorship impact number
+            { number: '30+',  label: 'Nations Reached'    }, // Cambridge University Press: 30+ African nations; NMI Education: 7 countries
             { number: '10K+', label: 'Community Members'   },
           ].map((m) => (
             <div key={m.label} style={{ padding: '1.5rem 1rem' }}>
@@ -178,10 +178,11 @@ export default function HomePage() {
               Changing lives,<br />one person at a time.
             </h2>
             <p style={{ color: '#4c4c4c', fontSize: 16, lineHeight: 1.85, marginBottom: 20, fontWeight: 300 }}>
-              Rogers Nforgwei is a businessman, development director, and humanitarian who has spent over 15 years building people and institutions that create lasting change across Africa. As CEO of NMI Education and founder of multiple transformational programs, he has impacted thousands of lives.
+              {/* Verified biography — Rogers Ngalla Nforgwei */}
+              Apostle Dr. Rogers Ngalla Nforgwei was born in Mbabi, Wat village, Donga Mantung Division, Northwest Region, Cameroon. From humble beginnings, he rose to become Business Development Manager for Africa at Cambridge University Press — overseeing 30+ countries — and founder of NMI Education, one of Cameroon&apos;s leading publishing companies, now operating across 7 nations.
             </p>
             <p style={{ color: '#4c4c4c', fontSize: 16, lineHeight: 1.85, marginBottom: 36, fontWeight: 300 }}>
-              Rooted in faith and driven by purpose, Rogers believes every man and leader carries untapped potential that, when activated, reshapes families, communities, and nations.
+              A holder of a Doctorate in Applied Theology from Kingdom Life University, California, and twice honored by President Paul Biya — Knight (2016) and Officer (2023) of the National Orders of Cameroon — Rogers brings kingdom-minded leadership to every room he enters.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="#programs" style={{ background: '#3a0ca3', color: '#fff', padding: '12px 28px', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
