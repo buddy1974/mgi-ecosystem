@@ -101,17 +101,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <div style={{ flex: 1, height: 6, background: "#f72585" }} />
                 </div>
                 <p style={{ color: "#ffffff", fontWeight: 800, fontSize: 18, margin: "0 0 8px", letterSpacing: "-0.02em" }}>
-                  Rogers Nforgwei
+                  Rogers Ngalla Nforgwei
                 </p>
                 <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 13, lineHeight: 1.7, maxWidth: 320, margin: "0 0 16px", fontWeight: 300 }}>
-                  Impacting and Changing lives and communities.
+                  Faith-Based Coaching &amp; Mentorship in Leadership, Business and Personal Development
                 </p>
                 <p style={{ color: "#7b90f3", fontWeight: 300, fontStyle: "italic", fontSize: 13, margin: "0 0 16px" }}>
-                  &ldquo;Switch on the better side of the future.&rdquo;
+                  Yaound&eacute;, Cameroon
                 </p>
-                <a href="mailto:rogers@rogersnforgwei.com" style={{ color: "#f72585", fontSize: 13, textDecoration: "none" }}>
+                <a href="mailto:rogers@rogersnforgwei.com" style={{ color: "#f72585", fontSize: 13, textDecoration: "none", display: "block", marginBottom: 8 }}>
                   rogers@rogersnforgwei.com
                 </a>
+                <div style={{ display: "flex", gap: 16, marginTop: 4 }}>
+                  <a href="https://www.instagram.com/rogers_nforgwei/" target="_blank" rel="noopener noreferrer" style={{ color: "#7b90f3", fontSize: 12, textDecoration: "none", fontWeight: 500 }}>
+                    Instagram
+                  </a>
+                  <a href="https://www.facebook.com/nforgwei.rogers/" target="_blank" rel="noopener noreferrer" style={{ color: "#7b90f3", fontSize: 12, textDecoration: "none", fontWeight: 500 }}>
+                    Facebook
+                  </a>
+                </div>
               </div>
 
               <div>
@@ -131,7 +139,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 16px" }}>
                   Identity
                 </p>
-                {["Business man", "Development Director", "Humanitarian", "Coach and Mentor", "CEO NMI Education", "Man of God"].map((d) => (
+                {[
+                  "Apostle Dr. Rogers Ngalla Nforgwei",
+                  "Founder & CEO, NMI Education",
+                  "Business Development Manager, Cambridge University Press",
+                  "Founding President, DRIMP Foundation",
+                  "Knight of the Order of Valor · 2016",
+                  "Officer, National Orders of Cameroon · 2023",
+                ].map((d) => (
                   <p key={d} style={{ color: "rgba(255,255,255,0.25)", fontSize: 12, margin: "0 0 8px", fontWeight: 300 }}>{d}</p>
                 ))}
               </div>
@@ -143,7 +158,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
 
             <p style={{ color: "rgba(255,255,255,0.12)", fontSize: 11, margin: 0, textAlign: "center", fontFamily: "var(--font-body, 'Nunito', sans-serif)" }}>
-              © {new Date().getFullYear()} Rogers Nforgwei · All rights reserved · MGI Ecosystem
+              &copy; Rogers Ngalla Nforgwei &middot; Yaound&eacute;, Cameroon &middot; Faith &middot; Leadership &middot; Legacy
             </p>
           </div>
         </footer>
