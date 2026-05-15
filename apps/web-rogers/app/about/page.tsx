@@ -194,8 +194,8 @@ export default function AboutPage() {
             <p style={{ color: sky, fontSize: 11, fontWeight: 700, letterSpacing: '0.45em', textTransform: 'uppercase', marginBottom: 32 }}>
               Who Rogers Is
             </p>
-            {/* Pull quote — large glass panel */}
-            <div className="glass-panel" style={{ padding: '48px', marginBottom: 40 }}>
+            {/* Pull quote — editorial serif, generous breathing room */}
+            <div style={{ padding: '48px 0', marginBottom: 40, borderTop: '1px solid rgba(255,255,255,0.15)', borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
               <h2 style={{
                 fontFamily: serif,
                 color: '#ffffff',

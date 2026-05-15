@@ -249,7 +249,7 @@ export default function DominionLifePage() {
               </h2>
             </div>
           </ScrollReveal>
-          <div className="glass-panel" style={{ padding: '8px', background: 'rgba(58,12,163,0.03)', display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <div style={{ background: 'rgba(58,12,163,0.03)', borderRadius: 16, border: '1px solid rgba(58,12,163,0.08)', display: 'flex', flexDirection: 'column', gap: 0 }}>
             {SCHEDULE.map((day, i) => (
               <div key={i} style={{ display: 'flex', gap: 32, padding: '2.5rem', borderBottom: i < SCHEDULE.length - 1 ? '1px solid rgba(58,12,163,0.08)' : 'none' }}>
                 <div style={{ flexShrink: 0, width: 80 }}>
