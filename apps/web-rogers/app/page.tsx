@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { SquareBars } from '@/components/SquareBars'
 import { WaveDivider } from '@/components/WaveDivider'
 import { ScriptureDivider } from '@/components/ScriptureDivider'
+import { HeroSection } from '@/components/HeroSection'
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 const purple  = '#3a0ca3'
@@ -13,16 +15,17 @@ const pink    = '#f72585'
 const sky     = '#4361ee'
 const hl      = "var(--font-headline, 'Nunito', system-ui, sans-serif)"
 
+// ── Fade-up scroll animation variant ─────────────────────────────────────────
+const fadeUp = {
+  hidden:  { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay: (i ?? 0) * 0.12, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  }),
+}
+
 // ── Data ──────────────────────────────────────────────────────────────────────
-
-const METRICS = [
-  { value: '12+',    label: 'Years of Ministry'    },
-  { value: '500+',   label: 'Leaders Mentored'     }, // TODO: Rogers to confirm exact mentorship impact number
-  { value: '30+',    label: 'Nations Reached'      }, // Cambridge University Press: 30+ African nations; NMI Education: 7 countries
-  { value: '3',      label: 'Active Programs'      },
-  { value: '1,000+', label: 'Community Members'    },
-]
-
 const PROGRAMS = [
   {
     name: "Dominion Life Men's Conference",
@@ -92,8 +95,26 @@ const EVENTS = [
   },
 ]
 
-// ── Page ──────────────────────────────────────────────────────────────────────
+const PROOF_STATS = [
+  { value: '30+',   label: 'Nations Reached'          },
+  { value: '7',     label: 'Countries — NMI Education' },
+  { value: '47+',   label: 'Families Supported'        },
+  { value: '2×',    label: 'Presidential Honors'       },
+  { value: '26+',   label: 'Years of Leadership'       },
+]
 
+// ── Section divider ───────────────────────────────────────────────────────────
+const SectionDivider = () => (
+  <div style={{
+    width: '100%',
+    height: '1px',
+    background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent)',
+    maxWidth: '1280px',
+    margin: '0 auto',
+  }} />
+)
+
+// ── Page ──────────────────────────────────────────────────────────────────────
 export default function HomePage() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -106,304 +127,211 @@ export default function HomePage() {
           50%       { box-shadow: 0 0 0 5px rgba(34,197,94,0.1); }
         }
         @media (max-width: 768px) {
-          .hero-wrapper      { flex-direction: column !important; }
-          .hero-image-col    { flex: none !important; height: 320px !important; width: 100% !important; min-height: unset !important; }
           .story-grid        { grid-template-columns: 1fr !important; }
-          .programs-grid     { grid-template-columns: 1fr !important; }
+          .programs-asymmetric { grid-template-columns: 1fr !important !important; }
           .testimonials-grid { grid-template-columns: 1fr !important; }
           .events-grid       { grid-template-columns: 1fr !important; }
           .coaching-grid     { grid-template-columns: 1fr !important; }
-          .social-proof-grid { grid-template-columns: repeat(3, 1fr) !important; }
-          .metrics-sep       { display: none !important; }
-          .hero-ctas         { flex-direction: column !important; align-items: flex-start !important; }
+          .metrics-strip     { flex-wrap: wrap !important; gap: 24px !important; }
+          .section-premium   { padding-top: 80px !important; padding-bottom: 80px !important; }
         }
         @media (max-width: 480px) {
-          .social-proof-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .metrics-strip     { gap: 16px !important; }
         }
       `}</style>
 
       {/* ══ 1. HERO ══════════════════════════════════════════════════════════ */}
-      <section className="hero-wrapper" style={{
-        paddingTop: 76,
-        minHeight: '100vh',
-        display: 'flex', alignItems: 'stretch',
-        background: `linear-gradient(150deg, #0a0120 0%, ${purple} 55%, #1e0a60 100%)`,
-        position: 'relative', overflow: 'hidden',
-      }}>
-        {/* Ambient glow */}
-        <div style={{ position: 'absolute', bottom: -80, left: '40%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(247,37,133,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <HeroSection />
 
-        {/* LEFT — copy (55%) */}
-        <div style={{
-          flex: '0 0 55%',
-          display: 'flex', flexDirection: 'column', justifyContent: 'center',
-          padding: '80px 60px 80px 80px',
-          position: 'relative', zIndex: 2,
-        }}>
-          <div style={{ display: 'flex', gap: 0, marginBottom: 32, borderRadius: 3, overflow: 'hidden', width: 68 }}>
-            <div style={{ width: 40, height: 6, background: purple }} />
-            <div style={{ width: 28, height: 6, background: pink }} />
-          </div>
+      <SectionDivider />
 
-          <p style={{ color: '#7b90f3', fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 24, lineHeight: 1 }}>
-            Rogers Nforgwei
-          </p>
-
-          <h1 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2.8rem, 6vw, 5.5rem)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 0 }}>
-            You were built
-          </h1>
-          <h1 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2.8rem, 6vw, 5.5rem)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 0 }}>
-            for more than
-          </h1>
-          <h1 style={{ background: 'linear-gradient(90deg, #7b90f3 0%, #f72585 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontFamily: hl, fontSize: 'clamp(2.8rem, 6vw, 5.5rem)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 32 }}>
-            this.
-          </h1>
-
-          <p style={{ color: 'rgba(255,255,255,0.80)', fontFamily: hl, fontSize: 17, lineHeight: 1.8, marginBottom: 44, maxWidth: 520, fontWeight: 300 }}>
-            Faith-Based Coaching &amp; Mentorship in Leadership, Business and Personal Development
-          </p>
-
-          <div className="hero-ctas" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-            <a
-              href="/#programs"
-              style={{
-                background: pink, color: '#ffffff',
-                padding: '16px 40px', borderRadius: 8,
-                textDecoration: 'none', fontFamily: hl, fontWeight: 700,
-                fontSize: '1rem', letterSpacing: '0.02em',
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                transition: 'all 0.2s ease',
-                boxShadow: '0 6px 28px rgba(247,37,133,0.38)',
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.transform = 'translateY(-2px)'
-                el.style.boxShadow = '0 10px 36px rgba(247,37,133,0.55)'
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.transform = 'translateY(0)'
-                el.style.boxShadow = '0 6px 28px rgba(247,37,133,0.38)'
-              }}
-            >
-              Explore Programs
-            </a>
-            <a
-              href="/about"
-              style={{
-                border: '2px solid rgba(67,97,238,0.6)',
-                color: 'rgba(255,255,255,0.85)',
-                background: 'rgba(67,97,238,0.08)',
-                padding: '14px 36px', borderRadius: 8,
-                textDecoration: 'none', fontFamily: hl,
-                fontWeight: 600, fontSize: '0.95rem',
-                transition: 'all 0.2s ease',
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.background = 'rgba(67,97,238,0.18)'
-                el.style.borderColor = 'rgba(67,97,238,0.9)'
-                el.style.color = '#ffffff'
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.background = 'rgba(67,97,238,0.08)'
-                el.style.borderColor = 'rgba(67,97,238,0.6)'
-                el.style.color = 'rgba(255,255,255,0.85)'
-              }}
-            >
-              About Rogers
-            </a>
-            <a
-              href="https://wa.me/237683493220"
-              target="_blank" rel="noopener noreferrer"
-              style={{ color: 'rgba(255,255,255,0.50)', fontFamily: hl, fontSize: 13, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, transition: 'color 0.2s' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.85)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.50)' }}
-            >
-              <span style={{ fontSize: 16 }}>💬</span> WhatsApp
-            </a>
-          </div>
-        </div>
-
-        {/* RIGHT — Rogers photo, full-bleed (45%) */}
-        <div className="hero-image-col" style={{
-          flex: '0 0 45%',
-          position: 'relative', overflow: 'hidden',
-          minHeight: 600,
-        }}>
-          <Image
-            src="/rogers-hero.png"
-            alt="Rogers Nforgwei"
-            fill
-            style={{ objectFit: 'cover', objectPosition: 'top center' }}
-            priority
-          />
-          {/* Left fade — blends into text column */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: `linear-gradient(to right, ${purple} 0%, transparent 30%)`,
-            zIndex: 1,
-          }} />
-          {/* Bottom fade */}
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0, height: 200,
-            background: `linear-gradient(to top, #0a0120 0%, transparent 100%)`,
-            zIndex: 1,
-          }} />
-          {/* Floating stat chip */}
-          <div style={{
-            position: 'absolute', bottom: 40, right: 32, zIndex: 2,
-            background: 'rgba(255,255,255,0.08)',
-            backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: 14, padding: '18px 24px',
-          }}>
-            <p style={{ fontFamily: hl, fontWeight: 800, fontSize: '2rem', color: '#ffffff', lineHeight: 1, marginBottom: 4 }}>500+</p>
-            <p style={{ fontFamily: hl, fontWeight: 400, fontSize: '0.72rem', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0 }}>Leaders Transformed</p>
-          </div>
-          {/* Floating quote chip */}
-          <div style={{
-            position: 'absolute', top: 48, right: 28, zIndex: 2,
-            background: 'rgba(247,37,133,0.15)',
-            border: '1px solid rgba(247,37,133,0.3)',
-            borderRadius: 100, padding: '8px 16px',
-          }}>
-            <p style={{ fontFamily: hl, fontWeight: 600, fontSize: '0.75rem', color: 'rgba(255,255,255,0.9)', margin: 0 }}>8 Nations Reached</p>
-          </div>
-        </div>
-      </section>
-
-      {/* WAVE: Hero → Social Proof */}
-      <WaveDivider fromColor={`linear-gradient(150deg, #0a0120, #1e0a60)`} toColor="#0d0120" />
-
-      {/* ══ 2. SOCIAL PROOF BAR ══════════════════════════════════════════════ */}
-      <section style={{ background: '#0d0120', padding: '3.5rem 2rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      {/* ══ 2. SOCIAL PROOF METRICS STRIP ════════════════════════════════════ */}
+      <div style={{ background: '#0d0120', padding: '0 2rem' }}>
         <div
-          className="social-proof-grid"
-          style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', alignItems: 'center' }}
+          className="glass-panel metrics-strip"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            padding: '28px 48px',
+            maxWidth: '1280px',
+            margin: '0 auto',
+          }}
         >
-          {METRICS.map((m, i) => (
-            <div key={m.label} style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ textAlign: 'center', padding: '0 20px', flex: 1 }}>
-                <p style={{ fontFamily: hl, fontWeight: 800, fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', color: '#ffffff', lineHeight: 1, marginBottom: 6 }}>{m.value}</p>
-                <p style={{ fontFamily: hl, fontWeight: 400, fontSize: '0.72rem', color: 'rgba(255,255,255,0.55)', letterSpacing: '0.10em', textTransform: 'uppercase', margin: 0 }}>{m.label}</p>
-              </div>
-              {i < METRICS.length - 1 && (
-                <div className="metrics-sep" style={{ width: 1, height: 40, background: pink, opacity: 0.3, flexShrink: 0 }} />
-              )}
-            </div>
+          {PROOF_STATS.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                textAlign: 'center' as const,
+                padding: '0 24px',
+                borderRight: i < PROOF_STATS.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none',
+              }}
+            >
+              <div style={{ fontSize: 28, fontWeight: 700, color: '#ffffff', fontFamily: hl }}>{stat.value}</div>
+              <div style={{ fontSize: 13, opacity: 0.5, marginTop: 6, color: '#ffffff', fontFamily: hl }}>{stat.label}</div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </div>
+
+      <SectionDivider />
 
       {/* ══ 3. ROGERS STORY ══════════════════════════════════════════════════ */}
-      <section id="story" style={{ background: '#f8f7ff', padding: '6rem 2rem' }}>
-        <div
-          className="story-grid"
-          style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'center' }}
+      <section id="story" className="section-premium" style={{ background: '#f8f7ff' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Photo */}
-          <div style={{ position: 'relative' }}>
-            <div style={{ borderRadius: 20, overflow: 'hidden', background: purple, aspectRatio: '3/4', position: 'relative', maxHeight: 540 }}>
-              <Image src="/rogers-hero.png" alt="Rogers Nforgwei" fill style={{ objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.85 }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(to top, rgba(58,12,163,0.97) 0%, transparent 100%)' }}>
-                <p style={{ color: 'rgba(255,255,255,0.9)', fontStyle: 'italic', fontSize: 14, lineHeight: 1.65, margin: '0 0 8px' }}>
-                  &ldquo;A man doesn&apos;t have a professional life and a spiritual life. He has one life.&rdquo;
-                </p>
-                <p style={{ color: pink, fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', margin: 0 }}>— Rogers Nforgwei</p>
+          <div
+            className="story-grid"
+            style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'center' }}
+          >
+            {/* Photo */}
+            <div style={{ position: 'relative' }}>
+              <div style={{ borderRadius: 28, overflow: 'hidden', background: purple, aspectRatio: '3/4', position: 'relative', maxHeight: 540 }}>
+                <Image src="/images/rogers-frontpage.png" alt="Apostle Dr. Rogers Ngalla Nforgwei" fill style={{ objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.85 }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(to top, rgba(58,12,163,0.97) 0%, transparent 100%)' }}>
+                  <p style={{ color: 'rgba(255,255,255,0.9)', fontStyle: 'italic', fontSize: 14, lineHeight: 1.65, margin: '0 0 8px' }}>
+                    &ldquo;A man doesn&apos;t have a professional life and a spiritual life. He has one life.&rdquo;
+                  </p>
+                  <p style={{ color: pink, fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', margin: 0 }}>— Rogers Nforgwei</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Narrative */}
-          <div>
-            <SquareBars color={sky} />
-            <p style={{ color: sky, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 16, lineHeight: 1 }}>
-              The Man Behind the Mission
-            </p>
-            <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: 24 }}>
-              Changing lives,<br />one person at a time.
-            </h2>
-            <p style={{ color: '#1a1a2e', fontSize: 16, lineHeight: 1.8, marginBottom: 18, fontWeight: 300, maxWidth: 520 }}>
-              {/* Verified biography — Rogers Ngalla Nforgwei */}
-              Apostle Dr. Rogers Ngalla Nforgwei was born in Mbabi, Wat village, Donga Mantung Division, Northwest Region, Cameroon. From humble beginnings, he rose to become Business Development Manager for Africa at Cambridge University Press — overseeing 30+ countries — and founder of NMI Education, one of Cameroon&apos;s leading publishing companies, now operating across 7 nations.
-            </p>
-            <p style={{ color: '#4a4a6a', fontSize: 16, lineHeight: 1.8, marginBottom: 32, fontWeight: 300, maxWidth: 520 }}>
-              A holder of a Doctorate in Applied Theology from Kingdom Life University, California, and twice honored by President Paul Biya — Knight (2016) and Officer (2023) of the National Orders of Cameroon — Rogers brings kingdom-minded leadership to every room he enters.
-            </p>
-            <a
-              href="/about"
-              style={{ color: sky, fontFamily: hl, fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, transition: 'gap 0.2s ease' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.gap = '10px' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.gap = '6px' }}
-            >
-              Read the full story <span style={{ fontSize: '1.1em' }}>→</span>
-            </a>
+            {/* Narrative */}
+            <div>
+              <SquareBars color={sky} />
+              <p style={{ color: sky, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 16, lineHeight: 1 }}>
+                The Man Behind the Mission
+              </p>
+              <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: 24 }}>
+                Changing lives,<br />one person at a time.
+              </h2>
+              <p style={{ color: '#1a1a2e', fontSize: 16, lineHeight: 1.8, marginBottom: 18, fontWeight: 300, maxWidth: 520 }}>
+                {/* Verified biography — Rogers Ngalla Nforgwei */}
+                Apostle Dr. Rogers Ngalla Nforgwei was born in Mbabi, Wat village, Donga Mantung Division, Northwest Region, Cameroon. From humble beginnings, he rose to become Business Development Manager for Africa at Cambridge University Press — overseeing 30+ countries — and founder of NMI Education, one of Cameroon&apos;s leading publishing companies, now operating across 7 nations.
+              </p>
+              <p style={{ color: '#4a4a6a', fontSize: 16, lineHeight: 1.8, marginBottom: 32, fontWeight: 300, maxWidth: 520 }}>
+                A holder of a Doctorate in Applied Theology from Kingdom Life University, California, and twice honored by President Paul Biya — Knight (2016) and Officer (2023) of the National Orders of Cameroon — Rogers brings kingdom-minded leadership to every room he enters.
+              </p>
+              <a
+                href="/about"
+                style={{ color: sky, fontFamily: hl, fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, transition: 'gap 0.2s ease' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.gap = '10px' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.gap = '6px' }}
+              >
+                Read the full story <span style={{ fontSize: '1.1em' }}>→</span>
+              </a>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
+      <SectionDivider />
+
       {/* ══ 4. PROGRAMS ══════════════════════════════════════════════════════ */}
-      <section id="programs" style={{ background: '#f1f1f1', padding: '6rem 2rem', borderTop: '1px solid rgba(58,12,163,0.07)' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 52 }}>
+      <section id="programs" className="section-premium" style={{ background: '#f1f1f1' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 2rem' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            style={{ textAlign: 'center', marginBottom: 56 }}
+          >
             <SquareBars color={purple} />
             <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
-              Programs & Initiatives
+              Programs &amp; Initiatives
             </p>
             <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 auto', maxWidth: 480 }}>
               Choose your transformation.
             </h2>
-          </div>
+          </motion.div>
 
-          <div className="programs-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
-            {PROGRAMS.map((p) => (
-              <Link key={p.name} href={p.href} style={{ textDecoration: 'none', display: 'block' }}>
-                <div
-                  className="program-card"
-                  style={{ background: '#ffffff', border: '1px solid rgba(58,12,163,0.10)', borderRadius: 20, overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.2s, box-shadow 0.2s' }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLDivElement
-                    el.style.transform = 'translateY(-4px)'
-                    el.style.boxShadow = '0 12px 40px rgba(58,12,163,0.13)'
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLDivElement
-                    el.style.transform = 'translateY(0)'
-                    el.style.boxShadow = 'none'
-                  }}
-                >
-                  <div style={{ display: 'flex' }}>
-                    <div style={{ flex: 1, height: 4, background: p.color }} />
-                    <div style={{ flex: 1, height: 4, background: pink, opacity: 0.5 }} />
-                  </div>
-                  <div style={{ padding: '2rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ background: 'rgba(58,12,163,0.07)', color: purple, fontFamily: hl, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '4px 10px', borderRadius: 4, display: 'inline-block', marginBottom: 16 }}>{p.tag}</span>
-                    <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 18, marginBottom: 12, letterSpacing: '-0.02em', lineHeight: 1.25 }}>{p.name}</h3>
-                    <p style={{ color: '#4a4a6a', fontSize: 14, lineHeight: 1.8, margin: '0 0 20px', fontWeight: 300, flex: 1 }}>{p.outcome}</p>
-                    <span style={{ color: sky, fontFamily: hl, fontSize: '0.9rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                      Secure your place <span style={{ fontSize: '1.1em' }}>→</span>
-                    </span>
-                  </div>
+          {/* Asymmetric grid — Dominion Life large + two stacked */}
+          <div
+            className="programs-asymmetric"
+            style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 28 }}
+          >
+            {/* Large card — Dominion Life */}
+            <motion.div
+              className="card-editorial"
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              style={{ overflow: 'hidden' }}
+            >
+              <Link href={PROGRAMS[0].href} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', padding: '48px', minHeight: 340 }}>
+                <div style={{ display: 'flex', marginBottom: 24 }}>
+                  <div style={{ height: 4, width: 40, background: PROGRAMS[0].color, borderRadius: 2 }} />
+                  <div style={{ height: 4, width: 28, background: pink, opacity: 0.5, borderRadius: 2, marginLeft: 4 }} />
                 </div>
+                <span style={{ background: 'rgba(58,12,163,0.08)', color: purple, fontFamily: hl, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '4px 12px', borderRadius: 4, display: 'inline-block', marginBottom: 20 }}>{PROGRAMS[0].tag}</span>
+                <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 24, marginBottom: 16, letterSpacing: '-0.02em', lineHeight: 1.2 }}>{PROGRAMS[0].name}</h3>
+                <p style={{ color: '#4a4a6a', fontSize: 15, lineHeight: 1.8, fontWeight: 300, flex: 1, marginBottom: 28 }}>{PROGRAMS[0].outcome}</p>
+                <span style={{ color: pink, fontFamily: hl, fontSize: '0.9rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  Secure your place <span style={{ fontSize: '1.1em' }}>→</span>
+                </span>
               </Link>
-            ))}
+            </motion.div>
+
+            {/* Right stacked: Men On Duty + CEO On Mission */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+              {PROGRAMS.slice(1).map((p, idx) => (
+                <motion.div
+                  key={p.name}
+                  className="card-editorial"
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.7, delay: 0.12 * (idx + 1), ease: [0.22, 1, 0.36, 1] }}
+                  style={{ flex: 1, overflow: 'hidden' }}
+                >
+                  <Link href={p.href} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', padding: '36px' }}>
+                    <div style={{ display: 'flex', marginBottom: 16 }}>
+                      <div style={{ height: 3, width: 32, background: p.color, borderRadius: 2 }} />
+                      <div style={{ height: 3, width: 20, background: pink, opacity: 0.5, borderRadius: 2, marginLeft: 4 }} />
+                    </div>
+                    <span style={{ background: 'rgba(58,12,163,0.08)', color: purple, fontFamily: hl, fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 4, display: 'inline-block', marginBottom: 14 }}>{p.tag}</span>
+                    <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 18, marginBottom: 10, letterSpacing: '-0.02em', lineHeight: 1.3 }}>{p.name}</h3>
+                    <p style={{ color: '#4a4a6a', fontSize: 14, lineHeight: 1.75, fontWeight: 300, flex: 1, marginBottom: 20 }}>{p.outcome}</p>
+                    <span style={{ color: sky, fontFamily: hl, fontSize: '0.85rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                      Secure your place →
+                    </span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* SCRIPTURE DIVIDER + WAVE: Programs → Testimonials */}
+      {/* SCRIPTURE DIVIDER + WAVE */}
       <ScriptureDivider
         verse="Iron sharpens iron, and one man sharpens another."
         citation="Proverbs 27:17"
       />
       <WaveDivider fromColor="#0d0120" toColor={purple} />
 
+      <SectionDivider />
+
       {/* ══ 5. TESTIMONIALS ══════════════════════════════════════════════════ */}
-      <section style={{ padding: '6rem 2rem', background: purple }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+      <section className="section-premium" style={{ background: purple }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            style={{ textAlign: 'center', marginBottom: 48 }}
+          >
             <SquareBars color={pink} />
             <p style={{ color: 'rgba(255,255,255,0.50)', fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
               Transformation Stories
@@ -411,38 +339,75 @@ export default function HomePage() {
             <h2 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
               Lives changed. Missions activated.
             </h2>
-          </div>
+          </motion.div>
 
           <div className="testimonials-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginBottom: 36 }}>
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} style={{ background: 'rgba(255,255,255,0.07)', borderLeft: `3px solid ${pink}`, borderRadius: 16, padding: '2rem', border: `1px solid rgba(255,255,255,0.10)`, borderLeftWidth: 3, borderLeftColor: pink }}>
+              <motion.div
+                key={i}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+                style={{
+                  padding: '2rem',
+                  position: 'relative',
+                  background: 'rgba(255,255,255,0.08)',
+                  borderLeft: '3px solid rgba(247,37,133,0.55)',
+                  borderRadius: 16,
+                  border: '1px solid rgba(255,255,255,0.10)',
+                  borderLeftWidth: 3,
+                  borderLeftColor: 'rgba(247,37,133,0.55)',
+                }}
+              >
+                {/* Faint serif quote icon */}
                 <p style={{ color: 'rgba(247,37,133,0.20)', fontFamily: 'Georgia, serif', fontSize: '4rem', lineHeight: 0.8, marginBottom: 16 }}>&ldquo;</p>
-                <p style={{ color: 'rgba(255,255,255,0.80)', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 20 }}>
+                <p style={{ color: 'rgba(255,255,255,0.85)', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 24 }}>
                   {t.quote}
                 </p>
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.10)', paddingTop: 16 }}>
-                  <p style={{ color: '#7b90f3', fontFamily: hl, fontWeight: 700, fontSize: 14, margin: '0 0 3px' }}>{t.name}</p>
-                  <p style={{ color: 'rgba(255,255,255,0.50)', fontFamily: hl, fontSize: '0.8rem', margin: 0 }}>{t.city} · {t.program}</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid rgba(255,255,255,0.10)', paddingTop: 16 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(247,37,133,0.18)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 700, color: pink, fontFamily: hl }}>
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <p style={{ color: '#7b90f3', fontFamily: hl, fontWeight: 700, fontSize: 14, margin: '0 0 2px' }}>{t.name}</p>
+                    <p style={{ color: 'rgba(255,255,255,0.45)', fontFamily: hl, fontSize: '0.8rem', margin: 0 }}>{t.city} · {t.program}</p>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
-          <div style={{ textAlign: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            style={{ textAlign: 'center' }}
+          >
             <Link
               href="/testimonials"
               style={{ color: 'rgba(255,255,255,0.70)', fontFamily: hl, fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}
             >
               See all transformation stories <span>→</span>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ══ 6. EVENTS ════════════════════════════════════════════════════════ */}
-      <section id="events" style={{ background: '#111028', padding: '6rem 2rem' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 52 }}>
+      <section id="events" className="section-premium" style={{ background: '#0d0120' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            style={{ textAlign: 'center', marginBottom: 52 }}
+          >
             <SquareBars color={sky} />
             <p style={{ color: '#7b90f3', fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
               Upcoming Events
@@ -450,11 +415,19 @@ export default function HomePage() {
             <h2 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
               The next gathering is forming.
             </h2>
-          </div>
+          </motion.div>
 
           <div className="events-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-            {EVENTS.map((ev) => (
-              <div key={ev.name} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '2rem' }}>
+            {EVENTS.map((ev, i) => (
+              <motion.div
+                key={ev.name}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+                style={{ padding: '2rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, transition: 'border-color 0.25s ease' }}
+              >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
                   <span style={{
                     display: 'inline-block', width: 8, height: 8, borderRadius: '50%',
@@ -472,91 +445,119 @@ export default function HomePage() {
                 >
                   Learn More →
                 </Link>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ 7. LEAD MAGNET ═══════════════════════════════════════════════════ */}
-      <section style={{ padding: '6rem 2rem', background: '#ffffff' }}>
-        <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-          <SquareBars color={purple} />
-          <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
-            Free Resource
-          </p>
-          <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: 16, lineHeight: 1.15 }}>
-            The 5 Pillars of<br />Purpose-Driven Leadership
-          </h2>
-          <p style={{ color: '#4a4a6a', fontSize: 16, lineHeight: 1.8, maxWidth: 520, margin: '0 auto 36px', fontWeight: 300 }}>
-            A free guide by Rogers Nforgwei — 15+ years of leadership experience distilled into five principles every man and leader must master.
-          </p>
+      <SectionDivider />
 
-          {submitted ? (
-            <div style={{ background: purple, borderRadius: 16, padding: '2.5rem' }}>
-              <p style={{ color: '#ffffff', fontSize: 20, fontFamily: hl, fontWeight: 800, margin: '0 0 8px' }}>You&apos;re in!</p>
-              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, margin: 0 }}>Check your inbox — your guide is on its way.</p>
-            </div>
-          ) : (
-            <form
-              onSubmit={(e) => { e.preventDefault(); if (email) setSubmitted(true) }}
-              style={{ display: 'flex', gap: 12, maxWidth: 480, margin: '0 auto', flexWrap: 'wrap', justifyContent: 'center' }}
-            >
-              <input
-                type="email" value={email} onChange={e => setEmail(e.target.value)}
-                placeholder="Your email address" required
-                style={{ flex: 1, minWidth: 200, padding: '14px 20px', border: '2px solid rgba(58,12,163,0.18)', borderRadius: 8, fontSize: 14, outline: 'none', background: '#fff', color: purple, fontFamily: hl }}
-              />
-              <button
-                type="submit"
-                style={{ background: pink, color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 14, fontFamily: hl, fontWeight: 700, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: '0 4px 18px rgba(247,37,133,0.3)' }}
+      {/* ══ 7. LEAD MAGNET ═══════════════════════════════════════════════════ */}
+      <section className="section-premium" style={{ background: '#ffffff' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center', padding: '0 2rem' }}>
+            <SquareBars color={purple} />
+            <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
+              Free Resource
+            </p>
+            <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: 16, lineHeight: 1.15 }}>
+              The 5 Pillars of<br />Purpose-Driven Leadership
+            </h2>
+            <p style={{ color: '#4a4a6a', fontSize: 16, lineHeight: 1.8, maxWidth: 520, margin: '0 auto 36px', fontWeight: 300 }}>
+              A free guide by Rogers Nforgwei — 15+ years of leadership experience distilled into five principles every man and leader must master.
+            </p>
+
+            {submitted ? (
+              <div style={{ background: purple, borderRadius: 28, padding: '2.5rem' }}>
+                <p style={{ color: '#ffffff', fontSize: 20, fontFamily: hl, fontWeight: 800, margin: '0 0 8px' }}>You&apos;re in!</p>
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, margin: 0 }}>Check your inbox — your guide is on its way.</p>
+              </div>
+            ) : (
+              <form
+                onSubmit={(e) => { e.preventDefault(); if (email) setSubmitted(true) }}
+                style={{ display: 'flex', gap: 12, maxWidth: 480, margin: '0 auto', flexWrap: 'wrap', justifyContent: 'center' }}
               >
-                Send My Guide
-              </button>
-            </form>
-          )}
-          <p style={{ color: '#888', fontFamily: hl, fontSize: 12, marginTop: 12 }}>No spam. Unsubscribe any time.</p>
-        </div>
+                <input
+                  type="email" value={email} onChange={e => setEmail(e.target.value)}
+                  placeholder="Your email address" required
+                  style={{ flex: 1, minWidth: 200, padding: '16px 20px', border: '1px solid rgba(58,12,163,0.18)', borderRadius: '999px', fontSize: 14, outline: 'none', background: '#fff', color: purple, fontFamily: hl }}
+                />
+                <button
+                  type="submit"
+                  className="btn-premium"
+                  style={{ background: pink, color: '#fff', padding: '16px 28px', borderRadius: '999px', fontSize: 14, fontFamily: hl, fontWeight: 700, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: '0 4px 18px rgba(247,37,133,0.35)' }}
+                >
+                  Send My Guide
+                </button>
+              </form>
+            )}
+            <p style={{ color: '#888', fontFamily: hl, fontSize: 12, marginTop: 12 }}>No spam. Unsubscribe any time.</p>
+          </div>
+        </motion.div>
       </section>
 
       {/* WAVE: Lead Magnet → Community */}
       <WaveDivider fromColor="#ffffff" toColor={`linear-gradient(135deg, ${purple}, ${sky})`} />
 
+      <SectionDivider />
+
       {/* ══ 8. COMMUNITY ═════════════════════════════════════════════════════ */}
-      <section id="community" style={{ padding: '6rem 2rem', background: `linear-gradient(135deg, ${purple} 0%, ${sky} 100%)`, textAlign: 'center' }}>
-        <div style={{ maxWidth: 680, margin: '0 auto' }}>
-          <SquareBars color="rgba(255,255,255,0.5)" />
-          <p style={{ color: 'rgba(255,255,255,0.55)', fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 16, lineHeight: 1 }}>
-            The Community
-          </p>
-          <h2 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: 16, lineHeight: 1.1 }}>
-            1,000+ men already moving.
-          </h2>
-          <p style={{ color: 'rgba(255,255,255,0.80)', fontSize: 16, lineHeight: 1.8, maxWidth: 520, margin: '0 auto 36px', fontWeight: 300 }}>
-            The Men On Duty community is growing across Africa and beyond. Daily encouragement, accountability, and real conversation — with men who are done drifting. The next man who steps in could be you.
-          </p>
-          <a
-            href="https://wa.me/237683493220?text=Hi%20Rogers%2C%20I%20want%20to%20join%20the%20community"
-            target="_blank" rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 10,
-              background: '#25D366', color: '#fff',
-              padding: '16px 36px', borderRadius: 8,
-              fontFamily: hl, fontWeight: 700, fontSize: '1rem',
-              textDecoration: 'none',
-              boxShadow: '0 4px 24px rgba(37,211,102,0.35)',
-            }}
-          >
-            <span style={{ fontSize: 20 }}>💬</span>
-            Join the Movement
-          </a>
-        </div>
+      <section id="community" className="section-premium" style={{ background: `linear-gradient(135deg, ${purple} 0%, ${sky} 100%)`, textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 2rem' }}>
+            <SquareBars color="rgba(255,255,255,0.5)" />
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 16, lineHeight: 1 }}>
+              The Community
+            </p>
+            <h2 style={{ color: '#ffffff', fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: 16, lineHeight: 1.1 }}>
+              1,000+ men already moving.
+            </h2>
+            <p style={{ color: 'rgba(255,255,255,0.80)', fontSize: 16, lineHeight: 1.8, maxWidth: 520, margin: '0 auto 36px', fontWeight: 300 }}>
+              The Men On Duty community is growing across Africa and beyond. Daily encouragement, accountability, and real conversation — with men who are done drifting. The next man who steps in could be you.
+            </p>
+            <a
+              href="https://wa.me/237683493220?text=Hi%20Rogers%2C%20I%20want%20to%20join%20the%20community"
+              target="_blank" rel="noopener noreferrer"
+              className="btn-premium"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 10,
+                background: '#25D366', color: '#fff',
+                padding: '16px 36px', borderRadius: '999px',
+                fontFamily: hl, fontWeight: 700, fontSize: '1rem',
+                textDecoration: 'none',
+                boxShadow: '0 4px 24px rgba(37,211,102,0.35)',
+              }}
+            >
+              <span style={{ fontSize: 20 }}>💬</span>
+              Join the Movement
+            </a>
+          </div>
+        </motion.div>
       </section>
 
+      <SectionDivider />
+
       {/* ══ 9. COACHING INQUIRY ══════════════════════════════════════════════ */}
-      <section id="coaching" style={{ padding: '6rem 2rem', background: '#f8f7ff' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+      <section id="coaching" className="section-premium" style={{ background: '#f8f7ff' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 2rem' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            style={{ textAlign: 'center', marginBottom: 48 }}
+          >
             <SquareBars color={purple} />
             <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
               Work With Rogers
@@ -564,10 +565,18 @@ export default function HomePage() {
             <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 3.5vw, 2.4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: 0 }}>
               Ready to go further?
             </h2>
-          </div>
+          </motion.div>
 
           <div className="coaching-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
-            <div style={{ background: '#ffffff', borderRadius: 20, padding: '2.5rem', border: '1px solid rgba(58,12,163,0.10)', boxShadow: '0 2px 20px rgba(58,12,163,0.06)' }}>
+            <motion.div
+              custom={0}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-80px' }}
+              className="card-editorial"
+              style={{ padding: '2.5rem' }}
+            >
               <div style={{ width: 48, height: 48, background: 'rgba(58,12,163,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, marginBottom: 20 }}>🎯</div>
               <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 20, marginBottom: 12 }}>Personal Coaching</h3>
               <p style={{ color: '#4a4a6a', fontSize: 14, lineHeight: 1.8, margin: '0 0 24px', fontWeight: 300, maxWidth: 360 }}>
@@ -576,38 +585,48 @@ export default function HomePage() {
               <a
                 href="https://wa.me/237683493220?text=Hi%20Rogers%2C%20I%27m%20interested%20in%20personal%20coaching"
                 target="_blank" rel="noopener noreferrer"
+                className="btn-premium"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                   background: purple, color: '#fff',
-                  padding: '12px 24px', borderRadius: 8,
+                  padding: '14px 24px', borderRadius: '999px',
                   fontFamily: hl, fontWeight: 700, fontSize: 13, textDecoration: 'none',
                   boxShadow: '0 4px 16px rgba(58,12,163,0.25)',
                 }}
               >
                 Apply via WhatsApp →
               </a>
-            </div>
+            </motion.div>
 
-            <div style={{ background: '#ffffff', borderRadius: 20, padding: '2.5rem', border: '1px solid rgba(58,12,163,0.10)', boxShadow: '0 2px 20px rgba(58,12,163,0.06)' }}>
+            <motion.div
+              custom={1}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-80px' }}
+              className="card-editorial"
+              style={{ padding: '2.5rem' }}
+            >
               <div style={{ width: 48, height: 48, background: 'rgba(247,37,133,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, marginBottom: 20 }}>🎙️</div>
-              <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 20, marginBottom: 12 }}>Speaking & Events</h3>
+              <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 20, marginBottom: 12 }}>Speaking &amp; Events</h3>
               <p style={{ color: '#4a4a6a', fontSize: 14, lineHeight: 1.8, margin: '0 0 24px', fontWeight: 300, maxWidth: 360 }}>
                 Invite Rogers to speak at your conference, corporate event, or church gathering. A transformational voice for any platform of purpose.
               </p>
               <a
                 href="https://wa.me/237683493220?text=Hi%20Rogers%2C%20I%27d%20like%20to%20invite%20you%20to%20speak%20at%20my%20event"
                 target="_blank" rel="noopener noreferrer"
+                className="btn-premium"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                   background: pink, color: '#fff',
-                  padding: '12px 24px', borderRadius: 8,
+                  padding: '14px 24px', borderRadius: '999px',
                   fontFamily: hl, fontWeight: 700, fontSize: 13, textDecoration: 'none',
                   boxShadow: '0 4px 16px rgba(247,37,133,0.25)',
                 }}
               >
                 Inquire via WhatsApp →
               </a>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

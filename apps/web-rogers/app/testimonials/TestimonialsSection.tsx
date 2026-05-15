@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 const purple = '#3a0ca3'
@@ -213,20 +214,35 @@ export function TestimonialsSection() {
             className="test-grid"
             style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}
           >
-            {filtered.map(t => (
-              <div key={t.id} style={{ background: '#fff', borderRadius: 20, padding: '1.75rem', borderLeft: `4px solid ${pink}`, boxShadow: '0 2px 20px rgba(58,12,163,0.07)', display: 'flex', flexDirection: 'column' }}>
-                <p style={{ color: pink, fontSize: '2rem', fontFamily: serif, lineHeight: 1, marginBottom: 12 }}>&ldquo;</p>
-                <p style={{ color: '#3a3a3a', fontFamily: serif, fontStyle: 'italic', fontSize: 15, lineHeight: 1.75, flex: 1, marginBottom: 20 }}>
-                  {t.quote}
+            {filtered.map((t, index) => (
+              <motion.div
+                key={t.id}
+                className="card-editorial"
+                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                style={{ padding: '36px', position: 'relative', display: 'flex', flexDirection: 'column' }}
+              >
+                {/* Large quote icon — very faint, editorial */}
+                <div style={{ fontSize: 80, lineHeight: 0.8, opacity: 0.07, fontFamily: serif, position: 'absolute', top: 12, left: 18, color: purple }}>&ldquo;</div>
+
+                {/* Quote text */}
+                <p style={{ color: '#3a3a3a', fontFamily: serif, fontStyle: 'italic', fontSize: 15, lineHeight: 1.8, flex: 1, marginBottom: 24, position: 'relative', zIndex: 1 }}>
+                  &ldquo;{t.quote}&rdquo;
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid #f0f0f0', paddingTop: 16 }}>
-                  <Initials name={t.name} />
+
+                {/* Profile row */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, borderTop: '1px solid rgba(58,12,163,0.07)', paddingTop: 16 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(58,12,163,0.10)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: purple }}>
+                    {t.name[0]}
+                  </div>
                   <div>
-                    <p style={{ color: purple, fontWeight: 700, fontSize: 14, margin: '0 0 2px' }}>{t.name}</p>
-                    <p style={{ color: '#9ca3af', fontSize: 12, margin: 0 }}>{t.city} · {t.program} · {t.year}</p>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: purple }}>{t.name}</div>
+                    <div style={{ fontSize: 12, color: '#6b7280' }}>{t.city} · {t.program} · {t.year}</div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
