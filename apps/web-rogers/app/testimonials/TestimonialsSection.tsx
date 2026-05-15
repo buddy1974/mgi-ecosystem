@@ -21,6 +21,8 @@ interface Testimonial {
   highlight?: boolean
 }
 
+// TODO: ALL testimonials below are placeholder. Rogers to supply real names,
+// quotes, and program categories. See ROGERSNFORGWEI_Content-Collection-Brief.docx
 const TESTIMONIALS: Testimonial[] = [
   // DOMINION LIFE
   {
@@ -247,16 +249,25 @@ export function TestimonialsSection() {
             style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}
           >
             {[
-              { caption: 'Emmanuel K. — Dominion Life 2023' },
-              { caption: 'Patrice N. — Men On Duty 2024'    },
-              { caption: 'Daniel M. — CEO On Mission 2024'  },
+              { caption: 'Rogers Nforgwei — Watch on YouTube', href: 'https://www.youtube.com/watch?v=yg7pQSnNMUY' },
+              { caption: 'Patrice N. — Men On Duty 2024', href: null },    // TODO: Rogers to supply YouTube URL
+              { caption: 'Daniel M. — CEO On Mission 2024', href: null },  // TODO: Rogers to supply YouTube URL
             ].map((v) => (
-              <div key={v.caption} style={{ background: '#1a1a1a', borderRadius: 16, aspectRatio: '16/9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, border: '1px solid rgba(255,255,255,0.08)', cursor: 'not-allowed' }}>
-                <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(247,37,133,0.15)', border: `2px solid ${pink}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ color: pink, fontSize: 20, marginLeft: 3 }}>▶</span>
+              v.href ? (
+                <a key={v.caption} href={v.href} target="_blank" rel="noopener noreferrer" style={{ background: '#1a1a1a', borderRadius: 16, aspectRatio: '16/9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, border: `1px solid ${pink}`, cursor: 'pointer', textDecoration: 'none' }}>
+                  <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(247,37,133,0.25)', border: `2px solid ${pink}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ color: pink, fontSize: 20, marginLeft: 3 }}>▶</span>
+                  </div>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 12, margin: 0, textAlign: 'center', padding: '0 12px' }}>{v.caption}</p>
+                </a>
+              ) : (
+                <div key={v.caption} style={{ background: '#1a1a1a', borderRadius: 16, aspectRatio: '16/9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, border: '1px solid rgba(255,255,255,0.08)', cursor: 'not-allowed' }}>
+                  <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(247,37,133,0.15)', border: `2px solid ${pink}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ color: pink, fontSize: 20, marginLeft: 3 }}>▶</span>
+                  </div>
+                  <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 12, margin: 0, textAlign: 'center', padding: '0 12px' }}>{v.caption}</p>
                 </div>
-                <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 12, margin: 0, textAlign: 'center', padding: '0 12px' }}>{v.caption}</p>
-              </div>
+              )
             ))}
           </div>
         </div>
