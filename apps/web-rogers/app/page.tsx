@@ -236,80 +236,370 @@ export default function HomePage() {
       <SectionDivider />
 
       {/* ══ 4. PROGRAMS ══════════════════════════════════════════════════════ */}
-      <section id="programs" className="section-premium" style={{ background: '#f1f1f1' }}>
+      <section id="programs" className="section-premium" style={{ background: '#0d0120' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 2rem' }}>
+
+          {/* ── Section header ── */}
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            style={{ textAlign: 'center', marginBottom: 56 }}
+            style={{ textAlign: 'center', marginBottom: '56px' }}
           >
-            <SquareBars color={purple} />
-            <p style={{ color: purple, fontFamily: hl, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12, lineHeight: 1 }}>
-              Programs &amp; Initiatives
-            </p>
-            <h2 style={{ color: purple, fontFamily: hl, fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 auto', maxWidth: 480 }}>
-              Choose your transformation.
+            <div style={{
+              display: 'inline-block',
+              background: 'rgba(247,37,133,0.12)',
+              border: '1px solid rgba(247,37,133,0.3)',
+              borderRadius: '999px',
+              padding: '6px 20px',
+              marginBottom: '24px',
+            }}>
+              <span style={{
+                fontSize: '11px',
+                fontWeight: 700,
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase' as const,
+                color: '#f72585',
+                fontFamily: hl,
+              }}>
+                Transformation Programs
+              </span>
+            </div>
+            <h2 style={{
+              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+              fontWeight: 800,
+              lineHeight: 1.1,
+              color: '#ffffff',
+              marginBottom: '20px',
+              letterSpacing: '-0.02em',
+              fontFamily: hl,
+            }}>
+              Choose Your Arena.<br />
+              <span style={{ color: '#f72585' }}>Begin Your Transformation.</span>
             </h2>
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              color: 'rgba(255,255,255,0.6)',
+              maxWidth: '560px',
+              margin: '0 auto 16px',
+              lineHeight: 1.7,
+              fontFamily: hl,
+              fontWeight: 300,
+            }}>
+              Three distinct programs. One mission — equip men and leaders to fulfil
+              their God-given assignment with clarity, authority, and impact.
+            </p>
           </motion.div>
 
-          {/* Asymmetric grid — Dominion Life large + two stacked */}
+          {/* ── Asymmetric grid — Dominion Life large + two stacked ── */}
           <div
             className="programs-asymmetric"
             style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 28 }}
           >
-            {/* Large card — Dominion Life */}
+
+            {/* ── DOMINION LIFE — Large Card (1.4fr) ── */}
             <motion.div
-              className="card-editorial"
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 24 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              style={{ overflow: 'hidden' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              style={{
+                background: 'linear-gradient(135deg, rgba(58,12,163,0.45) 0%, rgba(114,9,183,0.3) 100%)',
+                border: '1px solid rgba(247,37,133,0.25)',
+                borderRadius: '24px',
+                padding: 'clamp(32px, 4vw, 48px)',
+                position: 'relative',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '24px',
+              }}
             >
-              <Link href={PROGRAMS[0].href} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', padding: '48px', minHeight: 340 }}>
-                <div style={{ display: 'flex', marginBottom: 24 }}>
-                  <div style={{ height: 4, width: 40, background: PROGRAMS[0].color, borderRadius: 2 }} />
-                  <div style={{ height: 4, width: 28, background: pink, opacity: 0.5, borderRadius: 2, marginLeft: 4 }} />
+              {/* Background glow */}
+              <div style={{
+                position: 'absolute', top: '-60px', right: '-60px',
+                width: '280px', height: '280px',
+                background: 'radial-gradient(circle, rgba(247,37,133,0.12) 0%, transparent 70%)',
+                pointerEvents: 'none',
+              }} />
+
+              {/* Program number + badges */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' as const }}>
+                <span style={{ fontSize: '48px', fontWeight: 800, color: 'rgba(247,37,133,0.25)', lineHeight: 1 }}>01</span>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' as const }}>
+                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, background: 'rgba(247,37,133,0.15)', border: '1px solid rgba(247,37,133,0.4)', borderRadius: '999px', padding: '4px 12px', color: '#f72585' }}>Flagship</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, background: 'rgba(67,97,238,0.15)', border: '1px solid rgba(67,97,238,0.35)', borderRadius: '999px', padding: '4px 12px', color: '#4361ee' }}>Next Dates Coming</span>{/* TODO: awaiting Rogers content — replace with real dates */}
                 </div>
-                <span style={{ background: 'rgba(58,12,163,0.08)', color: purple, fontFamily: hl, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '4px 12px', borderRadius: 4, display: 'inline-block', marginBottom: 20 }}>{PROGRAMS[0].tag}</span>
-                <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 24, marginBottom: 16, letterSpacing: '-0.02em', lineHeight: 1.2 }}>{PROGRAMS[0].name}</h3>
-                <p style={{ color: '#4a4a6a', fontSize: 15, lineHeight: 1.8, fontWeight: 300, flex: 1, marginBottom: 28 }}>{PROGRAMS[0].outcome}</p>
-                <span style={{ color: pink, fontFamily: hl, fontSize: '0.9rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                  Secure your place <span style={{ fontSize: '1.1em' }}>→</span>
-                </span>
-              </Link>
+              </div>
+
+              {/* Title + tagline */}
+              <div>
+                <h3 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.15, marginBottom: '10px', letterSpacing: '-0.02em', fontFamily: hl }}>
+                  Dominion Life<br />Men&apos;s Conference
+                </h3>
+                <p style={{ fontSize: '1.05rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6 }}>
+                  &ldquo;Where men discover who they were built to be.&rdquo;
+                </p>
+              </div>
+
+              {/* WHO strip */}
+              <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', padding: '14px 18px', borderLeft: '3px solid #f72585' }}>
+                <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#f72585', marginBottom: '6px', fontFamily: hl }}>For You If —</p>
+                <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
+                  You are a man seeking spiritual authority · a leader feeling the weight
+                  of your assignment · a father who wants his legacy to outlive him · an
+                  executive ready to align success with purpose
+                </p>
+              </div>
+
+              {/* What transforms */}
+              <div>
+                <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.4)', marginBottom: '14px', fontFamily: hl }}>What Transforms</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {[
+                    'Spiritual authority — you understand your position and walk in it',
+                    'Life dominion — clarity over your calling, family, and business',
+                    'Brotherhood — a network of men committed to the same standard',
+                    'Identity — the confusion about who you are dissolves permanently',
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(247,37,133,0.2)', border: '1px solid rgba(247,37,133,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 700, color: '#f72585', marginTop: '1px' }}>{i + 1}</span>
+                      <span style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+
+              {/* Format strip */}
+              <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' as const }}>
+                {[
+                  { label: 'Format', value: 'Conference · In-Person + Online' },
+                  { label: 'Reach', value: '30+ Nations · 26+ Years' },
+                ].map(({ label, value }) => (
+                  <div key={label}>
+                    <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.35)', marginBottom: '2px', fontFamily: hl }}>{label}</p>
+                    <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>{value}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '4px' }}>
+                <a
+                  href="/#contact" /* TODO: awaiting Rogers content — replace with real registration URL */
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    background: 'linear-gradient(135deg, #f72585, #7209b7)',
+                    color: '#ffffff', fontWeight: 700, fontSize: '0.95rem',
+                    padding: '14px 28px', borderRadius: '999px', textDecoration: 'none',
+                    letterSpacing: '0.02em', boxShadow: '0 8px 24px rgba(247,37,133,0.35)',
+                    transition: 'transform 0.2s, box-shadow 0.2s', fontFamily: hl,
+                  }}
+                >
+                  Register Your Interest →
+                </a>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', textAlign: 'center' as const, fontFamily: hl }}>
+                  Limited seats per conference · Next dates announced soon
+                </p>
+              </div>
             </motion.div>
 
-            {/* Right stacked: Men On Duty + CEO On Mission */}
+            {/* ── Right stacked column ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-              {PROGRAMS.slice(1).map((p, idx) => (
-                <motion.div
-                  key={p.name}
-                  className="card-editorial"
-                  whileInView={{ opacity: 1, y: 0 }}
-                  initial={{ opacity: 0, y: 24 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.7, delay: 0.12 * (idx + 1), ease: [0.22, 1, 0.36, 1] }}
-                  style={{ flex: 1, overflow: 'hidden' }}
-                >
-                  <Link href={p.href} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', padding: '36px' }}>
-                    <div style={{ display: 'flex', marginBottom: 16 }}>
-                      <div style={{ height: 3, width: 32, background: p.color, borderRadius: 2 }} />
-                      <div style={{ height: 3, width: 20, background: pink, opacity: 0.5, borderRadius: 2, marginLeft: 4 }} />
+
+              {/* ── MEN ON DUTY — Right top card ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.12 }}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(13,1,32,0.8) 0%, rgba(58,12,163,0.2) 100%)',
+                  border: '1px solid rgba(67,97,238,0.25)',
+                  borderRadius: '20px',
+                  padding: 'clamp(24px, 3vw, 36px)',
+                  display: 'flex', flexDirection: 'column', gap: '18px',
+                  position: 'relative', overflow: 'hidden', flex: 1,
+                }}
+              >
+                <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(67,97,238,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+                {/* Number + badge */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '36px', fontWeight: 800, color: 'rgba(67,97,238,0.3)', lineHeight: 1 }}>02</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, background: 'rgba(67,97,238,0.15)', border: '1px solid rgba(67,97,238,0.35)', borderRadius: '999px', padding: '3px 10px', color: '#4361ee' }}>Active Program</span>
+                </div>
+
+                {/* Title + tagline */}
+                <div>
+                  <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.7rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.2, marginBottom: '8px', letterSpacing: '-0.015em', fontFamily: hl }}>
+                    Men On Duty
+                  </h3>
+                  <p style={{ fontSize: '0.88rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.5)', lineHeight: 1.55 }}>
+                    &ldquo;Stand up. Show up. Be the man they need.&rdquo;
+                  </p>
+                </div>
+
+                {/* FOR strip */}
+                <div style={{ borderLeft: '2px solid #4361ee', paddingLeft: '12px' }}>
+                  <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#4361ee', marginBottom: '4px', fontFamily: hl }}>For You If —</p>
+                  <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.55 }}>
+                    You are a husband, father, or man of God who knows he has more to give —
+                    and is ready to stop letting life lead him
+                  </p>
+                </div>
+
+                {/* Transformation bullets */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {[
+                    'Lead your home with authority',
+                    'Husband your wife with intention',
+                    'Father your children into destiny',
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, width: '6px', height: '6px', borderRadius: '50%', background: '#4361ee', marginTop: '7px' }} />
+                      <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item}</span>
                     </div>
-                    <span style={{ background: 'rgba(58,12,163,0.08)', color: purple, fontFamily: hl, fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 4, display: 'inline-block', marginBottom: 14 }}>{p.tag}</span>
-                    <h3 style={{ color: purple, fontFamily: hl, fontWeight: 800, fontSize: 18, marginBottom: 10, letterSpacing: '-0.02em', lineHeight: 1.3 }}>{p.name}</h3>
-                    <p style={{ color: '#4a4a6a', fontSize: 14, lineHeight: 1.75, fontWeight: 300, flex: 1, marginBottom: 20 }}>{p.outcome}</p>
-                    <span style={{ color: sky, fontFamily: hl, fontSize: '0.85rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-                      Secure your place →
-                    </span>
-                  </Link>
-                </motion.div>
-              ))}
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <a
+                  href="/programs/men-on-duty"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    background: 'rgba(67,97,238,0.15)', border: '1px solid rgba(67,97,238,0.4)',
+                    color: '#4361ee', fontWeight: 700, fontSize: '0.88rem',
+                    padding: '12px 22px', borderRadius: '999px', textDecoration: 'none',
+                    letterSpacing: '0.02em', transition: 'background 0.2s, border-color 0.2s',
+                    marginTop: '4px', fontFamily: hl,
+                  }}
+                >
+                  Explore Program →
+                </a>
+              </motion.div>
+
+              {/* ── CEO ON MISSION — Right bottom card ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.24 }}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(13,1,32,0.8) 0%, rgba(114,9,183,0.2) 100%)',
+                  border: '1px solid rgba(114,9,183,0.3)',
+                  borderRadius: '20px',
+                  padding: 'clamp(24px, 3vw, 36px)',
+                  display: 'flex', flexDirection: 'column', gap: '18px',
+                  position: 'relative', overflow: 'hidden', flex: 1,
+                }}
+              >
+                <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '180px', height: '180px', background: 'radial-gradient(circle, rgba(114,9,183,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+                {/* Number + badge */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '36px', fontWeight: 800, color: 'rgba(114,9,183,0.35)', lineHeight: 1 }}>03</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, background: 'rgba(114,9,183,0.15)', border: '1px solid rgba(114,9,183,0.4)', borderRadius: '999px', padding: '3px 10px', color: '#7209b7' }}>Executive Program</span>
+                </div>
+
+                {/* Title + tagline */}
+                <div>
+                  <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.7rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1.2, marginBottom: '8px', letterSpacing: '-0.015em', fontFamily: hl }}>
+                    CEO On Mission
+                  </h3>
+                  <p style={{ fontSize: '0.88rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.5)', lineHeight: 1.55 }}>
+                    &ldquo;Business built on God&apos;s blueprint.&rdquo;
+                  </p>
+                </div>
+
+                {/* FOR strip */}
+                <div style={{ borderLeft: '2px solid #7209b7', paddingLeft: '12px' }}>
+                  <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#7209b7', marginBottom: '4px', fontFamily: hl }}>For You If —</p>
+                  <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.55 }}>
+                    You are a CEO, executive, or entrepreneur who wants their business to
+                    carry eternal weight — not just financial results
+                  </p>
+                </div>
+
+                {/* Transformation bullets */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {[
+                    'Strategy aligned to God-given purpose',
+                    'Leadership from identity — not ego',
+                    'Build a business that outlasts you',
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, width: '6px', height: '6px', borderRadius: '50%', background: '#7209b7', marginTop: '7px' }} />
+                      <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <a
+                  href="/programs/ceo-on-mission"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    background: 'rgba(114,9,183,0.15)', border: '1px solid rgba(114,9,183,0.4)',
+                    color: '#b040fb', fontWeight: 700, fontSize: '0.88rem',
+                    padding: '12px 22px', borderRadius: '999px', textDecoration: 'none',
+                    letterSpacing: '0.02em', transition: 'background 0.2s, border-color 0.2s',
+                    marginTop: '4px', fontFamily: hl,
+                  }}
+                >
+                  Explore Program →
+                </a>
+              </motion.div>
+
             </div>
           </div>
+
+          {/* ── Urgency strip below program grid ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
+            style={{
+              marginTop: '48px',
+              padding: '24px 32px',
+              background: 'rgba(247,37,133,0.06)',
+              border: '1px solid rgba(247,37,133,0.15)',
+              borderRadius: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '16px',
+              textAlign: 'center' as const,
+            }}
+          >
+            <p style={{ fontSize: 'clamp(1rem, 2vw, 1.15rem)', color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, maxWidth: '600px', fontFamily: hl }}>
+              Daddy Rogers leads a limited number of intensive programs each year.{' '}
+              <span style={{ color: '#f72585', fontWeight: 600 }}>Seats fill months in advance.</span>{' '}
+              Register your interest now to be notified first.
+            </p>
+            <a
+              href="/#contact" /* TODO: awaiting Rogers content — replace with actual booking URL */
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                background: 'linear-gradient(135deg, #f72585, #7209b7)',
+                color: '#ffffff', fontWeight: 700, fontSize: '1rem',
+                padding: '14px 32px', borderRadius: '999px', textDecoration: 'none',
+                boxShadow: '0 8px 28px rgba(247,37,133,0.3)', letterSpacing: '0.02em',
+                fontFamily: hl,
+              }}
+            >
+              Register Your Interest — It&apos;s Free
+            </a>
+            <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)', fontFamily: hl }}>
+              No commitment · No payment · Just your name and program preference
+            </p>
+          </motion.div>
+
         </div>
       </section>
 
