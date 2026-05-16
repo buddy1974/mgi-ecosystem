@@ -2,589 +2,933 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import {
+  MGI_META,
+  MGI_SERVICES,
+  MGI_VALUES,
+  MGI_PARTNERS,
+  MGI_CONTACT,
+  MGI_VENTURES,
+} from "../data/mgi-content";
 
-/* ─── BRAND DATA ─────────────────────────────────────── */
-
-const expertise = [
-  "Corporate Governance",
-  "Legal & Fiscal Advisory",
-  "Accounting Services",
-  "ERP & CRM Integration",
-  "AI & Workflow Automation",
-  "Digital Transformation",
-  "Human Resources",
-  "Project Engineering",
-  "Marketing & Business Growth",
-];
-
-const stats = [
-  { value: "2019", label: "Founded"           },
-  { value: "7",    label: "Venture Companies" },
-  { value: "5",    label: "Industry Sectors"  },
-  { value: "9",    label: "Service Domains"   },
-];
-
-const ventures: Array<{
-  name: string; domain: string; logo: string; color: string; accent: string;
-  tag: string; tagline: string; programs: string[]; comingSoon: boolean;
-  externalLink?: string; initials: string;
-}> = [
-  {
-    name:     "Rogers Nforgwei Platform",
-    domain:   "rogersnforgwei.com",
-    logo:     "/logos/rogers.png",
-    color:    "#3a0ca3",
-    accent:   "#f72585",
-    tag:      "Personal Platform & Leadership",
-    tagline:  "Switch on the better side of the future.",
-    programs: ["Dominion Life Men's Conference", "Men On Duty", "CEO On Mission"],
-    comingSoon: false,
-    initials: "RN",
-  },
-  {
-    name:     "Horeb Solutions",
-    domain:   "horebsolutions.org",
-    logo:     "/logos/horeb-solutions.png",
-    color:    "#0a8348",
-    accent:   "#fdda2b",
-    tag:      "Logistics",
-    tagline:  "Reliability in motion. Your logistics, our priority.",
-    programs: [],
-    comingSoon: false,
-    initials: "HS",
-  },
-  {
-    name:     "NMI Education",
-    domain:   "nmieducation.com",
-    logo:     "/logos/nmi-main.png",
-    color:    "#1a56db",
-    accent:   "#60a5fa",
-    tag:      "Education",
-    tagline:  "Empowering minds. Building futures.",
-    programs: [],
-    comingSoon: false,
-    initials: "NMI",
-  },
-  {
-    name:     "Librairie du Quartier",
-    domain:   "librairieduquartier.org",
-    logo:     "/logos/librairie-du-quartier.png",
-    color:    "#393186",
-    accent:   "#EF7F1B",
-    tag:      "Community & Culture",
-    tagline:  "Your neighborhood. Your knowledge.",
-    programs: [],
-    comingSoon: false,
-    initials: "LQ",
-  },
-  {
-    name:     "DROS Construction",
-    domain:   "drosconstruction.com",
-    logo:     "/logos/dros-construction.png",
-    color:    "#1c3a2e",
-    accent:   "#a3855a",
-    tag:      "Construction & Development",
-    tagline:  "Building structures that stand the test of time.",
-    programs: [],
-    comingSoon: false,
-    initials: "DC",
-  },
-  {
-    name:       "Abba Land Place",
-    domain:     "abbalandplace.com",
-    logo:       "/logos/abbaland.png",
-    color:      "#110d07",
-    accent:     "#c8a96e",
-    tag:        "Hospitality & Lifestyle",
-    tagline:    "Something exceptional is coming.",
-    programs:   [],
-    comingSoon: false,
-    initials:   "ALP",
-  },
-  {
-    name:         "Drimp Foundation",
-    domain:       "drimpfoundation.org",
-    logo:         "/logos/drimp-foundation.png",
-    color:        "#023F78",
-    accent:       "#FC9D02",
-    tag:          "Social Impact & Humanitarian",
-    tagline:      "Transforming communities. Restoring dignity.",
-    programs:     [],
-    comingSoon:   false,
-    externalLink: "https://www.drimpfoundation.org",
-    initials:     "DF",
-  },
-];
-
-const systems = [
-  { title: "Executive OS",           desc: "Centralized command center for real-time operational oversight across all entities.",           icon: "⬡" },
-  { title: "AI Automation Layer",    desc: "Workflow orchestration, intelligent approval routing, and AI-powered briefings.",               icon: "⬡" },
-  { title: "ERP & CRM Infrastructure", desc: "Integrated enterprise resource planning and customer relationship systems.",                  icon: "⬡" },
-  { title: "Governance & Compliance", desc: "Structured approval flows, audit trails, and enterprise governance protocols.",               icon: "⬡" },
-];
-
-const expertiseDomains = [
-  {
-    number: "01", title: "Legal Assistance", color: "#1e40af", accent: "#3b82f6",
-    intro: "Due diligence and legal monitoring to minimize risks and support informed strategic decisions.",
-    services: ["Company creation & structuring", "Contract analysis, negotiation & drafting", "Legal secretariat & corporate governance", "Regulatory compliance & licensing"],
-  },
-  {
-    number: "02", title: "Accounting & Tax Support", color: "#065f46", accent: "#10b981",
-    intro: "Accounting, tax and social systems at the core of business success — compliant, reliable and optimized.",
-    services: ["Personalized accounting monitoring", "Monthly tax & CNPS declarations", "Tax optimization & fiscal culture", "Approved Management Centre (CGA)"],
-  },
-  {
-    number: "03", title: "Corporate Governance", color: "#7c2d12", accent: "#ea580c",
-    intro: "Governance structures that secure decision-making processes, ensure transparency and guarantee organizational continuity.",
-    services: ["General corporate policy", "Power, roles & responsibility frameworks", "Procedures, internal regulations & ethics codes", "Legal and regulatory compliance"],
-  },
-  {
-    number: "04", title: "Digital Transformation", color: "#1e3a5f", accent: "#0ea5e9",
-    intro: "Facilitating migration to secure digital systems — modernize infrastructure, protect data, enhance client experience.",
-    services: ["Custom application development (web, mobile, SaaS)", "ERP & CRM integration (Odoo, Salesforce, Dynamics)", "Process automation & workflow optimization", "Cybersecurity & cloud strategy"],
-  },
-  {
-    number: "05", title: "Digital Marketing", color: "#581c87", accent: "#a855f7",
-    intro: "Building high-performance digital tools to amplify your presence, reach your target audience, and break boundaries.",
-    services: ["Digital strategy & branding", "Social media management (Community Management)", "SEO & paid advertising (SEA)", "Content creation, email marketing & analytics"],
-  },
-  {
-    number: "06", title: "HR Services", color: "#7f1d1d", accent: "#ef4444",
-    intro: "Personalized HR services — candidate sourcing and screening, payroll automation, and labor law compliance.",
-    services: ["Outsourced recruitment", "Staff placement & secondment (MAD)", "Outsourced payroll management", "Social audit & interim services"],
-  },
-  {
-    number: "07", title: "Project Engineering", color: "#14532d", accent: "#22c55e",
-    intro: "Expert project management and engineering — better planning, optimal use of resources, risk minimization.",
-    services: ["Project setup & business plan development", "Project & program monitoring-evaluation", "Socioeconomic & environmental impact studies", "Administrative procedure tracking"],
-  },
-];
-
-/* ─── LOGO BADGE ─────────────────────────────────────── */
-
-function LogoBadge({
-  logo, initials, color, accent
-}: {
-  logo: string; initials: string; color: string; accent: string;
-}) {
-  const [imgFailed, setImgFailed] = React.useState(false);
-
-  if (imgFailed || !logo) {
-    return (
-      <div
-        style={{
-          width: 140, height: 140,
-          borderRadius: 20,
-          background: `linear-gradient(145deg, ${color}30, ${color}18)`,
-          border: `1px solid ${color}45`,
-          boxShadow: `0 0 60px ${color}20, 0 8px 32px rgba(0,0,0,0.35)`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          flexShrink: 0,
-        }}
-      >
-        <span style={{
-          color: accent,
-          fontSize: initials.length > 2 ? 22 : 30,
-          fontWeight: 700,
-          letterSpacing: "0.05em",
-          fontFamily: "system-ui, sans-serif",
-          lineHeight: 1,
-        }}>
-          {initials}
-        </span>
-      </div>
-    );
-  }
-
+/* ── Square marker — used throughout per brochure ───────── */
+function Sq({ size = 14, color = "#000" }: { size?: number; color?: string }) {
   return (
-    <div
+    <span
       style={{
-        width: 140, height: 140,
-        borderRadius: 20,
-        background: `linear-gradient(145deg, ${color}22, ${accent}14)`,
-        border: `1px solid ${color}35`,
-        boxShadow: `0 0 60px ${color}20, 0 8px 32px rgba(0,0,0,0.35)`,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        overflow: "hidden", flexShrink: 0,
+        display: "inline-block",
+        width: size,
+        height: size,
+        background: color,
+        flexShrink: 0,
+        marginTop: 2,
+      }}
+    />
+  );
+}
+
+/* ── Bullet item (green ■ prefix) ───────────────────────── */
+function Bullet({ text, light = false }: { text: string; light?: boolean }) {
+  return (
+    <li
+      style={{
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 10,
+        color: light ? "rgba(255,255,255,0.92)" : "var(--mgi-text)",
+        fontSize: "clamp(0.82rem, 1.8vw, 0.92rem)",
+        lineHeight: 1.6,
       }}
     >
-      <img
-        src={logo}
-        alt={initials}
-        width={96}
-        height={96}
-        style={{ objectFit: "contain" }}
-        onError={() => setImgFailed(true)}
+      <Sq size={10} color={light ? "var(--mgi-light)" : "var(--mgi-green)"} />
+      <span>{text}</span>
+    </li>
+  );
+}
+
+/* ── Service block — alternating image / content ────────── */
+function ServiceBlock({
+  service,
+  imageLeft,
+  shade,
+}: {
+  service: (typeof MGI_SERVICES)[0];
+  imageLeft: boolean;
+  shade: string;
+}) {
+  const imgPanel = (
+    <div
+      className="service-img-mobile"
+      style={{
+        position: "relative",
+        minHeight: 440,
+        border: `6px solid ${shade}`,
+        overflow: "hidden",
+      }}
+    >
+      <Image
+        src={service.image}
+        alt={service.imageAlt}
+        fill
+        style={{ objectFit: "cover" }}
+        sizes="(max-width: 768px) 100vw, 50vw"
       />
     </div>
   );
-}
 
-/* ─── ANIMATED TICKER ────────────────────────────────── */
+  const contentPanel = (
+    <div
+      style={{
+        background: shade,
+        padding: "clamp(2rem, 5vw, 3.5rem)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        minHeight: 440,
+      }}
+    >
+      {/* Heading with black square marker */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: "1.25rem" }}>
+        <Sq size={16} color="#000" />
+        <h3
+          style={{
+            color: "#fff",
+            fontWeight: 900,
+            fontSize: "clamp(1.3rem, 3vw, 1.75rem)",
+            lineHeight: 1.15,
+            margin: 0,
+          }}
+        >
+          {service.title}
+        </h3>
+      </div>
 
-function ActivityTicker() {
-  const items = [...expertise, ...expertise];
+      {/* Description */}
+      <p
+        style={{
+          color: "rgba(255,255,255,0.88)",
+          fontSize: "clamp(0.85rem, 1.8vw, 0.95rem)",
+          lineHeight: 1.75,
+          marginBottom: "1.5rem",
+        }}
+      >
+        {service.description}
+      </p>
+
+      {/* Bullets */}
+      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+        {service.bullets.map((b) => (
+          <Bullet key={b} text={b} light />
+        ))}
+      </ul>
+    </div>
+  );
+
   return (
     <div
-      className="relative w-full overflow-hidden mt-12"
-      style={{ maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)" }}
+      className="service-block"
+      style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
     >
-      <div className="flex gap-4 animate-ticker" style={{ width: "max-content" }}>
-        {items.map((label, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-2.5 px-5 py-2.5 rounded-full flex-shrink-0"
-            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.09)" }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#22c55e" }} />
-            <span className="text-xs font-medium whitespace-nowrap" style={{ color: "rgba(244,247,245,0.65)" }}>{label}</span>
-          </div>
-        ))}
-      </div>
-      <style>{`
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-ticker { animation: ticker 30s linear infinite; }
-        .animate-ticker:hover { animation-play-state: paused; }
-      `}</style>
+      {imageLeft ? imgPanel : contentPanel}
+      {imageLeft ? contentPanel : imgPanel}
     </div>
   );
 }
 
-/* ─── PAGE ───────────────────────────────────────────── */
+/* ── Venture card ────────────────────────────────────────── */
+function VentureCard({ v }: { v: (typeof MGI_VENTURES)[0] }) {
+  const [imgFailed, setImgFailed] = React.useState(false);
+  const href = "externalLink" in v && v.externalLink ? v.externalLink : `https://${v.domain}`;
 
-export default function Home() {
   return (
-    <main className="min-h-screen overflow-x-hidden" style={{ background: "#f4f7f4" }}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        background: `linear-gradient(145deg, ${v.color}35 0%, #161e1a 100%)`,
+        border: `1px solid ${v.color}50`,
+        borderRadius: 16,
+        overflow: "hidden",
+        textDecoration: "none",
+        transition: "transform 0.3s",
+      }}
+    >
+      <div style={{ height: 3, background: `linear-gradient(90deg, ${v.color}, ${v.accent})` }} />
+      <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", flex: 1 }}>
+        {imgFailed ? (
+          <div style={{ width: 80, height: 80, borderRadius: 12, background: `${v.color}25`, border: `1px solid ${v.color}40`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
+            <span style={{ color: v.accent, fontWeight: 700, fontSize: 18 }}>{v.initials}</span>
+          </div>
+        ) : (
+          <div style={{ width: 80, height: 80, borderRadius: 12, background: `${v.color}20`, border: `1px solid ${v.color}35`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem", overflow: "hidden" }}>
+            <img src={v.logo} alt={v.initials} width={60} height={60} style={{ objectFit: "contain" }} onError={() => setImgFailed(true)} />
+          </div>
+        )}
+        <p style={{ color: v.accent, fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 6 }}>{v.tag}</p>
+        <h3 style={{ color: "#f4f7f5", fontWeight: 800, fontSize: 15, marginBottom: 6 }}>{v.name}</h3>
+        <p style={{ color: "rgba(244,247,245,0.35)", fontSize: 11, fontStyle: "italic" }}>&ldquo;{v.tagline}&rdquo;</p>
+      </div>
+    </a>
+  );
+}
 
-      {/* Nav is in layout.tsx — spacer only */}
-      <div className="h-16" />
+/* ══ PAGE ════════════════════════════════════════════════════ */
+export default function Home() {
+  const shades = [
+    "var(--mgi-block-1)",
+    "var(--mgi-block-2)",
+    "var(--mgi-block-3)",
+    "var(--mgi-block-4)",
+    "var(--mgi-block-5)",
+    "var(--mgi-block-6)",
+    "var(--mgi-block-7)",
+  ];
 
-      {/* ══ HERO ══════════════════════════════════════════════ */}
-      <section
-        className="relative pt-40 pb-36 px-8 overflow-hidden"
-        style={{ background: "linear-gradient(160deg, #0d1f10 0%, #111a0d 40%, #131508 100%)" }}
-      >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none" style={{ width: "900px", height: "600px", background: "radial-gradient(ellipse at 50% 30%, rgba(34,197,94,0.14) 0%, rgba(250,204,21,0.04) 35%, transparent 65%)" }} />
-        <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(22,163,74,0.08), rgba(250,204,21,0.03) 50%, transparent)" }} />
+  return (
+    <main style={{ overflowX: "hidden" }}>
 
-        <div className="relative max-w-5xl mx-auto text-center">
-          <div className="mx-auto mb-10 flex items-center justify-center" style={{ width: "184px", height: "184px", borderRadius: "28px", background: "rgba(22,163,74,0.1)", border: "1px solid rgba(34,197,94,0.25)", boxShadow: "0 0 100px rgba(34,197,94,0.12), 0 0 40px rgba(250,204,21,0.06), 0 30px 80px rgba(0,0,0,0.4)" }}>
-            <Image src="/logos/mgi-main.png" alt="Mina-Galeed Invest" width={150} height={150} className="object-contain" priority />
+      {/* ══ 1. HERO ════════════════════════════════════════════ */}
+      <section id="accueil">
+        {/* Two-column hero */}
+        <div
+          className="hero-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
+        >
+          {/* Left — brand content */}
+          <div
+            style={{
+              background: "linear-gradient(155deg, #e4f1e8 0%, #d0e8d7 100%)",
+              padding: "clamp(3rem,6vw,5rem) clamp(2rem,5vw,4rem)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              minHeight: "clamp(480px,60vh,700px)",
+            }}
+          >
+            {/* Logo row */}
+            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: "clamp(1.5rem,3vw,2.5rem)" }}>
+              <Image
+                src="/logos/mgi-main.png"
+                alt="Mina-Galeed Invest"
+                width={90}
+                height={90}
+                style={{ objectFit: "contain" }}
+                priority
+              />
+              <div>
+                <p style={{ color: "var(--mgi-dark)", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", margin: 0 }}>
+                  MINA-GALEED INVEST
+                </p>
+                <p style={{ color: "var(--mgi-muted)", fontSize: 10, margin: "2px 0 0" }}>
+                  {MGI_META.since}
+                </p>
+              </div>
+            </div>
+
+            {/* Headline */}
+            <h1
+              style={{
+                color: "var(--mgi-text)",
+                fontWeight: 900,
+                fontSize: "clamp(2rem,5vw,3.6rem)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.02em",
+                marginBottom: "1rem",
+              }}
+            >
+              Start well,
+              <br />
+              <span style={{ color: "var(--mgi-green)" }}>Grow well.</span>
+            </h1>
+
+            <p style={{ color: "var(--mgi-dark)", fontWeight: 700, fontSize: "clamp(0.9rem,2vw,1.05rem)", marginBottom: "0.75rem" }}>
+              {MGI_META.positioning}
+            </p>
+
+            <p
+              style={{
+                color: "var(--mgi-muted)",
+                fontSize: "clamp(0.85rem,1.8vw,0.95rem)",
+                lineHeight: 1.75,
+                marginBottom: "2rem",
+                maxWidth: 480,
+              }}
+            >
+              {MGI_META.descriptionLong}
+            </p>
+
+            {/* CTAs */}
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <a
+                href="#expertise"
+                style={{
+                  background: "var(--mgi-green)",
+                  color: "#fff",
+                  padding: "clamp(11px,2vw,14px) clamp(20px,4vw,28px)",
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  textDecoration: "none",
+                  fontSize: "clamp(0.85rem,2vw,0.95rem)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  minHeight: 44,
+                }}
+              >
+                Découvrir nos expertises →
+              </a>
+              <a
+                href="#contact"
+                style={{
+                  border: "2px solid var(--mgi-green)",
+                  color: "var(--mgi-green)",
+                  padding: "clamp(9px,2vw,12px) clamp(18px,4vw,26px)",
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  textDecoration: "none",
+                  fontSize: "clamp(0.85rem,2vw,0.95rem)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  minHeight: 44,
+                  background: "transparent",
+                }}
+              >
+                Demander un accompagnement
+              </a>
+            </div>
+
+            <p style={{ color: "var(--mgi-muted)", fontSize: 12, marginTop: "1.75rem" }}>
+              🌐 {MGI_META.website}
+            </p>
           </div>
 
-          <p className="text-xs font-bold tracking-[0.35em] uppercase mb-3" style={{ color: "#22c55e" }}>
-            Mina-Galeed Invest (MGI) Ltd
-          </p>
-          {/* Official tagline from brochure */}
-          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-5" style={{ color: "#4ade80" }}>
-            At the Heart of SME Performance
-          </p>
+          {/* Right — hero photo */}
+          <div style={{ position: "relative", minHeight: "clamp(360px,50vw,700px)", overflow: "hidden" }}>
+            <Image
+              src="/mgi-images/hero.jpeg"
+              alt="Conseil et accompagnement des entreprises — Mina-Galeed Invest"
+              fill
+              style={{ objectFit: "cover" }}
+              priority
+              sizes="50vw"
+            />
+            {/* White inner frame overlay */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 20,
+                border: "3px solid rgba(255,255,255,0.55)",
+                borderRadius: 10,
+                pointerEvents: "none",
+              }}
+            />
+          </div>
+        </div>
 
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.0] mb-6" style={{ color: "#f4f7f5" }}>
-            Start well.{" "}
-            <span style={{ color: "#4ade80" }}>Grow well.</span>
-          </h1>
-
-          <p className="text-lg max-w-2xl mx-auto leading-relaxed mb-4" style={{ color: "rgba(244,247,245,0.5)" }}>
-            A holding company accompanying enterprises through their full development cycle —
-            from legal structuring and governance to digital transformation and intelligent systems.
+        {/* Bottom identity strip */}
+        <div
+          style={{
+            background: "var(--mgi-dark)",
+            padding: "clamp(2rem,4vw,3rem) clamp(1.5rem,4vw,3rem)",
+            textAlign: "center",
+          }}
+        >
+          <h2
+            style={{
+              color: "#fff",
+              fontWeight: 900,
+              fontSize: "clamp(1.5rem,4vw,2.5rem)",
+              letterSpacing: "-0.01em",
+              marginBottom: "0.4rem",
+            }}
+          >
+            Mina-Galeed Invest Ltd.
+          </h2>
+          <p style={{ color: "var(--mgi-light)", fontWeight: 600, marginBottom: "0.35rem", fontSize: "clamp(0.95rem,2vw,1.1rem)" }}>
+            {MGI_META.positioning}
           </p>
-          <p className="text-sm tracking-widest uppercase mb-0" style={{ color: "rgba(244,247,245,0.22)" }}>
-            Rogers Nforgwei · Founder & CEO · Yaoundé, Cameroon
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: "1.5rem" }}>
+            https://www.mina-galeed.com
           </p>
-
-          <ActivityTicker />
+          <div style={{ display: "flex", gap: 24, justifyContent: "center", flexWrap: "wrap" }}>
+            <a
+              href={MGI_CONTACT.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "rgba(255,255,255,0.5)", display: "flex", alignItems: "center", gap: 6, fontSize: 12, textDecoration: "none" }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
+              {MGI_CONTACT.facebook}
+            </a>
+            <a
+              href={MGI_CONTACT.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "rgba(255,255,255,0.5)", display: "flex", alignItems: "center", gap: 6, fontSize: 12, textDecoration: "none" }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+              {MGI_CONTACT.linkedin}
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* ══ WHO WE ARE — REAL MGI CONTENT ════════════════════ */}
-      <section id="about-preview" className="py-24 px-8" style={{ background: "#ffffff" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#0d6e36" }}>Who We Are</p>
-              <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6" style={{ color: "#111827" }}>
-                Mina-Galeed Invest (MGI) Ltd
+      {/* ══ 2. QUI SOMMES-NOUS ═════════════════════════════════ */}
+      <section id="about" style={{ background: "#fff", padding: "clamp(3rem,6vw,6rem) clamp(1rem,4vw,2rem)" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <div
+            style={{
+              background: "var(--mgi-dark)",
+              borderRadius: 18,
+              padding: "clamp(2rem,5vw,3.5rem)",
+              textAlign: "center",
+              border: "3px solid var(--mgi-green)",
+            }}
+          >
+            {/* Heading with black square */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: "1.5rem" }}>
+              <Sq size={18} color="#000" />
+              <h2
+                style={{
+                  color: "#fff",
+                  fontWeight: 900,
+                  fontSize: "clamp(1.4rem,3.5vw,2rem)",
+                  margin: 0,
+                }}
+              >
+                Qui sommes-nous ?
               </h2>
-              <p className="text-lg leading-relaxed mb-4" style={{ color: "#374151" }}>
-                A holding company that accompanies businesses through their development cycles.
-                Since 2019, MGI has been providing expert advisory, operational support, and
-                technology solutions to SMEs across Cameroon and Central Africa.
+            </div>
+            <p
+              style={{
+                color: "rgba(255,255,255,0.88)",
+                fontSize: "clamp(0.95rem,2.2vw,1.1rem)",
+                lineHeight: 1.85,
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
+              {MGI_META.description}
+            </p>
+            <p
+              style={{
+                color: "var(--mgi-light)",
+                fontSize: "clamp(0.85rem,2vw,0.95rem)",
+                marginTop: "1.25rem",
+                fontStyle: "italic",
+              }}
+            >
+              Depuis 2019 · Yaoundé, Cameroun · {MGI_META.website}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 3. NOTRE SLOGAN / NOS VALEURS / NOS ATOUTS ═════════ */}
+      <section
+        style={{
+          background: "var(--mgi-pale)",
+          padding: "clamp(3rem,6vw,6rem) clamp(1rem,4vw,2rem)",
+        }}
+      >
+        <div
+          className="values-grid"
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "1fr 1.6fr 1.2fr",
+            gap: "clamp(1.5rem,4vw,3rem)",
+            alignItems: "start",
+          }}
+        >
+          {/* Col 1 — Notre slogan */}
+          <div>
+            <div
+              style={{
+                background: "var(--mgi-green)",
+                borderRadius: 16,
+                padding: "2rem 1.5rem",
+                textAlign: "center",
+              }}
+            >
+              <p
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  marginBottom: "1rem",
+                }}
+              >
+                Notre slogan
               </p>
-              <p className="text-base leading-relaxed mb-8" style={{ color: "#6B7280" }}>
-                We deploy highly qualified experts across 7 domains of excellence — from legal
-                structuring to digital transformation — ensuring every client receives
-                end-to-end support tailored to their specific growth stage.
+              <p
+                style={{
+                  color: "#fff",
+                  fontWeight: 900,
+                  fontSize: "clamp(1.1rem,2.5vw,1.4rem)",
+                  lineHeight: 1.3,
+                  fontStyle: "italic",
+                }}
+              >
+                {MGI_VALUES.slogan}
               </p>
-              <div className="flex flex-wrap gap-3">
-                {["Since 2019", "Yaoundé, Cameroun", "7 Expertise Domains", "6 Ventures"].map((item) => (
-                  <span key={item} className="text-xs font-semibold px-4 py-2 rounded-full" style={{ background: "#f0fdf4", color: "#0d6e36", border: "1px solid #bbf7d0" }}>
-                    {item}
+            </div>
+          </div>
+
+          {/* Col 2 — Nos Valeurs + Cinq raisons */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+            {/* Valeurs */}
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "1rem" }}>
+                <span style={{ fontSize: 18 }}>👆</span>
+                <h3
+                  style={{
+                    color: "var(--mgi-green)",
+                    fontWeight: 800,
+                    fontSize: "clamp(1rem,2.5vw,1.2rem)",
+                    margin: 0,
+                  }}
+                >
+                  Nos Valeurs
+                </h3>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+                {MGI_VALUES.valeurs.map((v) => (
+                  <Bullet key={v} text={v} />
+                ))}
+              </ul>
+            </div>
+
+            {/* Cinq raisons */}
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "1rem" }}>
+                <span style={{ fontSize: 18 }}>👆</span>
+                <h3
+                  style={{
+                    color: "var(--mgi-green)",
+                    fontWeight: 800,
+                    fontSize: "clamp(1rem,2.5vw,1.2rem)",
+                    margin: 0,
+                  }}
+                >
+                  Cinq raisons de nous choisir
+                </h3>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+                {MGI_VALUES.raisons.map((r) => (
+                  <Bullet key={r} text={r} />
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Col 3 — Nos atouts */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "1rem" }}>
+              <span style={{ fontSize: 18 }}>👆</span>
+              <h3
+                style={{
+                  color: "var(--mgi-green)",
+                  fontWeight: 800,
+                  fontSize: "clamp(1rem,2.5vw,1.2rem)",
+                  margin: 0,
+                }}
+              >
+                Nos atouts
+              </h3>
+            </div>
+            <p style={{ color: "var(--mgi-muted)", fontSize: "clamp(0.82rem,1.8vw,0.9rem)", lineHeight: 1.65, marginBottom: "1rem" }}>
+              {MGI_VALUES.atoutsIntro}
+            </p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+              {MGI_VALUES.atouts.map((a) => (
+                <li key={a.label} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                  <Sq size={10} color="var(--mgi-green)" />
+                  <span style={{ fontSize: "clamp(0.82rem,1.8vw,0.9rem)", color: "var(--mgi-text)", lineHeight: 1.6 }}>
+                    <strong style={{ color: "var(--mgi-green)" }}>{a.label} :</strong>{" "}
+                    {a.desc}
                   </span>
-                ))}
-              </div>
-            </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
 
-            <div className="space-y-8">
-              <div>
-                <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#0d6e36" }}>Our Values</p>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { value: "Integrity",       icon: "⚖️" },
-                    { value: "Excellence",      icon: "★"  },
-                    { value: "Confidentiality", icon: "🔒" },
-                    { value: "Innovation",      icon: "◈"  },
-                  ].map((v) => (
-                    <div key={v.value} className="px-4 py-3 rounded-xl flex items-center gap-3" style={{ background: "#f9fafb", border: "1px solid #e5e7eb" }}>
-                      <span className="text-lg">{v.icon}</span>
-                      <span className="text-sm font-semibold" style={{ color: "#111827" }}>{v.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      {/* ══ 4. EXPERTISE HEADER BLOCK ══════════════════════════ */}
+      <section
+        id="expertise"
+        style={{
+          background: "var(--mgi-dark)",
+          padding: "clamp(3rem,5vw,5rem) clamp(1.5rem,4vw,3rem)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "1.5rem",
+          }}
+        >
+          <div>
+            <h2
+              style={{
+                color: "#fff",
+                fontWeight: 900,
+                fontSize: "clamp(1.8rem,5vw,3.5rem)",
+                lineHeight: 1.0,
+                margin: 0,
+                letterSpacing: "-0.02em",
+                textTransform: "uppercase",
+              }}
+            >
+              NOS DOMAINES
+              <br />
+              D&rsquo;EXPERTISE
+            </h2>
+          </div>
+          <div style={{ flexShrink: 0 }}>
+            <Image
+              src="/logos/mgi-main.png"
+              alt="MGI"
+              width={80}
+              height={80}
+              style={{ objectFit: "contain", opacity: 0.9 }}
+            />
+          </div>
+        </div>
+      </section>
 
-              <div>
-                <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#0d6e36" }}>5 Reasons to Choose MGI</p>
-                <div className="space-y-2">
-                  {["A tailored approach", "Cutting-edge technologies", "End-to-end support", "Measurable impact", "Results-driven evaluation"].map((reason, i) => (
-                    <div key={reason} className="flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0" style={{ background: "#0d6e36", color: "white" }}>
-                        {i + 1}
-                      </span>
-                      <p className="text-sm" style={{ color: "#374151" }}>{reason}</p>
-                    </div>
-                  ))}
+      {/* ══ 5. 7 SERVICE BLOCKS ════════════════════════════════ */}
+      <section>
+        {MGI_SERVICES.map((service, i) => (
+          <ServiceBlock
+            key={service.id}
+            service={service}
+            imageLeft={i % 2 === 0}
+            shade={shades[i]}
+          />
+        ))}
+      </section>
+
+      {/* ══ 6. NOUS FONT CONFIANCE ═════════════════════════════ */}
+      <section
+        id="partenaires"
+        style={{ background: "#fff" }}
+      >
+        <div
+          className="partners-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr 3fr",
+            minHeight: 380,
+          }}
+        >
+          {/* Green title panel */}
+          <div
+            style={{
+              background: "var(--mgi-dark)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "clamp(2.5rem,5vw,4rem) clamp(1.5rem,4vw,3rem)",
+            }}
+          >
+            <h2
+              style={{
+                color: "#fff",
+                fontWeight: 900,
+                fontSize: "clamp(1.6rem,4vw,2.8rem)",
+                lineHeight: 1.1,
+                textAlign: "center",
+                textTransform: "uppercase",
+                letterSpacing: "-0.01em",
+                margin: 0,
+              }}
+            >
+              NOUS FONT
+              <br />
+              CONFIANCE
+            </h2>
+          </div>
+
+          {/* Logo grid */}
+          <div
+            style={{
+              padding: "clamp(2rem,5vw,4rem)",
+              display: "flex",
+              alignItems: "center",
+              border: "1px solid #e5e7eb",
+            }}
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "clamp(1rem,3vw,2rem)",
+                width: "100%",
+              }}
+            >
+              {MGI_PARTNERS.map((partner) => (
+                <div
+                  key={partner.name}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "clamp(0.75rem,2vw,1.25rem)",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: 8,
+                    minHeight: 90,
+                  }}
+                >
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    width={110}
+                    height={70}
+                    style={{ objectFit: "contain" }}
+                  />
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══ EXPERTISE — 7 DOMAINS ════════════════════════════ */}
-      <section id="expertise" className="py-24 px-8" style={{ background: "#f0f7f2" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-14 text-center">
-            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#0d6e36" }}>Our Expertise</p>
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-4" style={{ color: "#111827" }}>7 Domains of Excellence</h2>
-            <p className="text-base max-w-2xl mx-auto leading-relaxed" style={{ color: "#6B7280" }}>
-              We accompany businesses at every stage of their development — from legal structuring to
-              digital transformation — with highly qualified experts in each domain.
+      {/* ══ 7. NOS VENTURES (bottom) ═══════════════════════════ */}
+      <section
+        id="ventures"
+        style={{
+          background: "#0c1015",
+          padding: "clamp(3.5rem,6vw,6rem) clamp(1rem,4vw,2rem)",
+        }}
+      >
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          {/* Header */}
+          <div style={{ marginBottom: "clamp(2rem,4vw,3.5rem)" }}>
+            <p
+              style={{
+                color: "var(--mgi-light)",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Écosystème MGI
+            </p>
+            <h2
+              style={{
+                color: "#f4f7f5",
+                fontWeight: 900,
+                fontSize: "clamp(1.5rem,4vw,2.5rem)",
+                letterSpacing: "-0.02em",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Nos Ventures
+            </h2>
+            <p style={{ color: "rgba(244,247,245,0.4)", fontSize: 13 }}>
+              7 entreprises · 5 secteurs · Un même écosystème
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {expertiseDomains.map((domain) => (
-              <div key={domain.number} className="rounded-2xl p-7 flex flex-col" style={{ background: "#ffffff", border: "1px solid #e5e7eb", boxShadow: "0 1px 8px rgba(0,0,0,0.04)" }}>
-                <div className="flex items-start justify-between mb-4">
-                  <span className="text-3xl font-black" style={{ color: "#f3f4f6" }}>{domain.number}</span>
-                  <span className="w-2 h-8 rounded-full" style={{ background: domain.accent }} />
-                </div>
-                <h3 className="text-base font-black mb-2 tracking-tight" style={{ color: "#111827" }}>{domain.title}</h3>
-                <p className="text-xs leading-relaxed mb-4" style={{ color: "#6B7280" }}>{domain.intro}</p>
-                <ul className="space-y-1.5 mt-auto">
-                  {domain.services.map((s) => (
-                    <li key={s} className="flex items-start gap-2">
-                      <span className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0" style={{ background: domain.accent }} />
-                      <span className="text-xs" style={{ color: "#374151" }}>{s}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            {/* CTA card */}
-            <div className="rounded-2xl p-7 flex flex-col justify-center items-center text-center" style={{ background: "#0d6e36", border: "1px solid #0a5a2d" }}>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] mb-3" style={{ color: "#4ade80" }}>Your business</p>
-              <h3 className="text-lg font-black mb-3" style={{ color: "#ffffff" }}>Ready to grow?</h3>
-              <p className="text-xs leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.7)" }}>
-                We start with a situational analysis to identify your specific needs.
-              </p>
-              <a href="#contact" className="px-6 py-3 rounded-xl text-sm font-bold transition-all hover:opacity-90" style={{ background: "white", color: "#0d6e36" }}>
-                Contact Us →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══ ECOSYSTEM — DARK, PREMIUM ════════════════════════ */}
-      <section id="ventures" className="py-24 px-8" style={{ background: "#0c1015" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-14">
-            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#22c55e" }}>Ecosystem Architecture</p>
-            <div className="flex items-end justify-between flex-wrap gap-4">
-              <h2 className="text-3xl md:text-4xl font-black tracking-tight" style={{ color: "#f4f7f5" }}>Our Ventures</h2>
-              <p className="text-sm" style={{ color: "#3a4a42" }}>6 companies · 5 sectors</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {ventures.map((v) => {
-              const sharedClassName = "group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:-translate-y-1.5";
-              const sharedStyle = {
-                background: `linear-gradient(145deg, ${v.color}35 0%, #1a2028 100%)`,
-                border: `1px solid ${v.color}50`,
-                boxShadow: "0 4px 24px rgba(0,0,0,0.35)",
-              };
-              const cardContent = (
-                <>
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: `radial-gradient(ellipse at 50% -10%, ${v.color}28 0%, transparent 65%)` }} />
-                  <div className="h-[3px] w-full flex-shrink-0" style={{ background: `linear-gradient(90deg, ${v.color}, ${v.accent})` }} />
-                  <div className="flex flex-col flex-1 p-6 relative items-center text-center">
-                    {v.comingSoon && (
-                      <span className="absolute top-4 right-4 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                        Coming soon
-                      </span>
-                    )}
-                    <div className="mb-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
-                      <LogoBadge logo={v.logo} initials={v.initials} color={v.color} accent={v.accent} />
-                    </div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2" style={{ color: v.accent }}>{v.tag}</p>
-                    <h3 className="text-lg font-black leading-tight mb-2 tracking-tight" style={{ color: "#f4f7f5" }}>{v.name}</h3>
-                    <p className="text-xs italic leading-relaxed mb-2" style={{ color: "rgba(244,247,245,0.38)" }}>&ldquo;{v.tagline}&rdquo;</p>
-                    <p className="text-[11px] mb-4" style={{ color: "rgba(244,247,245,0.2)" }}>{v.domain}</p>
-                    {v.programs.length > 0 && (
-                      <div className="mt-auto pt-4 space-y-1.5" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-                        {v.programs.map((p) => (
-                          <div key={p} className="flex items-center gap-2">
-                            <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: v.accent }} />
-                            <p className="text-xs" style={{ color: "rgba(244,247,245,0.38)" }}>{p}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </>
-              );
-
-              if (v.comingSoon) {
-                return <div key={v.domain} className={sharedClassName} style={sharedStyle}>{cardContent}</div>;
-              }
-              return (
-                <a key={v.domain} href={v.externalLink ?? `https://${v.domain}`} target="_blank" rel="noopener noreferrer" className={sharedClassName} style={sharedStyle}>
-                  {cardContent}
-                </a>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ ENTERPRISE SYSTEMS ═══════════════════════════════ */}
-      <section className="py-24 px-8" style={{ background: "#0f1a12" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-14">
-            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#22c55e" }}>Enterprise Systems</p>
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-3" style={{ color: "#f4f7f5" }}>Intelligent Infrastructure</h2>
-            <p className="max-w-xl leading-relaxed" style={{ color: "rgba(244,247,245,0.45)" }}>
-              MGI operates a centralized technology and governance layer enabling real-time oversight,
-              AI-driven automation, and operational intelligence across the full ecosystem.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-            {systems.map((s) => (
-              <div key={s.title} className="px-7 py-6 rounded-2xl" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(34,197,94,0.15)" }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style={{ background: "rgba(13,110,54,0.3)", color: "#4ade80" }}>{s.icon}</div>
-                <h3 className="text-base font-bold mb-2" style={{ color: "#f4f7f5" }}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(244,247,245,0.4)" }}>{s.desc}</p>
-              </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gap: 18,
+            }}
+          >
+            {MGI_VENTURES.map((v) => (
+              <VentureCard key={v.domain} v={v} />
             ))}
           </div>
-          <div className="px-8 py-7 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6" style={{ background: "rgba(13,110,54,0.2)", border: "1px solid rgba(34,197,94,0.25)" }}>
+
+          {/* Executive OS CTA */}
+          <div
+            style={{
+              marginTop: "2rem",
+              padding: "clamp(1.5rem,3vw,2rem) clamp(1.5rem,4vw,2.5rem)",
+              borderRadius: 14,
+              background: "rgba(11,148,68,0.12)",
+              border: "1px solid rgba(11,148,68,0.3)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "1rem",
+            }}
+          >
             <div>
-              <h3 className="text-lg font-bold mb-1" style={{ color: "#f4f7f5" }}>MGI Executive OS</h3>
-              <p className="text-sm" style={{ color: "rgba(244,247,245,0.5)" }}>
-                The centralized command center for ecosystem management, approvals, communications, and strategic oversight.
+              <p style={{ color: "#f4f7f5", fontWeight: 700, fontSize: 15, margin: "0 0 4px" }}>
+                MGI Executive OS
+              </p>
+              <p style={{ color: "rgba(244,247,245,0.45)", fontSize: 13, margin: 0 }}>
+                Tableau de bord centralisé pour la gestion de l&apos;écosystème MGI.
               </p>
             </div>
-            <Link href="https://os.mgi-ventures.com" className="flex-shrink-0 px-6 py-3 rounded-xl font-bold text-sm text-white transition-all hover:brightness-110" style={{ background: "#16a34a" }}>
-              Access Executive OS →
-            </Link>
+            <a
+              href="https://os.mgi-ventures.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: "var(--mgi-green)",
+                color: "#fff",
+                padding: "10px 22px",
+                borderRadius: 8,
+                fontWeight: 700,
+                fontSize: 13,
+                textDecoration: "none",
+                flexShrink: 0,
+              }}
+            >
+              Accéder à Executive OS →
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ══ POSITIONING STRIP ════════════════════════════════ */}
-      <section className="py-20 px-8" style={{ background: "#e8f5eb" }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-2xl md:text-4xl font-bold leading-relaxed" style={{ color: "#0d6e36" }}>
-            &ldquo;At the heart of business performance.&rdquo;
-          </p>
-          <p className="text-sm mt-4 tracking-widest uppercase" style={{ color: "#5a7a65" }}>
-            Mina-Galeed Invest (MGI) Ltd · Yaoundé, Cameroon
-          </p>
-        </div>
-      </section>
+      {/* ══ 8. CONTACT / FOOTER ════════════════════════════════ */}
+      <footer
+        id="contact"
+        style={{
+          background: "var(--mgi-dark)",
+          padding: "clamp(3rem,6vw,5rem) clamp(1rem,4vw,2rem)",
+        }}
+      >
+        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+          {/* Heading */}
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: "clamp(2rem,4vw,3rem)" }}>
+            <Sq size={18} color="#000" />
+            <h2
+              style={{
+                color: "#fff",
+                fontWeight: 900,
+                fontSize: "clamp(1.5rem,4vw,2.2rem)",
+                margin: 0,
+              }}
+            >
+              Nos contacts
+            </h2>
+          </div>
 
-      {/* ══ FOOTER ═══════════════════════════════════════════ */}
-      <footer id="contact" className="py-14 px-8" style={{ background: "#0c1710", borderTop: "1px solid rgba(34,197,94,0.1)" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-10">
-            {/* Brand */}
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(13,110,54,0.25)", border: "1px solid rgba(13,110,54,0.4)" }}>
-                  <Image src="/logos/mgi-main.png" alt="MGI" width={18} height={18} className="object-contain" />
+          {/* Contact icon grid */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+              gap: "clamp(1.25rem,3vw,2rem)",
+              marginBottom: "clamp(2rem,4vw,3rem)",
+            }}
+          >
+            {[
+              { icon: "📍", label: "Siège social", value: MGI_CONTACT.siege, href: undefined },
+              { icon: "📮", label: "Boîte postale", value: MGI_CONTACT.bp, href: undefined },
+              { icon: "📞", label: "Téléphone", value: MGI_CONTACT.phone, href: MGI_CONTACT.phoneTel },
+              { icon: "📧", label: "Email", value: MGI_CONTACT.email, href: MGI_CONTACT.emailLink },
+              { icon: "🌐", label: "Site web", value: MGI_CONTACT.website, href: MGI_CONTACT.websiteUrl },
+            ].map((item) => (
+              <div key={item.label} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 20 }}>{item.icon}</span>
+                  <span
+                    style={{
+                      color: "var(--mgi-light)",
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.12em",
+                    }}
+                  >
+                    {item.label}
+                  </span>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold" style={{ color: "rgba(244,247,245,0.6)" }}>Mina-Galeed Invest (MGI) Ltd</p>
-                  <p className="text-xs" style={{ color: "rgba(244,247,245,0.25)" }}>Est. 2019 · Yaoundé, Cameroun</p>
-                </div>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    style={{
+                      color: "rgba(255,255,255,0.75)",
+                      fontSize: "clamp(0.82rem,1.8vw,0.9rem)",
+                      textDecoration: "none",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {item.value}
+                  </a>
+                ) : (
+                  <span
+                    style={{
+                      color: "rgba(255,255,255,0.65)",
+                      fontSize: "clamp(0.82rem,1.8vw,0.9rem)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {item.value}
+                  </span>
+                )}
               </div>
-              <p className="text-xs leading-relaxed" style={{ color: "rgba(244,247,245,0.35)" }}>
-                A holding company accompanying businesses through their full development cycles.
+            ))}
+          </div>
+
+          {/* Bottom bar */}
+          <div
+            style={{
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+              paddingTop: "1.75rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "1rem",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <Image
+                src="/logos/mgi-main.png"
+                alt="MGI"
+                width={32}
+                height={32}
+                style={{ objectFit: "contain", opacity: 0.8 }}
+              />
+              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 12, margin: 0 }}>
+                © {new Date().getFullYear()} Mina-Galeed Invest (MGI) Ltd · Tous droits réservés
               </p>
             </div>
 
-            {/* Quick links */}
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: "#4ade80" }}>Navigation</p>
-              <div className="space-y-2">
-                {[
-                  { label: "About MGI",     href: "/about"      },
-                  { label: "Our Expertise", href: "/#expertise" },
-                  { label: "Our Ventures",  href: "/#ventures"  },
-                  { label: "Executive OS",  href: "https://os.mgi-ventures.com" },
-                ].map((l) => (
-                  <Link key={l.label} href={l.href} className="block text-xs transition-colors hover:text-white" style={{ color: "rgba(244,247,245,0.4)" }}>
-                    {l.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: "#4ade80" }}>Contact</p>
-              <div className="space-y-2">
-                <p className="text-xs" style={{ color: "rgba(244,247,245,0.5)" }}>Biyem-Assi, Yaoundé – Cameroun</p>
-                <p className="text-xs" style={{ color: "rgba(244,247,245,0.5)" }}>BP 30374, Yaoundé – Cameroun</p>
-                <a href="tel:+237699812513" className="block text-xs hover:text-white transition-colors" style={{ color: "rgba(244,247,245,0.5)" }}>
-                  (+237) 699 81 25 13
-                </a>
-                <a href="mailto:info@mgi-ventures.com" className="block text-xs hover:text-white transition-colors" style={{ color: "rgba(244,247,245,0.5)" }}>
-                  info@mgi-ventures.com
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-            <p className="text-xs" style={{ color: "rgba(244,247,245,0.2)" }}>© {new Date().getFullYear()} Mina-Galeed Invest (MGI) Ltd · All rights reserved</p>
-            <div className="flex items-center gap-4">
-              <a href="https://www.facebook.com/minagaleedinvest" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/25 hover:text-white/60 transition-colors flex">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+              <a
+                href={MGI_CONTACT.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "rgba(255,255,255,0.35)", display: "flex", alignItems: "center", gap: 6, fontSize: 12, textDecoration: "none" }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                LinkedIn
               </a>
-              <a href="https://www.linkedin.com/company/101651608/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/25 hover:text-white/60 transition-colors flex">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              <a
+                href={MGI_CONTACT.facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "rgba(255,255,255,0.35)", display: "flex", alignItems: "center", gap: 6, fontSize: 12, textDecoration: "none" }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
+                Facebook
               </a>
             </div>
-            <Link href="https://os.mgi-ventures.com" className="text-xs font-medium transition-colors" style={{ color: "rgba(74,222,128,0.5)" }}>
-              Executive OS →
-            </Link>
           </div>
         </div>
       </footer>

@@ -2,13 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-* { box-sizing: border-box; }
+/* ── MGI Brand Tokens ─────────────────────────────────────── */
+:root {
+  --mgi-green:      #0B9444;
+  --mgi-light:      #6FBA45;
+  --mgi-dark:       #1A5C2A;
+  --mgi-pale:       #EBF5EE;
+  --mgi-white:      #FFFFFF;
+  --mgi-text:       #1A1A1A;
+  --mgi-muted:      #4A6B52;
 
-body {
-  background: #0a0a0f;
-  color: #f0f0f4;
-  font-family: system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  /* Service block shading */
+  --mgi-block-1:    #0B9444;
+  --mgi-block-2:    #0A8040;
+  --mgi-block-3:    #097A3C;
+  --mgi-block-4:    #087538;
+  --mgi-block-5:    #076F34;
+  --mgi-block-6:    #066A30;
+  --mgi-block-7:    #05642C;
 }
 
+* { box-sizing: border-box; }
+
 html { scroll-behavior: smooth; }
+
+body {
+  background: var(--mgi-white);
+  color: var(--mgi-text);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Square bullet — brochure style ──────────────────────── */
+.mgi-bullet {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: var(--mgi-light);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.mgi-bullet-dark {
+  background: #000;
+}
+
+/* ── Responsive hero grid ────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr !important; }
+  .service-block { grid-template-columns: 1fr !important; }
+  .values-grid { grid-template-columns: 1fr !important; }
+  .partners-grid { grid-template-columns: 1fr !important; }
+  .service-img-mobile { min-height: 280px !important; }
+}

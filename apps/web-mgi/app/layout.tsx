@@ -5,72 +5,124 @@ import './globals.css'
 import ChatWidget from '@/components/ChatWidget'
 
 export const metadata: Metadata = {
-  title: "MGI Ventures — Multi-Sector Venture Ecosystem",
-  description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
-  metadataBase: new URL("https://mgi-ventures.com"),
+  title: 'Mina-Galeed Invest (MGI) Ltd — Au Cœur de la performance des PME',
+  description:
+    "Mina-Galeed Invest (MGI) Ltd est une holding qui accompagne les entreprises dans leurs cycles de développement — assistance juridique, comptable, gouvernance, transformation digitale, marketing, RH et ingénierie des projets.",
+  metadataBase: new URL('https://mgi-ventures.com'),
+  keywords: [
+    'MGI', 'Mina-Galeed Invest', 'holding Cameroun', 'assistance juridique Cameroun',
+    'comptabilité fiscalité Cameroun', 'transformation digitale', 'gouvernance entreprise',
+    'marketing digital Cameroun', 'ressources humaines Cameroun', 'ingénierie projets',
+  ],
+  authors: [{ name: 'Mina-Galeed Invest (MGI) Ltd' }],
   openGraph: {
-    title: "MGI Ventures — Multi-Sector Venture Ecosystem",
-    description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
-    url: "https://mgi-ventures.com",
-    siteName: "MGI Ventures",
-    type: "website",
-    locale: "en_US",
+    title: 'Mina-Galeed Invest (MGI) Ltd — Au Cœur de la performance des PME',
+    description: "Holding d'accompagnement des PME au Cameroun — 7 domaines d'expertise, réseau national.",
+    url: 'https://mgi-ventures.com',
+    siteName: 'MGI — Mina-Galeed Invest',
+    type: 'website',
+    locale: 'fr_CM',
   },
   twitter: {
-    card: "summary",
-    title: "MGI Ventures — Multi-Sector Venture Ecosystem",
-    description: "MGI Ventures is a multi-sector venture ecosystem operating across education, hospitality, construction, culture, and humanitarian impact.",
+    card: 'summary_large_image',
+    title: 'Mina-Galeed Invest (MGI) Ltd — Start well, Grow well',
+    description: "Holding d'accompagnement des PME au Cameroun.",
   },
-  alternates: {
-    canonical: "https://mgi-ventures.com",
-  },
+  robots: { index: true, follow: true },
 }
+
+const navLinks = [
+  { label: 'Accueil',    href: '/'            },
+  { label: 'À propos',  href: '/#about'      },
+  { label: 'Expertise', href: '/#expertise'  },
+  { label: 'Partenaires', href: '/#partenaires' },
+  { label: 'Nos ventures', href: '/#ventures' },
+  { label: 'Contact',   href: '/#contact'    },
+]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body>
-        {/* ── SHARED NAV ─────────────────────────────────── */}
+        {/* ── NAV ──────────────────────────────────────────── */}
         <nav
-          className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
           style={{
-            background: "rgba(255,255,255,0.95)",
-            borderBottom: "1px solid rgba(13,110,54,0.1)",
-            boxShadow: "0 1px 20px rgba(0,0,0,0.06)",
+            position: 'fixed',
+            top: 0, left: 0, right: 0,
+            zIndex: 50,
+            background: 'var(--mgi-dark)',
+            boxShadow: '0 2px 20px rgba(0,0,0,0.35)',
           }}
         >
-          <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-4">
+          <div
+            style={{
+              maxWidth: 1280,
+              margin: '0 auto',
+              padding: '0 clamp(1rem,4vw,2rem)',
+              height: 64,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            {/* Logo */}
+            <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 12 }}>
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: "#f0f7f2", border: "1px solid rgba(13,110,54,0.2)" }}
+                style={{
+                  width: 42, height: 42,
+                  background: 'rgba(255,255,255,0.12)',
+                  borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  overflow: 'hidden',
+                }}
               >
-                <Image src="/logos/mgi-main.png" alt="MGI" width={28} height={28} className="object-contain" />
+                <Image src="/logos/mgi-main.png" alt="MGI" width={30} height={30} style={{ objectFit: 'contain' }} />
               </div>
               <div>
-                <p className="text-sm font-bold tracking-tight leading-none" style={{ color: "#0c1a10" }}>
+                <p style={{ color: '#fff', fontWeight: 700, fontSize: 14, margin: 0, lineHeight: 1.1 }}>
                   Mina-Galeed Invest
                 </p>
-                <p className="text-[10px] tracking-[0.2em] uppercase leading-none mt-0.5" style={{ color: "#5a7a65" }}>
-                  MGI Ltd · Est. 2019
+                <p style={{ color: 'var(--mgi-light)', fontSize: 10, margin: 0, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  MGI Ltd · Start well, Grow well
                 </p>
               </div>
             </Link>
-            <div className="hidden md:flex items-center gap-8">
-              <Link href="/about"     className="text-sm transition-colors hover:text-[#0d6e36]" style={{ color: "#5a7a65" }}>About</Link>
-              <Link href="/expertise" className="text-sm transition-colors hover:text-[#0d6e36]" style={{ color: "#5a7a65" }}>Expertise</Link>
-              <Link href="/#ventures" className="text-sm transition-colors hover:text-[#0d6e36]" style={{ color: "#5a7a65" }}>Our Ventures</Link>
-              <Link href="/contact"   className="text-sm transition-colors hover:text-[#0d6e36]" style={{ color: "#5a7a65" }}>Contact</Link>
-              <Link
-                href="https://os.mgi-ventures.com"
-                className="px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:brightness-110"
-                style={{ background: "#0d6e36" }}
+
+            {/* Desktop links */}
+            <div className="hidden md:flex" style={{ alignItems: 'center', gap: 24 }}>
+              {navLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, textDecoration: 'none', fontWeight: 500 }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <a
+                href="/#contact"
+                style={{
+                  background: 'var(--mgi-green)',
+                  color: '#fff',
+                  padding: '9px 20px',
+                  borderRadius: 6,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  minHeight: 40,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                }}
               >
-                Executive OS
-              </Link>
+                Nous contacter
+              </a>
             </div>
           </div>
         </nav>
+
+        {/* Spacer for fixed nav */}
+        <div style={{ height: 64 }} />
 
         {children}
         <ChatWidget />
