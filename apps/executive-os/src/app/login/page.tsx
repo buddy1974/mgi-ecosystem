@@ -53,6 +53,43 @@ export default function LoginPage() {
           </button>
         </form>
 
+        {/* Quick access — one click, no typing. The credential itself is
+            never sent to the browser: this server action reads OS_PASSWORD
+            on the server and signs in directly, so the restricted-access
+            password is never exposed in page source or network traffic. */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-mgi-border" />
+            <span className="text-[11px] text-mgi-label uppercase tracking-widest">
+              Quick access — click to sign in
+            </span>
+            <div className="flex-1 h-px bg-mgi-border" />
+          </div>
+          <form
+            action={async () => {
+              'use server'
+              const expectedPassword =
+                process.env.OS_PASSWORD ??
+                (process.env.NODE_ENV === 'development' ? 'essen2026' : null)
+              if (!expectedPassword) return
+              await signIn('credentials', {
+                password: expectedPassword,
+                redirectTo: '/dashboard',
+              })
+            }}
+          >
+            <button
+              type="submit"
+              className="w-full flex items-center justify-between rounded-full border border-mgi-border bg-mgi-input px-5 py-3 text-sm font-medium text-mgi-text hover:border-white/40 hover:bg-mgi-card-hover transition-colors"
+            >
+              <span>Rogers Nforgwei</span>
+              <span className="rounded-badge bg-status-build-bg px-2 py-0.5 text-[11px] font-semibold text-status-build">
+                Owner
+              </span>
+            </button>
+          </form>
+        </div>
+
         {/* Divider */}
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px bg-mgi-border" />
