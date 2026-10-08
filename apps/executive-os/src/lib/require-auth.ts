@@ -15,23 +15,34 @@
 
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
-import { hasPermission, getUserCompanyRole } from '@mgi/auth'
-import type { MGIUser } from '@mgi/types'
+import { prisma } from '@mgi/database'
+import { hasPermission, getUserCompanyRole, isAllowedToSignIn } from '@mgi/auth'
+import type { MGIUser, GlobalRole } from '@mgi/types'
 
 // ── Session ──────────────────────────────────────────────────────────────────
 
 /**
  * Returns the authenticated MGIUser or a 401 NextResponse.
+ * The account is re-checked against the database on every call so that a
+ * deactivated or demoted user loses access immediately (JWTs live up to 12h).
  * Use instanceof NextResponse to check for failure:
  *   const user = await requireSession()
  *   if (user instanceof NextResponse) return user
  */
 export async function requireSession(): Promise<MGIUser | NextResponse> {
   const session = await auth()
-  if (!session?.user) {
+  const sessionUser = session?.user as MGIUser | undefined
+  if (!sessionUser?.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  return session.user as unknown as MGIUser
+  const dbUser = await prisma.user.findUnique({
+    where: { id: sessionUser.id },
+    select: { status: true, globalRole: true },
+  })
+  if (!isAllowedToSignIn(dbUser)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  return { ...sessionUser, globalRole: dbUser!.globalRole as GlobalRole }
 }
 
 // ── Company access ───────────────────────────────────────────────────────────

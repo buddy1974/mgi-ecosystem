@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   const adminOrError = requireSuperAdmin(userOrError)
   if (adminOrError instanceof NextResponse) return adminOrError
 
-  const result = InviteUserSchema.safeParse(await req.json())
+  const result = InviteUserSchema.safeParse(await req.json().catch(() => null))
   if (!result.success) {
     return NextResponse.json(
       { error: 'Validation failed', issues: result.error.flatten().fieldErrors },
@@ -24,23 +24,34 @@ export async function POST(req: NextRequest) {
   }
   const { email, name, role } = result.data
 
+  // Never reset or downgrade an existing account through an invite
+  const existing = await prisma.user.findUnique({
+    where:  { email },
+    select: { status: true },
+  })
+  if (existing && existing.status !== 'invited') {
+    return NextResponse.json({ error: 'A user with this email already exists' }, { status: 409 })
+  }
+
   const inviteToken   = crypto.randomBytes(32).toString('hex')
   const inviteExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
 
   const user = await prisma.user.upsert({
     where:  { email },
-    update: { inviteToken, inviteExpires, status: 'invited', name },
-    create: { email, name, status: 'invited', inviteToken, inviteExpires },
+    update: { inviteToken, inviteExpires, name, globalRole: role },
+    create: { email, name, globalRole: role, status: 'invited', inviteToken, inviteExpires },
   })
 
   const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://os.mgi-ventures.com'}/auth/accept-invite?token=${inviteToken}`
 
   triggerN8nWorkflow('mgi-approval-alert', {
-    title:       `You've been invited to MGI Executive OS`,
-    requestedBy: userOrError.name ?? 'The MGI Team',
-    entity:      'MGI Executive OS',
-    priority:    'normal',
-    reviewUrl:   inviteUrl,
+    title:        `You've been invited to MGI Executive OS`,
+    requestedBy:  userOrError.name ?? 'The MGI Team',
+    entity:       'MGI Executive OS',
+    priority:     'normal',
+    reviewUrl:    inviteUrl,
+    inviteeEmail: email,
+    inviteeName:  name ?? null,
   }).catch(console.error)
 
   return NextResponse.json({ success: true, userId: user.id, inviteUrl })

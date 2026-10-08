@@ -1,3 +1,9 @@
+// Telegram parse_mode=HTML: user-supplied text must be escaped, otherwise
+// '<' or '&' in a report breaks delivery or injects markup/links.
+export function escapeTelegramHtml(text: string): string {
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
 export async function sendOperationsAlert(message: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN
   const chatId = process.env.OPERATIONS_CHAT_ID
@@ -38,13 +44,13 @@ export function buildSubmissionAlert(params: {
   return [
     `${urgencyEmoji} <b>${typeLabel}</b>`,
     '',
-    `🏢 <b>Venture:</b> ${params.venture}`,
-    `📋 <b>Title:</b> ${params.title}`,
-    `👤 <b>From:</b> ${params.submittedBy}`,
+    `🏢 <b>Venture:</b> ${escapeTelegramHtml(params.venture)}`,
+    `📋 <b>Title:</b> ${escapeTelegramHtml(params.title)}`,
+    `👤 <b>From:</b> ${escapeTelegramHtml(params.submittedBy)}`,
     `📅 <b>Date:</b> ${date}`,
     '',
     `📝 <b>Details:</b>`,
-    params.body,
+    escapeTelegramHtml(params.body),
     '',
     `<i>View &amp; reply at: os.mgi-ventures.com/operations</i>`,
   ].join('\n')
@@ -64,9 +70,9 @@ export function buildCeoReply(params: {
   return [
     `✉️ <b>CEO Response</b>`,
     '',
-    `🏢 <b>Re:</b> ${params.venture} — ${params.title}`,
+    `🏢 <b>Re:</b> ${escapeTelegramHtml(params.venture)} — ${escapeTelegramHtml(params.title)}`,
     `📅 <b>Date:</b> ${date}`,
     '',
-    params.reply,
+    escapeTelegramHtml(params.reply),
   ].join('\n')
 }

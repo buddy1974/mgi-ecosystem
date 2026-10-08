@@ -84,7 +84,6 @@ export function InviteUserForm() {
             >
               <option value="USER">Member</option>
               <option value="ADMIN">Admin</option>
-              <option value="SUPER_ADMIN">Super Admin</option>
             </select>
           </div>
 

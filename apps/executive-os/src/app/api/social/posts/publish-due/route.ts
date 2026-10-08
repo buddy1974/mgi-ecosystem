@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
+import { safeEqual } from '@mgi/auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
     console.error('[publish-due] CRON_SECRET env var is not configured')
     return NextResponse.json({ error: 'Service misconfigured' }, { status: 503 })
   }
-  if (req.headers.get('x-cron-secret') !== cronSecret) {
+  if (!safeEqual(req.headers.get('x-cron-secret'), cronSecret)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

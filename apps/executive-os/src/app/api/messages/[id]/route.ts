@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
-import { requireSession } from '@/lib/require-auth'
+import { requireSession, requireCompanyAccess } from '@/lib/require-auth'
 import { PatchMessageSchema } from '@/lib/schemas'
 
 export const dynamic = 'force-dynamic'
@@ -30,6 +30,12 @@ export async function PATCH(
   if (Object.keys(update).length === 0) {
     return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 })
   }
+
+  // Company scope: SUPER_ADMIN or a company ADMIN of the message's company
+  const existing = await prisma.message.findUnique({ where: { id }, select: { companyId: true } })
+  if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  const access = await requireCompanyAccess(userOrError, existing.companyId, 'messages.update')
+  if (access instanceof NextResponse) return access
 
   const message = await prisma.message.update({
     where: { id },

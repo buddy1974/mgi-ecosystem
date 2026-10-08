@@ -49,10 +49,10 @@ function AcceptInviteForm() {
         </label>
         <input
           type="password"
-          placeholder="Create a password (min 8 characters)"
+          placeholder="Create a password (min 12 characters)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          minLength={8}
+          minLength={12}
           required
           className="w-full rounded-lg border border-[#1F2D40] bg-[#0D1117] px-3 py-2 text-sm text-[#F1F5F9] placeholder:text-[#475569] focus:border-[#3a0ca3] focus:outline-none"
         />

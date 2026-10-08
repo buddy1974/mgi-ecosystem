@@ -1,25 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
-import crypto from 'crypto'
+import { hashPassword } from '@mgi/auth'
+import { AcceptInviteSchema } from '@/lib/schemas'
 
 export const dynamic = 'force-dynamic'
 
-function hashPassword(password: string): string {
-  const salt = crypto.randomBytes(16).toString('hex')
-  const hash = crypto.pbkdf2Sync(password, salt, 100_000, 64, 'sha512').toString('hex')
-  return `${salt}:${hash}`
-}
-
+// Public route (see lib/route-policy.ts) — authorised by the single-use invite token.
 export async function POST(req: NextRequest) {
-  const { token, password } = await req.json()
-
-  if (!token || !password || password.length < 8) {
-    return NextResponse.json({ error: 'Token and password (min 8 chars) required' }, { status: 400 })
+  const result = AcceptInviteSchema.safeParse(await req.json().catch(() => null))
+  if (!result.success) {
+    return NextResponse.json(
+      { error: 'Validation failed', issues: result.error.flatten().fieldErrors },
+      { status: 400 }
+    )
   }
+  const { token, password } = result.data
 
   const user = await prisma.user.findUnique({ where: { inviteToken: token } })
 
-  if (!user || !user.inviteExpires || user.inviteExpires < new Date()) {
+  if (!user || user.status !== 'invited' || !user.inviteExpires || user.inviteExpires < new Date()) {
     return NextResponse.json({ error: 'Invalid or expired invite link' }, { status: 400 })
   }
 

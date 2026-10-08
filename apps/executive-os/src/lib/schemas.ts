@@ -69,11 +69,18 @@ export const PatchSocialPostSchema = z.object({
 
 // ── Users / Invite ─────────────────────────────────────────────────────────────
 
+// role = GlobalRole assigned on invite. SUPER_ADMIN can never be granted
+// through the UI — only via the admin-set-password script (see docs).
 export const InviteUserSchema = z.object({
-  email:     z.string().email('Must be a valid email address'),
-  name:      z.string().min(1).max(100).optional(),
-  role:      z.enum(['ADMIN', 'MANAGER', 'STAFF', 'GUEST']),
+  email:     z.string().trim().toLowerCase().pipe(z.string().email('Must be a valid email address')),
+  name:      z.string().trim().max(100).optional().transform((v) => (v ? v : undefined)),
+  role:      z.enum(['USER', 'ADMIN']).default('USER'),
   companyId: z.string().optional(),
+})
+
+export const AcceptInviteSchema = z.object({
+  token:    z.string().regex(/^[a-f0-9]{64}$/, 'Invalid invite token'),
+  password: z.string().min(12, 'Password must be at least 12 characters').max(200),
 })
 
 // ── Venture Reports ────────────────────────────────────────────────────────────

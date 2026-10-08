@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import { NextResponse } from 'next/server'
+import { classifyRoute } from './src/lib/route-policy'
 
 // Edge-safe: JWT-only instance — no Prisma adapter, no email provider
 const { auth } = NextAuth({
@@ -11,36 +12,24 @@ const { auth } = NextAuth({
 export default auth((req) => {
   const { pathname } = req.nextUrl
   const isLoggedIn = !!req.auth
+  const access = classifyRoute(pathname)
 
-  // ── Always allow: NextAuth routes ──────────────────────────────────────────
-  if (pathname.startsWith('/api/auth')) return NextResponse.next()
+  if (access === 'next-auth' || access === 'public-api') return NextResponse.next()
 
-  // ── Always allow: public pages (no login required) ─────────────────────────
-  const isPublicPage =
-    pathname.startsWith('/login') ||
-    pathname.startsWith('/auth/') ||
-    pathname.startsWith('/submit/')
-  if (isPublicPage) {
-    // Redirect already-logged-in users away from login page
+  if (access === 'public-page') {
+    // Redirect already-logged-in users away from the login page
     if (pathname.startsWith('/login') && isLoggedIn) {
       return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
     }
     return NextResponse.next()
   }
 
-  // ── Always allow: public API endpoints (no auth required) ──────────────────
-  const isPublicApi =
-    pathname === '/api/venture-report' ||
-    pathname.startsWith('/api/venture-report/')
-  if (isPublicApi) return NextResponse.next()
-
-  // ── Require authentication for everything else ──────────────────────────────
+  // Protected: require authentication
   if (!isLoggedIn) {
-    // API routes: return 401 JSON — not a redirect (clients can't follow HTML redirects)
+    // API routes: 401 JSON — not a redirect (clients can't follow HTML redirects)
     if (pathname.startsWith('/api/')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-    // Page routes: redirect to login
     return NextResponse.redirect(new URL('/login', req.nextUrl))
   }
 
@@ -50,4 +39,3 @@ export default auth((req) => {
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
-

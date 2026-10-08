@@ -1,6 +1,53 @@
+import { AuthError } from 'next-auth'
+import { redirect } from 'next/navigation'
 import { signIn } from '@/auth'
 
-export default function LoginPage() {
+// SECURITY: this page must never offer one-click or pre-filled sign-in.
+// Guarded by tests/security.test.ts.
+
+const ERROR_MESSAGES: Record<string, string> = {
+  CredentialsSignin: 'Invalid email or password.',
+  AccessDenied: 'This account is not authorised for MGI Executive OS.',
+  Verification: 'The sign-in link is invalid or has expired.',
+}
+
+async function credentialsAction(formData: FormData) {
+  'use server'
+  try {
+    await signIn('credentials', {
+      email: formData.get('email'),
+      password: formData.get('password'),
+      redirectTo: '/dashboard',
+    })
+  } catch (error) {
+    if (error instanceof AuthError) redirect(`/login?error=${encodeURIComponent(error.type)}`)
+    throw error
+  }
+}
+
+async function magicLinkAction(formData: FormData) {
+  'use server'
+  try {
+    await signIn('nodemailer', {
+      email: formData.get('email'),
+      redirectTo: '/dashboard',
+    })
+  } catch (error) {
+    if (error instanceof AuthError) redirect(`/login?error=${encodeURIComponent(error.type)}`)
+    throw error
+  }
+}
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const { error } = await searchParams
+  const errorKey = typeof error === 'string' ? error : undefined
+  const errorMessage = errorKey ? (ERROR_MESSAGES[errorKey] ?? 'Sign-in failed.') : null
+  const magicLinkEnabled = Boolean(process.env.EMAIL_SERVER)
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-mgi-bg">
       <div className="w-full max-w-sm space-y-8 px-6">
@@ -17,23 +64,36 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Dev password login */}
-        <form
-          action={async (formData: FormData) => {
-            'use server'
-            await signIn('credentials', {
-              password: formData.get('password') as string,
-              redirectTo: '/dashboard',
-            })
-          }}
-          className="space-y-4"
-        >
+        {errorMessage && (
+          <p role="alert" className="rounded-md border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+            {errorMessage}
+          </p>
+        )}
+
+        {/* Email + password */}
+        <form action={credentialsAction} className="space-y-4">
+          <div className="space-y-2">
+            <label
+              htmlFor="cred-email"
+              className="block text-xs font-medium uppercase tracking-widest text-mgi-muted"
+            >
+              Email
+            </label>
+            <input
+              id="cred-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="username"
+              className="w-full rounded-md border border-mgi-border bg-mgi-input px-4 py-3 text-sm text-mgi-text placeholder:text-mgi-label focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-colors"
+            />
+          </div>
           <div className="space-y-2">
             <label
               htmlFor="password"
               className="block text-xs font-medium uppercase tracking-widest text-mgi-muted"
             >
-              Dev password
+              Password
             </label>
             <input
               id="password"
@@ -53,84 +113,41 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Quick access — one click, no typing. The credential itself is
-            never sent to the browser: this server action reads OS_PASSWORD
-            on the server and signs in directly, so the restricted-access
-            password is never exposed in page source or network traffic. */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-px bg-mgi-border" />
-            <span className="text-[11px] text-mgi-label uppercase tracking-widest">
-              Quick access — click to sign in
-            </span>
-            <div className="flex-1 h-px bg-mgi-border" />
-          </div>
-          <form
-            action={async () => {
-              'use server'
-              const expectedPassword =
-                process.env.OS_PASSWORD ??
-                (process.env.NODE_ENV === 'development' ? 'essen2026' : null)
-              if (!expectedPassword) return
-              await signIn('credentials', {
-                password: expectedPassword,
-                redirectTo: '/dashboard',
-              })
-            }}
-          >
-            <button
-              type="submit"
-              className="w-full flex items-center justify-between rounded-full border border-mgi-border bg-mgi-input px-5 py-3 text-sm font-medium text-mgi-text hover:border-white/40 hover:bg-mgi-card-hover transition-colors"
-            >
-              <span>Rogers Nforgwei</span>
-              <span className="rounded-badge bg-status-build-bg px-2 py-0.5 text-[11px] font-semibold text-status-build">
-                Owner
-              </span>
-            </button>
-          </form>
-        </div>
+        {magicLinkEnabled && (
+          <>
+            {/* Divider */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-mgi-border" />
+              <span className="text-[11px] text-mgi-label uppercase tracking-widest">or</span>
+              <div className="flex-1 h-px bg-mgi-border" />
+            </div>
 
-        {/* Divider */}
-        <div className="flex items-center gap-3">
-          <div className="flex-1 h-px bg-mgi-border" />
-          <span className="text-[11px] text-mgi-label uppercase tracking-widest">or</span>
-          <div className="flex-1 h-px bg-mgi-border" />
-        </div>
-
-        {/* Magic link login */}
-        <form
-          action={async (formData: FormData) => {
-            'use server'
-            await signIn('nodemailer', {
-              email: formData.get('email'),
-              redirectTo: '/dashboard',
-            })
-          }}
-          className="space-y-4"
-        >
-          <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="block text-xs font-medium uppercase tracking-widest text-mgi-muted"
-            >
-              Email — magic link
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="rogers@mgi-ventures.com"
-              className="w-full rounded-md border border-mgi-border bg-mgi-input px-4 py-3 text-sm text-mgi-text placeholder:text-mgi-label focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-colors"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full rounded-md border border-mgi-border bg-transparent px-4 py-3 text-sm font-medium text-mgi-muted hover:text-white hover:border-white/30 transition-colors"
-          >
-            Send magic link
-          </button>
-        </form>
+            {/* Magic link login — existing active accounts only (see auth.ts signIn callback) */}
+            <form action={magicLinkAction} className="space-y-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="email"
+                  className="block text-xs font-medium uppercase tracking-widest text-mgi-muted"
+                >
+                  Email — magic link
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full rounded-md border border-mgi-border bg-mgi-input px-4 py-3 text-sm text-mgi-text placeholder:text-mgi-label focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-colors"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full rounded-md border border-mgi-border bg-transparent px-4 py-3 text-sm font-medium text-mgi-muted hover:text-white hover:border-white/30 transition-colors"
+              >
+                Send magic link
+              </button>
+            </form>
+          </>
+        )}
 
         <p className="text-center text-xs text-mgi-label">
           Restricted access · MGI Ventures internal only
