@@ -9,3 +9,9 @@ dist/
 .DS_Store
 Thumbs.db
 .vercel
+
+# Local AI-tooling and build artefacts (security: may contain tokens)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.openclaw/
+*.tsbuildinfo

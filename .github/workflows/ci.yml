@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [master, main, develop]
   pull_request:
-    branches: [main, develop]
+    branches: [master, main, develop]
 
 jobs:
   ci:
@@ -35,6 +35,9 @@ jobs:
 
       - name: Lint
         run: pnpm lint
+
+      - name: Security regression tests
+        run: pnpm test
 
       - name: Build
         run: pnpm build
