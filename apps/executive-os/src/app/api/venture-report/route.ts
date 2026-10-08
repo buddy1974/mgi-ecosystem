@@ -2,16 +2,21 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
 import { VENTURES } from '@/lib/ventures'
 import { sendOperationsAlert, buildSubmissionAlert } from '@/lib/telegram'
+import { VentureReportSchema } from '@/lib/schemas'
 
 export const dynamic = 'force-dynamic'
 
+// Public endpoint — no authentication required (managers submit without login)
 export async function POST(req: NextRequest) {
   try {
-    const { venture, type, urgency, title, body, submittedBy } = await req.json()
-
-    if (!venture || !type || !title || !body || !submittedBy) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    const result = VentureReportSchema.safeParse(await req.json())
+    if (!result.success) {
+      return NextResponse.json(
+        { error: 'Validation failed', issues: result.error.flatten().fieldErrors },
+        { status: 400 }
+      )
     }
+    const { venture, type, urgency, title, body, submittedBy } = result.data
 
     const ventureConfig = VENTURES[venture]
     if (!ventureConfig) {
@@ -23,7 +28,7 @@ export async function POST(req: NextRequest) {
         venture,
         ventureName: ventureConfig.name,
         type,
-        urgency: urgency ?? 'normal',
+        urgency,
         title,
         body,
         submittedBy,

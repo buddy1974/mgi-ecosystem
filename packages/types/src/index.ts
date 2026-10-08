@@ -1,5 +1,6 @@
 // ─── GLOBAL ROLE ─────────────────────────────────────────────────────────────
-export type GlobalRole = 'SUPER_ADMIN' | 'USER'
+// Must match Prisma schema enum GlobalRole exactly: SUPER_ADMIN | ADMIN | USER
+export type GlobalRole = 'SUPER_ADMIN' | 'ADMIN' | 'USER'
 
 // ─── COMPANY ROLE ─────────────────────────────────────────────────────────────
 export type CompanyRole = 'ADMIN' | 'MANAGER' | 'STAFF' | 'GUEST'

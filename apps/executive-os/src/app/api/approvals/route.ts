@@ -1,42 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
-import { auth } from '@/auth'
 import { triggerN8nWorkflow } from '@/lib/n8n'
-import type { ApprovalCategory, ApprovalPriority } from '@mgi/database'
+import { requireSession, requireCompanyAccess } from '@/lib/require-auth'
+import { CreateApprovalSchema } from '@/lib/schemas'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
-  const session = await auth()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const userOrError = await requireSession()
+  if (userOrError instanceof NextResponse) return userOrError
 
-  const body = await req.json()
-  const {
-    companyId,
-    category,
-    title,
-    description,
-    amount,
-    currency = 'XAF',
-    requestedBy,
-    priority = 'NORMAL',
-    n8nWorkflow,
-  } = body
-
-  if (!companyId || !category || !title || !description || !requestedBy) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+  const result = CreateApprovalSchema.safeParse(await req.json())
+  if (!result.success) {
+    return NextResponse.json(
+      { error: 'Validation failed', issues: result.error.flatten().fieldErrors },
+      { status: 400 }
+    )
   }
+  const { companyId, category, title, description, amount, currency, requestedBy, priority, n8nWorkflow } = result.data
+
+  // Verify the requesting user belongs to this company and has create permission
+  const accessOrError = await requireCompanyAccess(userOrError, companyId, 'approvals.create')
+  if (accessOrError instanceof NextResponse) return accessOrError
 
   const approval = await prisma.approval.create({
     data: {
       companyId,
-      category:    category as ApprovalCategory,
+      category,
       title,
       description,
       amount:      amount ?? null,
       currency,
       requestedBy,
-      priority:    priority as ApprovalPriority,
+      priority,
       n8nWorkflow: n8nWorkflow ?? null,
     },
   })

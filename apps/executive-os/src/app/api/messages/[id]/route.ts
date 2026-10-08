@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
-import { auth } from '@/auth'
+import { requireSession } from '@/lib/require-auth'
+import { PatchMessageSchema } from '@/lib/schemas'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,14 +9,31 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const userOrError = await requireSession()
+  if (userOrError instanceof NextResponse) return userOrError
 
   const { id } = await params
-  const body = await req.json()
+
+  // Zod validates the allowlist and rejects any extra fields
+  const result = PatchMessageSchema.safeParse(await req.json())
+  if (!result.success) {
+    return NextResponse.json(
+      { error: 'Validation failed', issues: result.error.flatten().fieldErrors },
+      { status: 400 }
+    )
+  }
+  // Strip undefined values — only include fields that were actually provided
+  const update = Object.fromEntries(
+    Object.entries(result.data).filter(([, v]) => v !== undefined)
+  ) as Record<string, boolean>
+
+  if (Object.keys(update).length === 0) {
+    return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 })
+  }
+
   const message = await prisma.message.update({
     where: { id },
-    data: body,
+    data: update,
   })
 
   return NextResponse.json(message)

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
-import { auth } from '@/auth'
+import { requireSession, requireSuperAdmin } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,8 +10,12 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  // Status updates are a CEO-level action (reviewing and triaging operations reports)
+  const userOrError = await requireSession()
+  if (userOrError instanceof NextResponse) return userOrError
+
+  const adminOrError = requireSuperAdmin(userOrError)
+  if (adminOrError instanceof NextResponse) return adminOrError
 
   try {
     const { id } = await params

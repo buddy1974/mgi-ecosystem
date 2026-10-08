@@ -141,7 +141,7 @@ export const VENTURES: Record<string, VentureConfig> = {
     name: 'MGI Holding',
     shortName: 'MGI',
     companyId: 'mgi',
-    domain: 'mina-galeed.com',
+    domain: 'mgi-ventures.com',
     tagline: 'Start well, Grow well',
     description: 'MGI Holding — parent company and shared services for all MGI ventures.',
     logoUrl: '/logos/mgi-main.png',
