@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Verifies that the configured test environment targets ONLY an allow-listed,
 // non-production Neon branch and that no real integration is configured.
-// Usage:  node scripts/test-env/assert-test-db.mjs [--env-file <path>] [--static-only]
+// Usage:  node scripts/test-env/assert-test-db.mjs [--env-file <path>] [--static-only | --fingerprint]
+//   --fingerprint: one-time setup — verifies a NON-production target and prints the full SHA-256
+//                  fingerprint(s) of its timeline for the operator to review and add to .test-db-allowlist.
 // Exit 0 = safe; exit 1 = refused (reasons printed, no secrets).
 // The live check runs a single READ ONLY transaction; nothing is written.
 import { readFileSync, existsSync } from "node:fs"
 import {
-  parseEnvText, readAllowlist, checkStaticConfig, checkLiveIdentity, short,
+  parseEnvText, readAllowlist, checkStaticConfig, checkLiveIdentity, short, sha256,
 } from "./guard-core.mjs"
 import * as cfg from "./config.mjs"
 
@@ -33,12 +35,24 @@ async function liveIdentity(url) {
   return { timelineId: rows[0]?.tl || null, endpointId: rows[0]?.ep || null }
 }
 
-export async function assertTestEnvironment({ envFile, staticOnly = false, log = console.log } = {}) {
+export async function assertTestEnvironment({ envFile, staticOnly = false, fingerprint = false, log = console.log } = {}) {
   const { env, error } = resolveTestEnv(envFile)
   if (!env) return { ok: false, errors: [error] }
   const allowlist = readAllowlist(cfg.ALLOWLIST_FILE)
-  const st = checkStaticConfig({ env, dbVars: dbVarsFor(env), forbiddenVars: forbiddenFor(env), allowlist })
+  const st = checkStaticConfig({ env, dbVars: dbVarsFor(env), forbiddenVars: forbiddenFor(env), allowlist: fingerprint ? ["setup"] : allowlist })
   if (!st.ok) return { ok: false, errors: st.errors, env }
+  if (fingerprint) {
+    const errors = []
+    for (const t of st.targets) {
+      let ident
+      try { ident = await liveIdentity(env[t.name]) } catch (e) { errors.push(`${t.name}: identity query failed (${e.code || e.name}) — fail closed`); continue }
+      const r = checkLiveIdentity({ name: t.name, ...ident, hostEndpointSha256: t.endpointSha256, allowlist: [sha256(ident.timelineId || "")] })
+      if (!r.ok) errors.push(...r.errors)
+      else log(`  ${t.name}: non-production timeline fingerprint (add to .test-db-allowlist after review):
+    ${r.timelineSha256}`)
+    }
+    return { ok: errors.length === 0, errors, env, targets: st.targets }
+  }
   if (staticOnly) return { ok: true, errors: [], env, targets: st.targets }
   const errors = []
   for (const t of st.targets) {
@@ -57,11 +71,12 @@ const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].repla
 if (isMain) {
   const i = process.argv.indexOf("--env-file")
   const envFile = i > 0 ? process.argv[i + 1] : undefined
-  const res = await assertTestEnvironment({ envFile, staticOnly: process.argv.includes("--static-only") })
+  const fingerprint = process.argv.includes("--fingerprint")
+  const res = await assertTestEnvironment({ envFile, staticOnly: process.argv.includes("--static-only"), fingerprint })
   if (!res.ok) {
     console.error("TEST ENVIRONMENT REFUSED:")
     for (const e of res.errors) console.error(`  - ${e}`)
     process.exit(1)
   }
-  console.log("TEST ENVIRONMENT VERIFIED (isolated, allow-listed, integrations disabled)")
+  console.log(fingerprint ? "FINGERPRINT MODE: targets are non-production; review, then write the fingerprint(s) to .test-db-allowlist" : "TEST ENVIRONMENT VERIFIED (isolated, allow-listed, integrations disabled)")
 }
