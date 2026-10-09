@@ -8,7 +8,12 @@
     "start": "next start",
     "lint": "eslint src/",
     "type-check": "tsc --noEmit",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:env:check": "node scripts/test-env/assert-test-db.mjs",
+    "test:env:start": "node scripts/test-env/start-test-server.mjs --build",
+    "test:env:seed": "tsx scripts/test-env/fixtures.ts seed",
+    "test:env:cleanup": "tsx scripts/test-env/fixtures.ts cleanup",
+    "test:integration": "node scripts/test-env/run-integration.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.1",
