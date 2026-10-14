@@ -45,6 +45,17 @@ export async function requireSession(): Promise<MGIUser | NextResponse> {
   return { ...sessionUser, globalRole: dbUser!.globalRole as GlobalRole }
 }
 
+/**
+ * For server components (pages/layouts): the signed-in user re-validated against the
+ * database (status + role), or null if not signed in, deactivated or deleted.
+ * The JWT alone is not enough: a deactivated user must lose read access immediately,
+ * not when the 12-hour session expires.
+ */
+export async function getActiveUser(): Promise<MGIUser | null> {
+  const result = await requireSession()
+  return result instanceof NextResponse ? null : result
+}
+
 // ── Company access ───────────────────────────────────────────────────────────
 
 /**

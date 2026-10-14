@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@mgi/database'
-import { auth } from '@/auth'
+import { requireSession } from '@/lib/require-auth'
 import type { MessageSource } from '@mgi/database'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
-  const session = await auth()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  // Re-validates the user against the database (deactivated users get 401)
+  const userOrError = await requireSession()
+  if (userOrError instanceof NextResponse) return userOrError
 
   const { searchParams } = new URL(req.url)
   const source = searchParams.get('source')

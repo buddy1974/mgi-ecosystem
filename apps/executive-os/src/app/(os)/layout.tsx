@@ -7,6 +7,7 @@ import { getApprovalStats } from '@/lib/approvals-data'
 import { getPendingBookingCount } from '@/lib/calendar-data'
 import { getScheduledPostCount } from '@/lib/social-data'
 import { getNewOperationsCount } from '@/lib/operations-data'
+import { getActiveUser } from '@/lib/require-auth'
 
 export default async function OSLayout({
   children,
@@ -22,6 +23,19 @@ export default async function OSLayout({
     getNewOperationsCount().catch(() => 0),
   ])
   if (!session) redirect('/login')
+  // The session token is valid, but the account must still be active in the database.
+  // (A redirect to /login would loop: the middleware sends signed-in users back to /dashboard.)
+  const activeUser = await getActiveUser()
+  if (!activeUser) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-mgi-bg p-6 text-center">
+        <div>
+          <p className="text-lg font-semibold text-white">Your access has been deactivated.</p>
+          <p className="mt-2 text-sm text-mgi-muted">Please contact the administrator.</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-mgi-bg">
