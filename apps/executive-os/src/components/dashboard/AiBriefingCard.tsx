@@ -20,8 +20,8 @@ function generateFallbackBriefing(nmiKpis: NmiKpis | null, openApprovals: number
     if (nmiKpis.ordersToday > 0)
       items.push(`${nmiKpis.ordersToday} new order${nmiKpis.ordersToday > 1 ? 's' : ''} at NMI Education today`)
   }
-  if (items.length === 0) return 'All systems nominal. No urgent items require your attention today.'
-  if (items.length === 1) return `${items[0]}. All other systems nominal.`
+  if (items.length === 0) return 'No urgent items in the connected data today.'
+  if (items.length === 1) return `${items[0]}.`
   return `${items.length} items need your attention: ${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}.`
 }
 
@@ -54,21 +54,16 @@ export function AiBriefingCard({ nmiKpis, openApprovals, aiBriefing }: AiBriefin
             AI Executive Briefing
           </span>
         </span>
-        <span className="text-[10px] text-mgi-dim">claude-haiku · updated hourly</span>
+        <span className="text-[10px] text-mgi-dim">{aiBriefing ? 'claude-haiku · updated hourly' : 'computed from live data · AI briefing unavailable'}</span>
         <span className="text-[10px] text-mgi-dim ml-auto">
           {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
         </span>
       </div>
 
       {/* Live Claude briefing — shown when API key is set */}
-      {aiBriefing !== undefined ? (
-        aiBriefing ? (
-          <p className="text-sm text-mgi-muted leading-relaxed max-w-3xl mb-4">{aiBriefing}</p>
-        ) : (
-          <p className="text-sm text-mgi-label italic mb-4">
-            Briefing unavailable — set ANTHROPIC_API_KEY in .env.local to enable.
-          </p>
-        )
+      {/* getAIBriefing() returns null when no key is set or the provider fails: show the computed summary */}
+      {aiBriefing ? (
+        <p className="text-sm text-mgi-muted leading-relaxed max-w-3xl mb-4">{aiBriefing}</p>
       ) : (
         <>
           {/* Fallback: local generation */}
