@@ -9,6 +9,7 @@ import {
   CalendarPreview,
   PriorityWidget,
 } from '@/components/dashboard'
+import { BookShieldPanel } from '@/components/dashboard/BookShieldPanel'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -30,6 +31,7 @@ export default async function DashboardPage() {
         <CalendarPreview />
         <ApprovalsPreview approvals={openApprovals} />
       </div>
+      <BookShieldPanel />
     </div>
   )
 }
