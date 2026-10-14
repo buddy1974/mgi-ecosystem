@@ -16,3 +16,6 @@ Thumbs.db
 .openclaw/
 *.tsbuildinfo
 .test-db-allowlist
+
+# seed archive backups (operator script output)
+seed-archive-*.json
