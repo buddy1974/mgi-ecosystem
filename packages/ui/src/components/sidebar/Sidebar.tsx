@@ -18,30 +18,44 @@ interface NavItem {
   label: string
   icon: string
   badge?: number | string
+  planned?: boolean // module not built yet: shown greyed, not clickable
 }
 
 const COMMAND_NAV: NavItem[] = [
   { href: '/priority',   label: 'Priority Tracker',   icon: '🎯' },
   { href: '/dashboard',  label: 'Executive Overview', icon: '🏠' },
   { href: '/operations', label: 'Ops Bridge',         icon: '📡' },
-  { href: '/ai',         label: 'AI Assistant',       icon: '🤖', badge: 'Live' },
-  { href: '/inbox',      label: 'Communications',     icon: '💬', badge: 14 },
-  { href: '/approvals',  label: 'Approval Center',    icon: '✅', badge: 8 },
+  { href: '/ai',         label: 'AI Assistant',       icon: '🤖', planned: true },
+  { href: '/inbox',      label: 'Communications',     icon: '💬' },
+  { href: '/approvals',  label: 'Approval Center',    icon: '✅' },
   { href: '/ventures',   label: 'Ventures',           icon: '🏢' },
   { href: '/calendar',   label: 'Calendar',           icon: '📅' },
   { href: '/social',     label: 'Social Command',     icon: '📣' },
 ]
 
 const OPERATIONS_NAV: NavItem[] = [
-  { href: '/crm',        label: 'CRM',               icon: '👥', badge: 28 },
-  { href: '/events',     label: 'Events & Bookings', icon: '📆' },
-  { href: '/newsletter', label: 'Newsletter Engine', icon: '📧' },
-  { href: '/knowledge',  label: 'Knowledge',         icon: '📚' },
+  { href: '/crm',        label: 'CRM',               icon: '👥', planned: true },
+  { href: '/events',     label: 'Events & Bookings', icon: '📆', planned: true },
+  { href: '/newsletter', label: 'Newsletter Engine', icon: '📧', planned: true },
+  { href: '/knowledge',  label: 'Knowledge',         icon: '📚', planned: true },
 ]
 
 function NavLink({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
   const pathname = usePathname()
   const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
+  if (item.planned) {
+    return (
+      <div title="Planned — not built yet" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-mgi-muted opacity-50 cursor-not-allowed">
+        <span className="text-base leading-none">{item.icon}</span>
+        {!collapsed && (
+          <>
+            <span className="flex-1 truncate">{item.label}</span>
+            <span className="rounded px-1.5 py-0.5 text-[10px] font-medium bg-white/10 text-mgi-muted">planned</span>
+          </>
+        )}
+      </div>
+    )
+  }
 
   return (
     <Link

@@ -10,7 +10,7 @@ interface VentureRowProps {
   logoSrc?: string
   avatarColor: string
   avatarInitial: string
-  healthScore: number
+  healthScore: number | null // null = not measured (no data source connected)
   status: Status
   revenue?: string
   growth?: string
@@ -21,6 +21,7 @@ export function VentureRow({
   healthScore, status, revenue, growth,
 }: VentureRowProps) {
   const barColor =
+    healthScore === null ? 'bg-mgi-dim' :
     healthScore >= 80 ? 'bg-status-active' :
     healthScore >= 60 ? 'bg-status-attention' : 'bg-status-risk'
 
@@ -47,9 +48,9 @@ export function VentureRow({
       <td className="px-4 py-3">
         <div className="flex items-center gap-2">
           <div className="w-20 h-1.5 bg-mgi-border rounded-full overflow-hidden">
-            <div className={`h-full rounded-full ${barColor}`} style={{ width: `${healthScore}%` }} />
+            <div className={`h-full rounded-full ${barColor}`} style={{ width: `${healthScore ?? 0}%` }} />
           </div>
-          <span className="text-xs text-mgi-muted tabular-nums">{healthScore}/100</span>
+          <span className="text-xs text-mgi-muted tabular-nums">{healthScore === null ? 'not measured' : `${healthScore}/100`}</span>
         </div>
       </td>
       <td className="px-4 py-3 text-sm text-mgi-muted tabular-nums">{revenue ?? '–'}</td>

@@ -49,9 +49,6 @@ export function TopBar() {
         </button>
         <button className="relative text-mgi-label hover:text-white transition-colors text-base" title="Notifications">
           🔔
-          <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
-            3
-          </span>
         </button>
         <button className="flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-gray-100 transition-colors">
           + New

@@ -21,7 +21,9 @@ function buildInsights(nmiKpis: NmiKpis | null): Insight[] {
       insights.push({ company: 'NMI Automation', companyColor: '#F59E0B', title: `${nmiKpis.agentRunsFailed} automation failure${nmiKpis.agentRunsFailed > 1 ? 's' : ''} in last 24h`, body: 'AI agent runs failed. Review automation logs.', severity: 'critical' })
   }
   if (insights.length === 0)
-    insights.push({ company: 'Ecosystem', companyColor: '#10B981', title: 'All systems nominal', body: 'No alerts across the ecosystem. All automations running.', severity: 'info' })
+    insights.push(nmiKpis
+      ? { company: 'Ecosystem', companyColor: '#10B981', title: 'No alerts from connected sources', body: 'NMI figures are within thresholds.', severity: 'info' }
+      : { company: 'Ecosystem', companyColor: '#F59E0B', title: 'No company systems connected', body: 'Alerts appear here once NMI and the other company systems are connected.', severity: 'info' })
   return insights
 }
 

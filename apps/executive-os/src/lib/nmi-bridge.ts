@@ -37,16 +37,18 @@ export async function getNmiKpis(): Promise<NmiKpis | null> {
       unhandledWhatsApp,
       agentRunsFailed,
     ] = await Promise.all([
-      sql`SELECT COUNT(*) as count FROM "Order" WHERE date::text = ${today}`,
-      sql`SELECT COUNT(*) as count FROM "Invoice" WHERE status != 'paid'`,
-      sql`SELECT COALESCE(SUM(amount), 0) as total FROM "Invoice" WHERE status != 'paid'`,
-      sql`SELECT COUNT(*) as count FROM "Invoice" WHERE "dueDate" < CURRENT_DATE AND status != 'paid'`,
-      sql`SELECT COUNT(*) as count FROM "Stock" WHERE qty < 10`,
-      sql`SELECT COUNT(*) as count FROM "Manuscript" WHERE status IN ('in_review', 'submitted')`,
-      sql`SELECT COUNT(*) as count FROM "Task" WHERE status NOT IN ('done', 'cancelled')`,
-      sql`SELECT COUNT(*) as count FROM "Notification" WHERE read = false`,
-      sql`SELECT COUNT(*) as count FROM "WhatsAppMessage" WHERE handled = false`,
-      sql`SELECT COUNT(*) as count FROM "AgentRun" WHERE status = 'failed' AND "startedAt" > NOW() - INTERVAL '24 hours'`,
+      // Table/column names are the NMI Prisma @@map/@map names (orders, invoices.due_date, agent_runs.started_at, ...).
+      // The previous quoted PascalCase model/field names never existed in the NMI database, so every call failed.
+      sql`SELECT COUNT(*) as count FROM orders WHERE date::text = ${today}`,
+      sql`SELECT COUNT(*) as count FROM invoices WHERE status != 'paid'`,
+      sql`SELECT COALESCE(SUM(amount), 0) as total FROM invoices WHERE status != 'paid'`,
+      sql`SELECT COUNT(*) as count FROM invoices WHERE due_date < CURRENT_DATE AND status != 'paid'`,
+      sql`SELECT COUNT(*) as count FROM stock WHERE qty < 10`,
+      sql`SELECT COUNT(*) as count FROM manuscripts WHERE status IN ('in_review', 'submitted')`,
+      sql`SELECT COUNT(*) as count FROM tasks WHERE status NOT IN ('done', 'cancelled')`,
+      sql`SELECT COUNT(*) as count FROM notifications WHERE read = false`,
+      sql`SELECT COUNT(*) as count FROM whatsapp_messages WHERE handled = false`,
+      sql`SELECT COUNT(*) as count FROM agent_runs WHERE status = 'failed' AND started_at > NOW() - INTERVAL '24 hours'`,
     ])
 
     return {

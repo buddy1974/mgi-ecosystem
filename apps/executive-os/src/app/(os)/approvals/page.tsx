@@ -34,7 +34,6 @@ export default async function ApprovalsPage({ searchParams }: Props) {
               {stats.total} OPEN
               {stats.critical > 0 && ` · ${stats.critical} CRITICAL`}
               {` · OLDEST ${oldestAge}`}
-              {' · AUDIT LOG ENABLED'}
             </p>
           </div>
           <button className="px-3 py-1.5 text-xs border border-mgi-border text-mgi-muted rounded hover:text-white hover:border-white/30 transition-colors">

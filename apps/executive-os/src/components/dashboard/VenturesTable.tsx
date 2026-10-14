@@ -13,7 +13,7 @@ export function VenturesTable({ nmiHealth }: VenturesTableProps) {
       domain: 'rogersnforgwei.com',
       avatarColor: '#3a0ca3',
       avatarInitial: 'R',
-      healthScore: 85,
+      healthScore: null,
       status: 'active' as const,
     },
     {
@@ -23,7 +23,7 @@ export function VenturesTable({ nmiHealth }: VenturesTableProps) {
       logoSrc: '/logos/nmi.png',
       avatarColor: '#1E293B',
       avatarInitial: 'N',
-      healthScore: nmiHealth.score,
+      healthScore: nmiHealth.summary === 'NMI bridge not connected' || nmiHealth.summary === 'Not connected' ? null : nmiHealth.score,
       status: nmiHealth.status,
     },
     {
@@ -33,7 +33,7 @@ export function VenturesTable({ nmiHealth }: VenturesTableProps) {
       logoSrc: '/logos/horeb-solutions.png',
       avatarColor: '#1E293B',
       avatarInitial: 'H',
-      healthScore: 72,
+      healthScore: null,
       status: 'attention' as const,
     },
     {
@@ -43,7 +43,7 @@ export function VenturesTable({ nmiHealth }: VenturesTableProps) {
       logoSrc: '/logos/librairie.png',
       avatarColor: '#1E293B',
       avatarInitial: 'L',
-      healthScore: 68,
+      healthScore: null,
       status: 'attention' as const,
     },
     {
@@ -53,7 +53,7 @@ export function VenturesTable({ nmiHealth }: VenturesTableProps) {
       logoSrc: '/logos/dros-construction.png',
       avatarColor: '#1E293B',
       avatarInitial: 'D',
-      healthScore: 55,
+      healthScore: null,
       status: 'build' as const,
     },
     {
@@ -63,7 +63,7 @@ export function VenturesTable({ nmiHealth }: VenturesTableProps) {
       logoSrc: '/logos/abba-land.png',
       avatarColor: '#1E293B',
       avatarInitial: 'A',
-      healthScore: 20,
+      healthScore: null,
       status: 'build' as const,
       growth: 'Coming soon',
     },
