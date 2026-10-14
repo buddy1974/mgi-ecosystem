@@ -353,7 +353,7 @@ export default function OperationsClient({ reports }: Props) {
                   rows={4}
                   value={reply}
                   onChange={e => setReply(e.target.value)}
-                  placeholder="Type your response... It will be sent to the Operations Telegram group."
+                  placeholder="Type your response... (local demo: saved here; Telegram not connected)"
                   className="w-full bg-mgi-input border border-mgi-border rounded-md px-3 py-2.5 text-sm text-white placeholder:text-mgi-label resize-none focus:outline-none focus:border-white/30 transition-colors"
                 />
                 <div className="flex items-center gap-3 mt-2">
@@ -365,7 +365,7 @@ export default function OperationsClient({ reports }: Props) {
                     {replyLoading ? 'Sending...' : 'Send Reply →'}
                   </button>
                   {replySuccess && (
-                    <span className="text-xs text-emerald-400">✓ Reply sent via Telegram</span>
+                    <span className="text-xs text-emerald-400">✓ Reply saved (local demo — Telegram not connected)</span>
                   )}
                 </div>
               </div>

@@ -20,7 +20,10 @@ function buildInsights(nmiKpis: NmiKpis | null): Insight[] {
     if (nmiKpis.agentRunsFailed > 0)
       insights.push({ company: 'NMI Automation', companyColor: '#F59E0B', title: `${nmiKpis.agentRunsFailed} automation failure${nmiKpis.agentRunsFailed > 1 ? 's' : ''} in last 24h`, body: 'AI agent runs failed. Review automation logs.', severity: 'critical' })
   }
-  if (insights.length === 0)
+  if (insights.length === 0 && process.env.MGI_LOCAL_DEMO === '1')
+    // LOCAL PRESENTATION DEMO ONLY: say plainly that nothing is connected
+    insights.push({ company: 'Ecosystem', companyColor: '#F59E0B', title: 'No company systems connected', body: 'Alerts will appear here once NMI and the other company systems are connected (planned).', severity: 'info' })
+  else if (insights.length === 0)
     insights.push({ company: 'Ecosystem', companyColor: '#10B981', title: 'All systems nominal', body: 'No alerts across the ecosystem. All automations running.', severity: 'info' })
   return insights
 }

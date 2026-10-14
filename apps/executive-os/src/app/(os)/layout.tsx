@@ -31,9 +31,16 @@ export default async function OSLayout({
         pendingBookings={pendingBookings}
         scheduledPosts={scheduledPosts}
         newOperationsReports={newOperationsReports}
+        plannedHrefs={process.env.MGI_LOCAL_DEMO === '1' ? ['/ai', '/crm', '/events', '/newsletter', '/knowledge'] : []}
       />
       <div className="flex flex-col flex-1 overflow-hidden">
         <TopBar />
+        {process.env.MGI_LOCAL_DEMO === '1' && (
+          // LOCAL PRESENTATION DEMO ONLY (branch demo/exos-local)
+          <div style={{ background: '#FBE7CF', color: '#7A3E00', fontSize: 13, fontWeight: 600, padding: '6px 24px', borderBottom: '1px solid #F2C88F' }}>
+            LOCAL DEMO · synthetic sample data on this laptop · not connected to NMI, live company systems or AI services · production system remains offline
+          </div>
+        )}
         <main className="flex-1 overflow-y-auto p-6">
           {children}
         </main>

@@ -1,6 +1,17 @@
 import { PrismaNeonHttp } from '@prisma/adapter-neon'
 import { PrismaClient } from '@prisma/client'
-import type { HTTPQueryOptions } from '@neondatabase/serverless'
+import { neonConfig, type HTTPQueryOptions } from '@neondatabase/serverless'
+
+// LOCAL PRESENTATION DEMO ONLY (branch demo/exos-local — never merge).
+// Routes Neon HTTP queries to a local Postgres + neon HTTP proxy in Docker.
+// Active only when MGI_LOCAL_DEMO_SQL_ENDPOINT is set to a loopback URL.
+const demoEndpoint = process.env.MGI_LOCAL_DEMO_SQL_ENDPOINT
+if (demoEndpoint) {
+  if (!/^http:\/\/(127\.0\.0\.1|localhost):\d+\/sql$/.test(demoEndpoint)) {
+    throw new Error('MGI_LOCAL_DEMO_SQL_ENDPOINT must be a loopback URL (http://127.0.0.1:<port>/sql)')
+  }
+  neonConfig.fetchEndpoint = demoEndpoint
+}
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined

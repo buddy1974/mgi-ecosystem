@@ -75,7 +75,7 @@ export function VenturesTable({ nmiHealth }: VenturesTableProps) {
         <h2 className="text-[11px] uppercase tracking-widest font-semibold text-mgi-label">
           Ventures
         </h2>
-        <span className="text-[11px] text-mgi-dim">{ventures.length} entities</span>
+        <span className="text-[11px] text-mgi-dim">{ventures.length} entities{process.env.MGI_LOCAL_DEMO === '1' ? ' · health scores are sample values (demo)' : ''}</span>
       </div>
       <table className="w-full">
         <thead>

@@ -39,9 +39,23 @@ const OPERATIONS_NAV: NavItem[] = [
   { href: '/knowledge',  label: 'Knowledge',         icon: '📚' },
 ]
 
-function NavLink({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
+function NavLink({ item, collapsed, planned = false }: { item: NavItem; collapsed: boolean; planned?: boolean }) {
   const pathname = usePathname()
   const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
+  // LOCAL PRESENTATION DEMO ONLY: modules not built yet are shown as "planned" and not clickable
+  if (planned) {
+    return (
+      <div title="Planned — not built yet" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-mgi-muted opacity-50 cursor-not-allowed">
+        <span className="text-base leading-none">{item.icon}</span>
+        {!collapsed && (
+          <>
+            <span className="flex-1 truncate">{item.label}</span>
+            <span className="rounded px-1.5 py-0.5 text-[10px] font-medium bg-white/10 text-mgi-muted">planned</span>
+          </>
+        )}
+      </div>
+    )
+  }
 
   return (
     <Link
@@ -79,9 +93,10 @@ interface SidebarProps {
   pendingBookings?: number
   scheduledPosts?: number
   newOperationsReports?: number
+  plannedHrefs?: string[]
 }
 
-export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, scheduledPosts, newOperationsReports }: SidebarProps) {
+export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, scheduledPosts, newOperationsReports, plannedHrefs = [] }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const commandNav = COMMAND_NAV.map(item => {
     if (item.href === '/inbox' && unreadMessages !== undefined)
@@ -150,7 +165,7 @@ export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, sch
           )}
           <div className="space-y-0.5">
             {commandNav.map((item) => (
-              <NavLink key={item.href} item={item} collapsed={collapsed} />
+              <NavLink key={item.href} item={item} collapsed={collapsed} planned={plannedHrefs.includes(item.href)} />
             ))}
           </div>
         </div>
@@ -164,7 +179,7 @@ export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, sch
           )}
           <div className="space-y-0.5">
             {OPERATIONS_NAV.map((item) => (
-              <NavLink key={item.href} item={item} collapsed={collapsed} />
+              <NavLink key={item.href} item={item} collapsed={collapsed} planned={plannedHrefs.includes(item.href)} />
             ))}
           </div>
         </div>
