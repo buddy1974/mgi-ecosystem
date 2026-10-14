@@ -14,7 +14,7 @@
  */
 import readline from 'node:readline'
 import { hashPassword, MIN_PASSWORD_LENGTH } from '../../auth/src/password'
-import { normalizeEmail } from '../../auth/src/sign-in-policy'
+import { normalizeLoginId } from '../../auth/src/sign-in-policy'
 
 const ROLES = ['SUPER_ADMIN', 'ADMIN', 'USER'] as const
 type Role = (typeof ROLES)[number]
@@ -36,13 +36,13 @@ function promptHidden(question: string): Promise<string> {
 }
 
 async function main() {
-  const email = normalizeEmail(process.env.ADMIN_EMAIL)
+  const email = normalizeLoginId(process.env.ADMIN_EMAIL) // email or username, e.g. admin
   const create = process.argv.includes('--create')
   const dryRun = process.argv.includes('--dry-run')
   const roleArg = argValue('--role')
   const name = argValue('--name')
 
-  if (!email) throw new Error('Set ADMIN_EMAIL to the account email.')
+  if (!email) throw new Error('Set ADMIN_EMAIL to the account email or username.')
   if (roleArg && !ROLES.includes(roleArg as Role)) throw new Error(`--role must be one of ${ROLES.join(', ')}`)
   if (!process.stdin.isTTY) throw new Error('Run interactively in a terminal (password is read with echo off).')
 

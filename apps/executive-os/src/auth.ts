@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import Nodemailer from 'next-auth/providers/nodemailer'
 import { prisma } from '@mgi/database'
-import { authConfig, isAllowedToSignIn, normalizeEmail, verifyPassword } from '@mgi/auth'
+import { authConfig, isAllowedToSignIn, normalizeLoginId, verifyPassword } from '@mgi/auth'
 
 // Security model (Phase 2B, 2026-10-08):
 // - No shared password, no one-click access. Every sign-in is tied to a real,
@@ -29,11 +29,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     Credentials({
       name: 'Executive Access',
       credentials: {
-        email: { label: 'Email', type: 'email' },
+        email: { label: 'Email or username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const email = normalizeEmail(credentials?.email)
+        const email = normalizeLoginId(credentials?.email) // email or username
         const password = credentials?.password
         if (!email || typeof password !== 'string' || password.length === 0) return null
 
@@ -52,7 +52,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     ...authConfig.callbacks,
     async signIn({ user }) {
-      const email = normalizeEmail(user?.email)
+      const email = normalizeLoginId(user?.email)
       if (!email) return false
       const dbUser = await prisma.user.findUnique({
         where: { email },

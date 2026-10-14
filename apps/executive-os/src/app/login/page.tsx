@@ -77,12 +77,14 @@ export default async function LoginPage({
               htmlFor="cred-email"
               className="block text-xs font-medium uppercase tracking-widest text-mgi-muted"
             >
-              Email
+              Email or username
             </label>
             <input
               id="cred-email"
               name="email"
-              type="email"
+              type="text"
+              autoCapitalize="none"
+              spellCheck={false}
               required
               autoComplete="username"
               className="w-full rounded-md border border-mgi-border bg-mgi-input px-4 py-3 text-sm text-mgi-text placeholder:text-mgi-label focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-colors"

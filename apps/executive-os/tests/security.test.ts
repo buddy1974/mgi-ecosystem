@@ -163,3 +163,14 @@ test('telegram output escapes user-supplied HTML', () => {
   assert.doesNotMatch(msg, /<script>/)
   assert.match(msg, /M&amp;M/)
 })
+
+// ── Username sign-in (2026-10-14) ────────────────────────────────────────────
+import { normalizeLoginId } from '../../../packages/auth/src/sign-in-policy'
+test('login id: emails and plain usernames are accepted, junk is rejected', () => {
+  assert.equal(normalizeLoginId('admin'), 'admin')
+  assert.equal(normalizeLoginId('  Admin '), 'admin')
+  assert.equal(normalizeLoginId('Marcel@Example.com'), 'marcel@example.com')
+  for (const bad of ['', 'ad', '1admin', 'admin user', 'admin;drop', 'x'.repeat(40), null, 42]) {
+    assert.equal(normalizeLoginId(bad as unknown), null, String(bad))
+  }
+})
