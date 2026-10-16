@@ -33,8 +33,11 @@ export const CreateApprovalSchema = z.object({
 
 export const PatchApprovalSchema = z.object({
   action:        z.enum(['approve', 'reject', 'delegate']),
-  delegatedTo:   z.string().max(100).optional(),
+  delegatedTo:   z.string().trim().max(100).optional(),
   rejectionNote: z.string().max(2000).optional(),
+}).refine((value) => value.action !== 'delegate' || !!value.delegatedTo, {
+  message: 'A delegation recipient is required',
+  path: ['delegatedTo'],
 })
 
 // ── Messages ───────────────────────────────────────────────────────────────────

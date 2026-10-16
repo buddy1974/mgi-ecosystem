@@ -14,7 +14,7 @@ export async function PATCH(
 
   const { id } = await params
 
-  const result = PatchApprovalSchema.safeParse(await req.json())
+  const result = PatchApprovalSchema.safeParse(await req.json().catch(() => null))
   if (!result.success) {
     return NextResponse.json(
       { error: 'Validation failed', issues: result.error.flatten().fieldErrors },
@@ -35,7 +35,7 @@ export async function PATCH(
   if (adminOrError instanceof NextResponse) return adminOrError
 
   const now = new Date()
-  const decidedBy = userOrError.name ?? 'Rogers Nforgwei'
+  const decidedBy = userOrError.name || userOrError.id
 
   let updateData: Record<string, unknown> = {}
   if (action === 'approve') {
@@ -46,10 +46,18 @@ export async function PATCH(
     updateData = { status: 'DELEGATED', decidedAt: now, decidedBy, delegatedTo: delegatedTo ?? null }
   }
 
-  const updated = await prisma.approval.update({
-    where: { id },
-    data: updateData,
+  // Compare and update in the database: two concurrent decisions must not both win.
+  const updated = await prisma.$transaction(async (tx) => {
+    const decision = await tx.approval.updateMany({
+      where: { id, status: 'PENDING' },
+      data: updateData,
+    })
+    if (decision.count === 0) return null
+    return tx.approval.findUnique({ where: { id } })
   })
 
+  if (!updated) {
+    return NextResponse.json({ error: 'This approval has already been decided. Refresh the page.' }, { status: 409 })
+  }
   return NextResponse.json(updated)
 }

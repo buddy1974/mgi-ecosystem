@@ -9,6 +9,7 @@ async function getBriefingContext(): Promise<string> {
   const todayEnd = new Date()
   todayEnd.setHours(23, 59, 59, 999)
 
+  // A failed data source must abort generation, not become a fabricated zero.
   const [
     pendingApprovals,
     criticalApprovals,
@@ -17,16 +18,16 @@ async function getBriefingContext(): Promise<string> {
     scheduledPosts,
     pendingBookings,
   ] = await Promise.all([
-    prisma.approval.count({ where: { status: 'PENDING' } }).catch(() => 0),
-    prisma.approval.count({ where: { status: 'PENDING', priority: 'CRITICAL' } }).catch(() => 0),
-    prisma.message.count({ where: { isRead: false, isArchived: false } }).catch(() => 0),
+    prisma.approval.count({ where: { status: 'PENDING' } }),
+    prisma.approval.count({ where: { status: 'PENDING', priority: 'CRITICAL' } }),
+    prisma.message.count({ where: { isRead: false, isArchived: false } }),
     prisma.event.findMany({
       where: { startAt: { gte: now, lte: todayEnd }, status: { not: 'CANCELLED' } },
       orderBy: { startAt: 'asc' },
       select: { title: true, startAt: true, companyId: true },
-    }).catch(() => []),
-    prisma.socialPost.count({ where: { status: 'SCHEDULED' } }).catch(() => 0),
-    prisma.bookingRequest.count({ where: { status: 'PENDING' } }).catch(() => 0),
+    }),
+    prisma.socialPost.count({ where: { status: 'SCHEDULED' } }),
+    prisma.bookingRequest.count({ where: { status: 'PENDING' } }),
   ])
 
   const todayEventsList = todayEvents

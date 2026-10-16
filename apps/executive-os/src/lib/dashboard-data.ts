@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { getNmiKpis, getNmiHealthScore } from './nmi-bridge'
 import { getPendingApprovals } from './approvals-data'
 import { getAIBriefing } from './ai-briefing'

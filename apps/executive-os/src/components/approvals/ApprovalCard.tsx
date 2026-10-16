@@ -15,6 +15,9 @@ interface Props {
 export function ApprovalCard({ approval }: Props) {
   const router = useRouter()
   const [acting, setActing] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [delegating, setDelegating] = useState(false)
+  const [delegatedTo, setDelegatedTo] = useState('')
 
   const age = formatDistanceToNow(new Date(approval.requestedAt), { addSuffix: true })
 
@@ -29,13 +32,24 @@ export function ApprovalCard({ approval }: Props) {
 
   const act = async (action: 'approve' | 'reject' | 'delegate') => {
     setActing(action)
+    setError(null)
     try {
-      await fetch(`/api/approvals/${approval.id}`, {
+      const response = await fetch(`/api/approvals/${approval.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action }),
+        body: JSON.stringify({ action, ...(action === 'delegate' ? { delegatedTo: delegatedTo.trim() } : {}) }),
       })
+      if (!response.ok) {
+        const body: unknown = await response.json().catch(() => null)
+        const message = body && typeof body === 'object' && 'error' in body && typeof body.error === 'string'
+          ? body.error : 'Unable to save this decision. Please try again.'
+        setError(message)
+        return
+      }
+      setDelegating(false)
       router.refresh()
+    } catch {
+      setError('Unable to connect. Please try again.')
     } finally {
       setActing(null)
     }
@@ -98,12 +112,22 @@ export function ApprovalCard({ approval }: Props) {
       )}
 
       {/* Actions */}
+      {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+      {delegating && (
+        <form onSubmit={(event) => { event.preventDefault(); void act('delegate') }} className="flex items-end gap-2">
+          <label className="flex-1 text-xs text-mgi-muted">
+            Delegate to
+            <input required maxLength={100} value={delegatedTo} onChange={(event) => setDelegatedTo(event.target.value)}
+              disabled={!!acting} className="mt-1 block w-full rounded border border-mgi-border bg-mgi-card px-3 py-2 text-white"
+              placeholder="Recipient name or email" />
+          </label>
+          <button type="submit" disabled={!!acting || !delegatedTo.trim()} className="rounded bg-white px-3 py-2 text-xs text-black disabled:opacity-40">Confirm delegation</button>
+          <button type="button" disabled={!!acting} onClick={() => setDelegating(false)} className="px-3 py-2 text-xs text-mgi-muted">Cancel</button>
+        </form>
+      )}
       <div className="flex items-center gap-2 pt-1">
-        <button className="px-3 py-1.5 text-xs border border-mgi-border text-mgi-muted rounded hover:text-white hover:border-white/30 transition-colors">
-          Discuss
-        </button>
         <button
-          onClick={() => act('delegate')}
+          onClick={() => setDelegating(true)}
           disabled={!!acting}
           className="px-3 py-1.5 text-xs border border-mgi-border text-mgi-muted rounded hover:text-white hover:border-white/30 transition-colors disabled:opacity-40"
         >

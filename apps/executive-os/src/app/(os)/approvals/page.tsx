@@ -36,9 +36,6 @@ export default async function ApprovalsPage({ searchParams }: Props) {
               {` · OLDEST ${oldestAge}`}
             </p>
           </div>
-          <button className="px-3 py-1.5 text-xs border border-mgi-border text-mgi-muted rounded hover:text-white hover:border-white/30 transition-colors">
-            Bulk delegate
-          </button>
         </div>
         <Suspense>
           <ApprovalsFilter />

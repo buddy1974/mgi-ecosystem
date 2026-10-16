@@ -91,6 +91,10 @@ describe("MGI Executive OS — isolated integration (Phase 3B §6.1)", { skip: e
   test("M-C3 approval decision: USER forbidden, SUPER_ADMIN allowed", async () => {
     assert.equal((await req("/api/approvals/t3b-approval-1", json({ action: "approve" }, user, "PATCH"))).status, 403)
     assert.equal((await req("/api/approvals/t3b-approval-1", json({ action: "approve" }, admin, "PATCH"))).status, 200)
+    assert.equal((await req("/api/approvals/t3b-approval-1", json({ action: "reject" }, admin, "PATCH"))).status, 409)
+    const { prisma } = await import("@mgi/database")
+    const saved = await prisma.approval.findUniqueOrThrow({ where: { id: "t3b-approval-1" } })
+    assert.equal(saved.status, "APPROVED")
   })
   test("M-C4 message PATCH ignores non-allowlisted fields", async () => {
     const r = await req("/api/messages/t3b-message-1", json({ isRead: true, companyId: "evil", body: "x" }, admin, "PATCH"))
