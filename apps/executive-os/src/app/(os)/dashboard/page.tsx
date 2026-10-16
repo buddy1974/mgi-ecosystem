@@ -7,7 +7,6 @@ import {
   AiInsightsPanel,
   ApprovalsPreview,
   CalendarPreview,
-  PriorityWidget,
 } from '@/components/dashboard'
 import { BookShieldPanel } from '@/components/dashboard/BookShieldPanel'
 
@@ -20,7 +19,9 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-6 p-6">
       <GreetingHeader />
-      <PriorityWidget />
+      {/* PriorityWidget removed from the dashboard: it rendered hard-coded sample
+          priorities (priority/data.ts) as if they were live. /priority keeps the
+          sample, clearly labelled, until priorities are stored in the database. */}
       <AiBriefingCard nmiKpis={nmiKpis} openApprovals={openApprovals.length} aiBriefing={aiBriefing} />
       <KpiRow openApprovals={openApprovals.length} nmiKpis={nmiKpis} />
       <div className="grid grid-cols-[1fr_350px] gap-4">

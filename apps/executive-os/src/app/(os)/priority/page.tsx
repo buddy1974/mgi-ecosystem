@@ -207,6 +207,9 @@ export default function PriorityTrackerPage() {
           <p className="text-sm text-mgi-muted mt-0.5">
             CEO command view — focus areas, flags, and open decisions
           </p>
+          <p className="text-xs text-status-attention mt-2">
+            Sample list — not connected to live data. Changes are not saved and reset on reload.
+          </p>
         </div>
         <Link
           href="/dashboard"
