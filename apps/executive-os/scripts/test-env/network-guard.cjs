@@ -11,6 +11,13 @@ const LOCAL = new Set(["localhost", "127.0.0.1", "::1", "[::1]"])
 const allow = new Set(
   String(process.env.TEST_NETWORK_ALLOW || "").split(",").map((h) => h.trim().toLowerCase()).filter(Boolean),
 )
+// The Neon serverless driver sends HTTP queries to the regional API host
+// (ep-xyz[-pooler].<region>.aws.neon.tech -> api.<region>.aws.neon.tech), so an
+// allowed Neon endpoint also allows exactly its derived API host.
+for (const h of [...allow]) {
+  const m = /^ep-[a-z0-9-]+\.(.+\.neon\.tech)$/.exec(h)
+  if (m) allow.add(`api.${m[1]}`)
+}
 
 function hostOf(input) {
   try {

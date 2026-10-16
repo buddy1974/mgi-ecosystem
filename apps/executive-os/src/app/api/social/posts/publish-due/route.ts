@@ -28,10 +28,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ published: 0, message: 'Nothing due' })
   }
 
-  await prisma.socialPost.updateMany({
-    where: { id: { in: due.map((p) => p.id) } },
-    data: { status: 'PUBLISHED', publishedAt: now },
-  })
+  // One update() per post: updateMany() needs a transaction, which the Neon HTTP
+  // adapter (@mgi/database) does not support.
+  for (const p of due) {
+    await prisma.socialPost.update({
+      where: { id: p.id },
+      data: { status: 'PUBLISHED', publishedAt: now },
+    })
+  }
 
   console.log(`[Social Publisher] Marked ${due.length} post(s) as published`)
   return NextResponse.json({ published: due.length, postIds: due.map((p) => p.id) })

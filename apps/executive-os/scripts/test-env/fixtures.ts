@@ -5,7 +5,6 @@
 // Refuses to run unless assertTestEnvironment() passes (static + live identity).
 // All fixture rows use the id prefix "t3b-" and reserved test email domains.
 // Credentials come from the git-ignored .env.test.local and are never printed.
-import { assertTestEnvironment } from "./assert-test-db.mjs"
 
 export const FIXTURE_PREFIX = "t3b-"
 const SYNTHETIC_EMAIL = /@([a-z0-9-]+\.)*(test|invalid|example\.(com|org|net))$/i
@@ -18,6 +17,9 @@ export function assertSyntheticEmail(name: string, email: string | undefined): s
 }
 
 async function main(mode: string) {
+  // Dynamic import keeps the guard native ESM (it uses top-level await; a static
+  // import is transpiled to CJS by tsx and fails).
+  const { assertTestEnvironment } = await import("./assert-test-db.mjs")
   const res = await assertTestEnvironment({ log: () => {} })
   if (!res.ok) {
     console.error("REFUSED — fixtures not touched:")

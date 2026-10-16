@@ -46,18 +46,20 @@ export async function PATCH(
     updateData = { status: 'DELEGATED', decidedAt: now, decidedBy, delegatedTo: delegatedTo ?? null }
   }
 
-  // Compare and update in the database: two concurrent decisions must not both win.
-  const updated = await prisma.$transaction(async (tx) => {
-    const decision = await tx.approval.updateMany({
+  // Compare and update in ONE statement (UPDATE ... WHERE id = ? AND status = 'PENDING'):
+  // two concurrent decisions cannot both win. Uses update(), not updateMany() or
+  // $transaction — both need a transaction, which the Neon HTTP adapter
+  // (@mgi/database) does not support. P2025 = no PENDING row matched.
+  try {
+    const updated = await prisma.approval.update({
       where: { id, status: 'PENDING' },
       data: updateData,
     })
-    if (decision.count === 0) return null
-    return tx.approval.findUnique({ where: { id } })
-  })
-
-  if (!updated) {
-    return NextResponse.json({ error: 'This approval has already been decided. Refresh the page.' }, { status: 409 })
+    return NextResponse.json(updated)
+  } catch (err) {
+    if ((err as { code?: string })?.code === 'P2025') {
+      return NextResponse.json({ error: 'This approval has already been decided. Refresh the page.' }, { status: 409 })
+    }
+    throw err
   }
-  return NextResponse.json(updated)
 }
