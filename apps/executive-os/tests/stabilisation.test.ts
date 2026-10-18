@@ -31,6 +31,22 @@ test('Next.js is pinned to 16.3.8 (patches every published 16.x advisory) in man
   assert.match(importer, /\n {6}next:\n {8}specifier: 16\.3\.8\n {8}version: 16\.3\.8\(/)
 })
 
+test('Auth.js is pinned past GHSA-8fpg-xm3f-6cx3 / GHSA-7rqj-j65f-68wh (next-auth beta.32, @auth/core 0.41.3)', () => {
+  assert.equal(JSON.parse(read('package.json')).dependencies['next-auth'], '5.0.0-beta.32')
+  const authPkg = JSON.parse(readFileSync(join(APP, '../../packages/auth/package.json'), 'utf8'))
+  assert.equal(authPkg.dependencies['next-auth'], '5.0.0-beta.32')
+  assert.equal(authPkg.dependencies['@auth/prisma-adapter'], '2.11.3')
+  const lock = readFileSync(join(APP, '../../pnpm-lock.yaml'), 'utf8')
+  assert.doesNotMatch(lock, /@auth\/core@0\.41\.[0-2]\b/)
+  assert.doesNotMatch(lock, /next-auth@5\.0\.0-beta\.(?:[0-9]|[12][0-9]|3[01])\b/)
+})
+
+test('session checks require a user, not a truthy auth object (GHSA-8fpg-xm3f-6cx3)', () => {
+  assert.match(read('middleware.ts'), /const isLoggedIn = !!req\.auth\?\.user/)
+  assert.doesNotMatch(read('middleware.ts'), /!!req\.auth\s*$/m)
+  assert.match(read('src/app/(os)/layout.tsx'), /if \(!session\?\.user\) redirect\('\/login'\)/)
+})
+
 // ── Login throttle ───────────────────────────────────────────────────────────
 test('credentials throttle: blocks at 8 failures per login id or 30 per IP in the window', () => {
   assert.equal(isThrottled('credentials', { account: 7, ip: 29 }), false)

@@ -7,10 +7,10 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "latest",
+    "@auth/prisma-adapter": "2.11.3",
     "@mgi/database": "workspace:*",
     "@mgi/types": "workspace:*",
-    "next-auth": "beta",
+    "next-auth": "5.0.0-beta.32",
     "nodemailer": "^7.0.13"
   },
   "devDependencies": {

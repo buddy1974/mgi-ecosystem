@@ -22,7 +22,7 @@ export default async function OSLayout({
     getScheduledPostCount().catch(() => 0),
     getNewOperationsCount().catch(() => 0),
   ])
-  if (!session) redirect('/login')
+  if (!session?.user) redirect('/login') // not a bare existence check (GHSA-8fpg-xm3f-6cx3)
   // The session token is valid, but the account must still be active in the database.
   // (A redirect to /login would loop: the middleware sends signed-in users back to /dashboard.)
   const activeUser = await getActiveUser()

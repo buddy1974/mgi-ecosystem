@@ -11,7 +11,9 @@ const { auth } = NextAuth({
 
 export default auth((req) => {
   const { pathname } = req.nextUrl
-  const isLoggedIn = !!req.auth
+  // Require an actual user, not just a truthy auth object (GHSA-8fpg-xm3f-6cx3: on
+  // configuration errors req.auth can be a non-session object — existence checks fail open).
+  const isLoggedIn = !!req.auth?.user
   const access = classifyRoute(pathname)
 
   if (access === 'next-auth' || access === 'public-api') return NextResponse.next()
