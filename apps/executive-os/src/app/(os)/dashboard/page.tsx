@@ -9,11 +9,13 @@ import {
   CalendarPreview,
 } from '@/components/dashboard'
 import { BookShieldPanel } from '@/components/dashboard/BookShieldPanel'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function DashboardPage() {
+  await requirePageUser()
   const { nmiKpis, nmiHealth, openApprovals, aiBriefing } = await getDashboardData()
 
   return (

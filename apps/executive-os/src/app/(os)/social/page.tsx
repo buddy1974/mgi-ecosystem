@@ -1,6 +1,7 @@
 import { getSocialPosts, getSocialStats } from '@/lib/social-data'
 import { PostComposer, PostCard, PostFilter, SocialStatsBar, PlatformCoverageCard } from '@/components/social'
 import { Suspense } from 'react'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default async function SocialPage({ searchParams }: Props) {
+  await requirePageUser()
   const { company, status } = await searchParams
 
   const [posts, stats] = await Promise.all([

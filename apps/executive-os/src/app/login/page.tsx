@@ -1,4 +1,4 @@
-import { AuthError } from 'next-auth'
+import { AuthError, CredentialsSignin } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { signIn } from '@/auth'
 
@@ -9,6 +9,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   CredentialsSignin: 'Invalid email or password.',
   AccessDenied: 'This account is not authorised for MGI Executive OS.',
   Verification: 'The sign-in link is invalid or has expired.',
+  RateLimited: 'Too many sign-in attempts. Please wait 15 minutes and try again.',
 }
 
 async function credentialsAction(formData: FormData) {
@@ -20,6 +21,7 @@ async function credentialsAction(formData: FormData) {
       redirectTo: '/dashboard',
     })
   } catch (error) {
+    if (error instanceof CredentialsSignin && error.code === 'rate_limited') redirect('/login?error=RateLimited')
     if (error instanceof AuthError) redirect(`/login?error=${encodeURIComponent(error.type)}`)
     throw error
   }

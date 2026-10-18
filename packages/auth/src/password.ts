@@ -16,12 +16,18 @@ export function hashPassword(password: string): string {
   return `${salt}:${hash}`
 }
 
+// Burned when there is no usable stored hash, so unknown accounts take as long
+// as known ones (no account discovery through response timing).
+const DUMMY_SALT = '00000000000000000000000000000000'
+
 export function verifyPassword(password: string, stored: string | null | undefined): boolean {
-  if (!stored || typeof password !== 'string' || password.length === 0) return false
-  const [salt, hashHex] = stored.split(':')
-  if (!salt || !hashHex) return false
-  const expected = Buffer.from(hashHex, 'hex')
-  if (expected.length !== KEY_LENGTH) return false
+  if (typeof password !== 'string' || password.length === 0) return false
+  const [salt, hashHex] = (stored ?? '').split(':')
+  const expected = Buffer.from(hashHex ?? '', 'hex')
+  if (!salt || expected.length !== KEY_LENGTH) {
+    crypto.pbkdf2Sync(password, DUMMY_SALT, ITERATIONS, KEY_LENGTH, DIGEST)
+    return false
+  }
   const actual = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST)
   return crypto.timingSafeEqual(actual, expected)
 }

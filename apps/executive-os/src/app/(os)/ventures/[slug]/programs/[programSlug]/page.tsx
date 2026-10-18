@@ -1,12 +1,14 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { VENTURES } from '@/lib/ventures-config'
+import { requirePageUser } from '@/lib/require-auth'
 
 interface Props {
   params: Promise<{ slug: string; programSlug: string }>
 }
 
 export default async function ProgramPage({ params }: Props) {
+  await requirePageUser()
   const { slug, programSlug } = await params
 
   const venture = VENTURES[slug]

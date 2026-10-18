@@ -1,10 +1,12 @@
 import { getInboxMessages, getInboxStats } from '@/lib/inbox-data'
 import { InboxClient } from '@/components/inbox/InboxClient'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function InboxPage() {
+  await requirePageUser()
   const [messages, stats] = await Promise.all([
     getInboxMessages(),
     getInboxStats(),

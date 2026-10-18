@@ -81,12 +81,62 @@ describe("MGI Executive OS — isolated integration (Phase 3B §6.1)", { skip: e
       assert.equal(r.status, 401, `${method} ${path}`)
     }
   })
-  test("M-C2 public manager submission: page renders, invalid body 400, valid body accepted", async () => {
+  test("M-C2 manager submission: page renders, invalid body 400, signed link required, valid signed body accepted", async () => {
+    const { ventureLinkKey } = await import("../../src/lib/venture-link")
+    const secret = process.env.AUTH_SECRET ?? ""
+    const report = { type: "report", urgency: "normal", title: "[T3B] integration report", body: "synthetic", submittedBy: "T3B" }
     assert.equal((await req("/submit/horeb")).status, 200)
     assert.equal((await req("/api/venture-report", json({ venture: "horeb" }))).status, 400)
-    const ok = await req("/api/venture-report", json({ venture: "horeb", type: "report", urgency: "normal",
-      title: "[T3B] integration report", body: "synthetic", submittedBy: "T3B" }))
+    assert.equal((await req("/api/venture-report", json({ venture: "horeb", ...report }))).status, 403, "no key")
+    assert.equal((await req("/api/venture-report", json({ venture: "horeb", key: "x".repeat(32), ...report }))).status, 403, "wrong key")
+    assert.equal((await req("/api/venture-report", json({ venture: "horeb", key: ventureLinkKey("dros", secret), ...report }))).status, 403, "other venture's key")
+    assert.equal((await req("/api/venture-report", json({ venture: "nope", key: ventureLinkKey("nope", secret), ...report }))).status, 403, "unknown venture")
+    const ok = await req("/api/venture-report", json({ venture: "horeb", key: ventureLinkKey("horeb", secret), ...report }))
     assert.equal(ok.status, 200)
+  })
+  test("M-S1 venture submissions are capped per venture per hour (429), checked before the write", async () => {
+    const { ventureLinkKey, VENTURE_REPORTS_PER_HOUR } = await import("../../src/lib/venture-link")
+    const { prisma } = await import("@mgi/database")
+    const venture = "abba"
+    const before = await prisma.ventureReport.count({ where: { venture } })
+    const fill = Math.max(0, VENTURE_REPORTS_PER_HOUR - await prisma.ventureReport.count({ where: { venture, createdAt: { gte: new Date(Date.now() - 3600_000) } } }))
+    await prisma.ventureReport.createMany({ data: Array.from({ length: fill }, (_, i) => ({
+      venture, ventureName: "T3B", type: "report", title: `[T3B] cap ${i}`, body: "synthetic", submittedBy: "T3B" })) })
+    try {
+      const r = await req("/api/venture-report", json({ venture, key: ventureLinkKey(venture, process.env.AUTH_SECRET ?? ""),
+        type: "incident", urgency: "critical", title: "[T3B] over cap", body: "synthetic", submittedBy: "T3B" }))
+      assert.equal(r.status, 429)
+      assert.equal(await prisma.ventureReport.count({ where: { venture, title: "[T3B] over cap" } }), 0)
+    } finally {
+      await prisma.ventureReport.deleteMany({ where: { venture, title: { startsWith: "[T3B] cap " } } })
+      assert.equal(await prisma.ventureReport.count({ where: { venture } }), before)
+    }
+  })
+  test("M-S2 credentials throttle: 8 failures for one login id → rate_limited; other accounts unaffected", async () => {
+    const id = `t3b-throttle-${Date.now()}@example.test`
+    const attempt = async (email: string, password: string) => {
+      const jar: Jar = new Map()
+      const csrf = await (await req("/api/auth/csrf", { jar })).json() as { csrfToken: string }
+      const r = await req("/api/auth/callback/credentials", { method: "POST", jar,
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ csrfToken: csrf.csrfToken, email, password, callbackUrl: `${BASE}/dashboard` }) })
+      return r.headers.get("location") ?? ""
+    }
+    for (let i = 0; i < 8; i++) {
+      const loc = await attempt(id, `wrong-password-${i}`)
+      assert.match(loc, /error=CredentialsSignin/); assert.doesNotMatch(loc, /rate_limited/)
+    }
+    assert.match(await attempt(id, "wrong-password-x"), /code=rate_limited/)
+    const { prisma } = await import("@mgi/database")
+    assert.equal(await prisma.auditLog.count({ where: { resource: "auth.login_failure", resourceId: id } }), 8)
+    assert.equal((await signIn(ADMIN.email, ADMIN.password)).ok, true, "a different account still signs in")
+  })
+  test("M-S3 security headers on every response", async () => {
+    for (const path of ["/login", "/dashboard", "/api/messages"]) {
+      const r = await req(path)
+      assert.equal(r.headers.get("x-frame-options"), "DENY", path)
+      assert.equal(r.headers.get("x-content-type-options"), "nosniff", path)
+    }
   })
   test("M-C3 approval decision: USER forbidden, SUPER_ADMIN allowed", async () => {
     assert.equal((await req("/api/approvals/t3b-approval-1", json({ action: "approve" }, user, "PATCH"))).status, 403)
@@ -130,5 +180,9 @@ describe("MGI Executive OS — isolated integration (Phase 3B §6.1)", { skip: e
     }
   })
 
-  after(() => { /* fixtures are removed by `fixtures.ts cleanup` */ })
+  after(async () => {
+    // fixtures are removed by `fixtures.ts cleanup`; throttle rows written by M-B3/M-S2 are removed here
+    const { prisma } = await import("@mgi/database")
+    await prisma.auditLog.deleteMany({ where: { resource: { in: ["auth.login_failure", "auth.magic_link_request"] } } })
+  })
 })

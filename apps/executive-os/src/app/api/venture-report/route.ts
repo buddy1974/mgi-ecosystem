@@ -3,12 +3,20 @@ import { prisma } from '@mgi/database'
 import { VENTURES } from '@/lib/ventures'
 import { sendOperationsAlert, buildSubmissionAlert } from '@/lib/telegram'
 import { VentureReportSchema } from '@/lib/schemas'
+import { isValidVentureKey, ventureLinkSecret, VENTURE_REPORTS_PER_HOUR } from '@/lib/venture-link'
 
 export const dynamic = 'force-dynamic'
 
-// Public endpoint — no authentication required (managers submit without login)
+// Public endpoint — managers submit without an account, but only through their
+// signed venture link (key = HMAC of the slug, see lib/venture-link.ts). Fails
+// closed without a usable secret; capped per venture per hour.
 export async function POST(req: NextRequest) {
   try {
+    const secret = ventureLinkSecret()
+    if (!secret) {
+      return NextResponse.json({ error: 'Submissions are temporarily unavailable' }, { status: 503 })
+    }
+
     const result = VentureReportSchema.safeParse(await req.json())
     if (!result.success) {
       return NextResponse.json(
@@ -16,11 +24,19 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       )
     }
-    const { venture, type, urgency, title, body, submittedBy } = result.data
+    const { venture, key, type, urgency, title, body, submittedBy } = result.data
 
     const ventureConfig = VENTURES[venture]
-    if (!ventureConfig) {
-      return NextResponse.json({ error: 'Invalid venture' }, { status: 400 })
+    if (!ventureConfig || !isValidVentureKey(venture, key, secret)) {
+      // Same answer for an unknown slug and a wrong key.
+      return NextResponse.json({ error: 'Invalid submission link' }, { status: 403 })
+    }
+
+    const recent = await prisma.ventureReport.count({
+      where: { venture, createdAt: { gte: new Date(Date.now() - 60 * 60 * 1000) } },
+    })
+    if (recent >= VENTURE_REPORTS_PER_HOUR) {
+      return NextResponse.json({ error: 'Too many submissions — please try again later' }, { status: 429 })
     }
 
     const report = await prisma.ventureReport.create({

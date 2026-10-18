@@ -1,10 +1,12 @@
 import { getUpcomingEvents, getPendingBookings, getCalendarStats } from '@/lib/calendar-data'
 import { CalendarStrip, EventGroup, BookingRequestCard } from '@/components/calendar'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function CalendarPage() {
+  await requirePageUser()
   const [events, bookings, stats] = await Promise.all([
     getUpcomingEvents(14),
     getPendingBookings(),

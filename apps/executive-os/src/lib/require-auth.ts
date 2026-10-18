@@ -14,6 +14,7 @@
  */
 
 import { NextResponse } from 'next/server'
+import { notFound, redirect } from 'next/navigation'
 import { auth } from '@/auth'
 import { prisma } from '@mgi/database'
 import { hasPermission, getUserCompanyRole, isAllowedToSignIn } from '@mgi/auth'
@@ -54,6 +55,22 @@ export async function requireSession(): Promise<MGIUser | NextResponse> {
 export async function getActiveUser(): Promise<MGIUser | null> {
   const result = await requireSession()
   return result instanceof NextResponse ? null : result
+}
+
+/**
+ * Page-level guard for every server-rendered (os) page that reads data.
+ * Defence in depth: the middleware and the (os) layout already check the session,
+ * but Next.js middleware-bypass advisories (GHSA-267c/26hh/492v) show a page can be
+ * rendered without them; the vendor workaround is to authorise in the page itself.
+ * No session → /login. Session but deactivated/deleted account → 404 (a redirect to
+ * /login would loop, and the layout shows the "deactivated" notice anyway).
+ */
+export async function requirePageUser(): Promise<MGIUser> {
+  const session = await auth()
+  if (!session?.user) redirect('/login')
+  const user = await getActiveUser()
+  if (!user) notFound()
+  return user
 }
 
 // ── Company access ───────────────────────────────────────────────────────────

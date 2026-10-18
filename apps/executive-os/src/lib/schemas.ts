@@ -90,6 +90,7 @@ export const AcceptInviteSchema = z.object({
 
 export const VentureReportSchema = z.object({
   venture:     z.string().min(1, 'Venture slug is required'),
+  key:         z.string().max(64).optional(), // signed link key, verified in the route
   type:        z.enum(['report', 'incident', 'update', 'approval_request']),
   urgency:     z.enum(['normal', 'urgent', 'critical']).default('normal'),
   title:       z.string().min(1, 'Title is required').max(200),

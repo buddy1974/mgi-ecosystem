@@ -3,6 +3,7 @@ import { ApprovalCard } from '@/components/approvals/ApprovalCard'
 import { ApprovalsFilter } from '@/components/approvals/ApprovalsFilter'
 import { formatDistanceToNow } from 'date-fns'
 import { Suspense } from 'react'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default async function ApprovalsPage({ searchParams }: Props) {
+  await requirePageUser()
   const { category = 'ALL' } = await searchParams
 
   const [approvals, stats] = await Promise.all([

@@ -17,6 +17,7 @@ export default function SubmitReportPage() {
     submittedBy: '',
   })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorText, setErrorText] = useState('Something went wrong. Please try again.')
 
   if (!ventureConfig) {
     return (
@@ -37,15 +38,24 @@ export default function SubmitReportPage() {
       const res = await fetch('/api/venture-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ venture, ...form }),
+        // Signed link key (?k=…) — read at submit time, no Suspense boundary needed.
+        body: JSON.stringify({ venture, key: new URLSearchParams(window.location.search).get('k') ?? '', ...form }),
       })
       if (res.ok) {
         setStatus('success')
         setForm({ type: 'report', urgency: 'normal', title: '', body: '', submittedBy: '' })
       } else {
+        setErrorText(
+          res.status === 403
+            ? 'This submission link is not valid. Please ask the CEO office for your current link.'
+            : res.status === 429
+              ? 'Too many submissions in the last hour. Please try again later.'
+              : 'Something went wrong. Please try again.'
+        )
         setStatus('error')
       }
     } catch {
+      setErrorText('Something went wrong. Please try again.')
       setStatus('error')
     }
   }
@@ -175,7 +185,7 @@ export default function SubmitReportPage() {
 
             {status === 'error' && (
               <p style={{ color: '#dc2626', fontSize: '0.85rem', margin: 0 }}>
-                Submission failed. Please try again or contact the CEO directly on WhatsApp.
+                {errorText} You can also contact the CEO directly on WhatsApp.
               </p>
             )}
 

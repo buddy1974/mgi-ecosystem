@@ -1,11 +1,13 @@
 import { VENTURES, VENTURE_SLUGS } from '@/lib/ventures-config'
 import { getAllVentureStats } from '@/lib/ventures-data'
 import { VentureCard } from '@/components/ventures'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function VenturesPage() {
+  await requirePageUser()
   const allStats = await getAllVentureStats()
 
   return (

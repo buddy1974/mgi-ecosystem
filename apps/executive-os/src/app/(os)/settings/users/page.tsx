@@ -1,8 +1,6 @@
-import { redirect } from 'next/navigation'
-import { auth } from '@/auth'
 import { prisma } from '@mgi/database'
 import { InviteUserForm } from '@/components/settings/InviteUserForm'
-import { getActiveUser } from '@/lib/require-auth'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -20,11 +18,9 @@ const STATUS_COLORS: Record<string, string> = {
 }
 
 export default async function UsersPage() {
-  const session = await auth()
-  if (!session) redirect('/login')
   // Team management (all accounts and e-mail addresses) is restricted to super administrators.
-  const activeUser = await getActiveUser()
-  if (activeUser?.globalRole !== 'SUPER_ADMIN') {
+  const activeUser = await requirePageUser()
+  if (activeUser.globalRole !== 'SUPER_ADMIN') {
     return <p className="text-sm text-mgi-muted">Only a super administrator can view and manage team members.</p>
   }
 

@@ -8,6 +8,7 @@ import {
   VentureMessagesPreview,
   VentureApprovalsPreview,
 } from '@/components/ventures'
+import { requirePageUser } from '@/lib/require-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export default async function VentureDeepDivePage({ params }: Props) {
+  await requirePageUser()
   const { slug } = await params
   const venture = VENTURES[slug]
   if (!venture) notFound()
