@@ -100,8 +100,10 @@ describe("MGI Executive OS — isolated integration (Phase 3B §6.1)", { skip: e
     const venture = "abba"
     const before = await prisma.ventureReport.count({ where: { venture } })
     const fill = Math.max(0, VENTURE_REPORTS_PER_HOUR - await prisma.ventureReport.count({ where: { venture, createdAt: { gte: new Date(Date.now() - 3600_000) } } }))
-    await prisma.ventureReport.createMany({ data: Array.from({ length: fill }, (_, i) => ({
-      venture, ventureName: "T3B", type: "report", title: `[T3B] cap ${i}`, body: "synthetic", submittedBy: "T3B" })) })
+    // One insert at a time: createMany opens a transaction, which the Neon HTTP adapter rejects.
+    for (let i = 0; i < fill; i++) {
+      await prisma.ventureReport.create({ data: { venture, ventureName: "T3B", type: "report", title: `[T3B] cap ${i}`, body: "synthetic", submittedBy: "T3B" } })
+    }
     try {
       const r = await req("/api/venture-report", json({ venture, key: ventureLinkKey(venture, process.env.AUTH_SECRET ?? ""),
         type: "incident", urgency: "critical", title: "[T3B] over cap", body: "synthetic", submittedBy: "T3B" }))
