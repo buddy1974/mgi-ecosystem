@@ -50,7 +50,7 @@ node scripts/briefing/e2e-http.mjs   # 31 HTTP end-to-end checks against the run
 
 ## 3. Executive demonstration script
 
-On the demo deployment (or locally), signed in as an executive, open **Briefing Centre → Demo control**:
+On https://os.mgi-ventures.com (or locally), signed in with the existing executive account, open **Briefing Centre → Demo control**:
 
 1. **Reset demo data** — deletes only DEMO rows and reseeds (774 records, 2 meetings, 7 commitments).
    Old demo links from earlier runs then show "not found" — expected.
@@ -75,24 +75,26 @@ On the demo deployment (or locally), signed in as an executive, open **Briefing 
 6. Show **Finance → NMI Education**: daily bars, week/month comparisons, best titles,
    branches, regions, ageing, collections — every figure labelled DEMO.
 
-## 4. Deploying (needs Marcel's approval — not done)
+## 4. Deployment — the original MGI OS (os.mgi-ventures.com)
 
-1. Schema: additive `prisma db push` of the 7 `exec_*` tables to the target database. Take a Neon
-   restore point first. No existing table changes (verified: schema diff only adds tables).
-2. Env vars per §1 on the Vercel project. For a **demo deployment**: separate project or
-   preview with its own Neon branch, `EXEC_DEMO_MODE=1`, `TELEGRAM_DEMO_CHAT_ID` = a private test
-   chat, no `TELEGRAM_PRESIDENT_CHAT_ID`, no `EXEC_TELEGRAM_LIVE`.
-3. Push the branch; wait for READY; run `npm run briefing -- reset` against the demo DB only
-   (or Demo control → Reset).
-4. n8n: create a *Custom Auth* credential `{"headers":{"x-exec-briefing-token":"<token>"}}` (staging also needs `"x-vercel-protection-bypass"`), import the three
-   files in `docs/briefing-centre/n8n/`, set the OS host in each *Config* node, select the
-   credential, activate. They are imported inactive on purpose.
-5. Verify: `/briefing` loads; `POST /api/briefing/run {"job":"process"}` with the token → 200;
-   one alert in the demo chat; its link opens the exact record after sign-in.
+The briefing centre is part of the normal MGI Executive OS: Vercel project `mgi-ecosystem`,
+production branch `develop`, database = the existing MGI Neon database. There is no separate
+staging application or database (consolidated 24 Oct 2026).
 
-**Rollback:** redeploy the previous Vercel deployment (the new tables are unused by older code;
-leaving them is harmless). To remove the module's data: `DELETE FROM exec_* WHERE "isDemo"` or
-drop the 7 tables (separate approval). Deactivate the three n8n workflows.
+| Step | How |
+|---|---|
+| Schema | Additive only. Preview: `node scripts/briefing/prod-db.mjs run "npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script"` (from `packages/database`); review that only `exec_*` objects appear; apply the reviewed file with `prisma db execute --file`; re-run the diff with `--exit-code` → "No difference detected". Back up first: `prod-db.mjs backup <private dir>`. |
+| Env (production) | `EXEC_DEMO_MODE=1` (development phase: only DEMO rows are shown), `EXEC_OS_BASE_URL=https://os.mgi-ventures.com`, `EXEC_BRIEFING_TOKEN` (private copy: `.briefing-local/production/secrets.json`). Telegram: existing `TELEGRAM_BOT_TOKEN`; demo messages go only to `TELEGRAM_DEMO_CHAT_ID` (unset → held as DRY_RUN). |
+| Demo data | `node scripts/briefing/prod-db.mjs run "set EXEC_DEMO_MODE=1&& set TZ=UTC&& npx tsx scripts/briefing/cli.ts reset --confirm-db=<endpoint id>"` (or Demo control → Reset). Verify: `prod-db.mjs run "set TZ=UTC&& npx tsx scripts/briefing/verify-data.ts"`. Deletes/creates `isDemo` rows only; users, approvals, messages etc. are never touched. |
+| Code | Merge to `develop` → Vercel builds and serves os.mgi-ventures.com. |
+| Verify | `node scripts/briefing/smoke-production.mjs` (no-login checks), `node scripts/briefing/n8n-verify.mjs 2.9.4`, then sign in with your existing account. |
+| n8n | *Custom Auth* credential `{"headers":{"x-exec-briefing-token":"<token>"}}`; import the three files in `docs/briefing-centre/n8n/` (base URL already https://os.mgi-ventures.com), select the credential, activate. |
+
+**Going live later:** remove `EXEC_DEMO_MODE`, connect live feeds, set `TELEGRAM_PRESIDENT_CHAT_ID`
+and `EXEC_TELEGRAM_LIVE=1` only after the President agrees to the alert rules.
+
+**Rollback:** promote the previous production deployment in Vercel (older code ignores the
+`exec_*` tables). Data: Demo control → Reset, or `DELETE FROM exec_* WHERE "isDemo"`.
 
 ## 5. Operations
 
@@ -109,7 +111,6 @@ drop the 7 tables (separate approval). Deactivate the three n8n workflows.
 
 ## 6. Related documents
 
-* `STAGING.md` — hosted staging: URL, access, reproducible deploy, Telegram demo chat setup, rollback.
 * `SECURITY-n8n.md` — n8n findings (inline keys, open webhooks) and the secured approval-alert workflow.
 * n8n versions: production runs **2.9.4**; the project specification names **2.4.8**. The three
   briefing workflows and the secured approval workflow were executed successfully on both in

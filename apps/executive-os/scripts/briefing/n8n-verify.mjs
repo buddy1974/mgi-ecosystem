@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Verifies the three briefing workflows in a THROWAWAY n8n container (never the production
-// instance): import → credential → execute each against the hosted staging OS.
+// instance): import → credential → execute each against the MGI OS (os.mgi-ventures.com).
 //   node scripts/briefing/n8n-verify.mjs <n8n image tag, e.g. 2.9.4 | 2.4.8>
-// Uses <repo>/.briefing-local/staging/staging-secrets.json; secret files live in a temp dir
+// Uses <repo>/.briefing-local/production/secrets.json; secret files live in a temp dir
 // that is deleted afterwards; the container is removed at the end.
 import { execFileSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs'
@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url'
 const tag = process.argv[2] ?? '2.9.4'
 const here = dirname(fileURLToPath(import.meta.url))
 const APP = join(here, '..', '..')
-const s = JSON.parse(readFileSync(join(APP, '..', '..', '.briefing-local', 'staging', 'staging-secrets.json'), 'utf8'))
+const s = JSON.parse(readFileSync(join(APP, '..', '..', '.briefing-local', 'production', 'secrets.json'), 'utf8'))
 const name = `n8n-briefing-verify-${tag.replace(/\W/g, '')}`
 const work = mkdtempSync(join(tmpdir(), 'n8nv-'))
 const env = { ...process.env, MSYS_NO_PATHCONV: '1' }
@@ -24,7 +24,7 @@ try {
   const CRED_ID = 'MgiExecCredStg01'
   writeFileSync(join(work, 'cred.json'), JSON.stringify([{
     id: CRED_ID, name: 'MGI Exec Briefing — OS access headers', type: 'httpCustomAuth',
-    data: { json: JSON.stringify({ headers: { 'x-exec-briefing-token': s.briefingToken, 'x-vercel-protection-bypass': s.bypass } }) },
+    data: { json: JSON.stringify({ headers: { 'x-exec-briefing-token': s.briefingToken } }) },
   }]))
   const files = ['mgi-exec-cycle', 'mgi-exec-digest', 'mgi-exec-morning-brief']
   for (const f of files) {
@@ -55,7 +55,7 @@ try {
       const item = run?.data?.main?.[0]?.[0]?.json
       ok = run?.executionStatus === 'success' && !!item?.job
       body = JSON.stringify(item ?? parsed.data?.resultData?.error?.message ?? '').slice(0, 300)
-    } catch { body = out.split(s.briefingToken).join('<redacted>').split(s.bypass).join('<redacted>').slice(-400) }
+    } catch { body = out.split(s.briefingToken).join('<redacted>').slice(-400) }
     results.push({ workflow: f, ok, body })
     console.log(`${ok ? 'PASS' : 'FAIL'}  ${f} → ${body}`)
   }
@@ -63,5 +63,5 @@ try {
   try { docker('rm', '-f', name) } catch { /* already gone */ }
   rmSync(work, { recursive: true, force: true })
 }
-writeFileSync(join(APP, '..', '..', '.briefing-local', 'staging', `n8n-verify-${tag}.json`), JSON.stringify({ at: new Date().toISOString(), tag, results }, null, 2))
+writeFileSync(join(APP, '..', '..', '.briefing-local', 'production', `n8n-verify-${tag}.json`), JSON.stringify({ at: new Date().toISOString(), tag, results }, null, 2))
 process.exit(results.length === 3 && results.every((r) => r.ok) ? 0 : 1)

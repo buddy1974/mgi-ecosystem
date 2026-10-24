@@ -41,7 +41,7 @@
             {
               "id": "c1",
               "name": "osBaseUrl",
-              "value": "https://REPLACE-WITH-EXECUTIVE-OS-HOST",
+              "value": "https://os.mgi-ventures.com",
               "type": "string"
             },
             {
@@ -94,7 +94,7 @@
           "name": "MGI Exec Briefing — OS access headers"
         }
       },
-      "notes": "Routes new events, builds the morning brief once per day, delivers. Idempotent: a re-run the same day sends nothing new. Credential (Custom Auth): {\"headers\":{\"x-exec-briefing-token\":\"…\"}} — on staging also \"x-vercel-protection-bypass\"."
+      "notes": "Routes new events, builds the morning brief once per day, delivers. Idempotent: a re-run the same day sends nothing new. Credential (Custom Auth): {\"headers\":{\"x-exec-briefing-token\":\"…\"}}."
     }
   ],
   "connections": {
