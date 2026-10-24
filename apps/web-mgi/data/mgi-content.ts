@@ -9,8 +9,8 @@ export const MGI_META = {
     "Mina-Galeed Invest (MGI) Ltd est une holding qui accompagne les entreprises dans leurs cycles de développement.",
   descriptionLong:
     "Mina-Galeed Invest (MGI) Ltd accompagne les entreprises dans leurs cycles de développement avec des solutions juridiques, comptables, fiscales, digitales, RH, marketing et d'ingénierie de projets.",
-  url: 'https://www.mina-galeed.com',
-  website: 'www.mina-galeed.com',
+  url: 'https://www.mgi-ventures.com',
+  website: 'www.mgi-ventures.com',
 };
 
 export const MGI_SERVICES = [
@@ -159,8 +159,8 @@ export const MGI_CONTACT = {
   phoneTel: 'tel:+237699812513',
   email:    'contact@mina-galeed.com',
   emailLink:'mailto:contact@mina-galeed.com',
-  website:  'www.mina-galeed.com',
-  websiteUrl: 'https://www.mina-galeed.com',
+  website:  'www.mgi-ventures.com',
+  websiteUrl: 'https://www.mgi-ventures.com',
   linkedin: 'MINA-GALEED INVEST',
   linkedinUrl: 'https://www.linkedin.com/company/101651608/',
   facebook: 'MINA-GALEED INVEST',

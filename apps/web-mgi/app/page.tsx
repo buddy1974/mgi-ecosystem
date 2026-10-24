@@ -352,7 +352,7 @@ export default function Home() {
             {MGI_META.positioning}
           </p>
           <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: "1.5rem" }}>
-            https://www.mina-galeed.com
+            {MGI_META.url}
           </p>
           <div style={{ display: "flex", gap: 24, justifyContent: "center", flexWrap: "wrap" }}>
             <a

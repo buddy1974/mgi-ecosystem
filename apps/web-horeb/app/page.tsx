@@ -765,51 +765,62 @@ export default function HomePage() {
       </section>
 
       {/* ══ 10. CONTACT ════════════════════════════════════════════ */}
-      <section id="contact" style={{ ...sectionPad, background: "var(--horeb-white)" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif" }}>
+      <section id="contact" style={{ ...sectionPad, background: "var(--horeb-off-white)" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+          <p style={{ color: "var(--horeb-green)", fontSize: 11, fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: 14, fontFamily: "'Montserrat', sans-serif", textAlign: "center" }}>
             CONTACT
           </p>
-          <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 40, fontFamily: "'Montserrat', sans-serif" }}>
+          <h2 style={{ color: "var(--horeb-text-dark)", fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 16, fontFamily: "'Montserrat', sans-serif", textAlign: "center" }}>
             Contactez-nous
           </h2>
+          <p style={{ color: "var(--horeb-muted)", fontSize: 15, marginBottom: 48, fontFamily: "'Roboto', sans-serif", textAlign: "center", maxWidth: 520, margin: "0 auto 48px" }}>
+            Notre équipe est disponible pour répondre à vos commandes et questions.
+          </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20, marginBottom: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 20, marginBottom: 40 }}>
             {[
-              { icon: "📍", label: HOREB_CONTACT.address, href: undefined },
-              { icon: "📮", label: HOREB_CONTACT.bp, href: undefined },
-              { icon: "📞", label: HOREB_CONTACT.phoneFull, href: HOREB_CONTACT.phoneTel },
-              { icon: "📧", label: HOREB_CONTACT.email, href: HOREB_CONTACT.emailLink },
+              { icon: "📍", title: "Siège social", value: "Immeuble CCA, Marché Central Yaoundé", href: undefined },
+              { icon: "📮", title: "Boîte postale", value: "BP : 31750 Yaoundé, Cameroun", href: undefined },
+              { icon: "📞", title: "Téléphone", value: "+237 237 222 23 36 65", href: HOREB_CONTACT.phoneTel },
+              { icon: "📧", title: "Email", value: HOREB_CONTACT.email, href: HOREB_CONTACT.emailLink },
             ].map((item) => (
               <div
-                key={item.label}
+                key={item.title}
                 style={{
-                  background: "var(--horeb-off-white)",
-                  borderRadius: 14,
-                  padding: "1.5rem",
+                  background: "var(--horeb-white)",
+                  borderRadius: 16,
+                  padding: "28px 22px",
                   border: "1px solid rgba(0,122,61,0.1)",
+                  boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
+                  textAlign: "center",
+                  borderTop: "4px solid var(--horeb-green)",
                 }}
               >
-                <span style={{ fontSize: 24, display: "block", marginBottom: 10 }}>{item.icon}</span>
+                <div style={{ fontSize: 32, marginBottom: 12 }}>{item.icon}</div>
+                <p style={{ color: "var(--horeb-muted)", fontSize: 10, fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 10, fontFamily: "'Montserrat', sans-serif" }}>
+                  {item.title}
+                </p>
                 {item.href ? (
-                  <a href={item.href} style={{ color: "var(--horeb-green)", fontSize: 15, textDecoration: "none", fontWeight: 600, fontFamily: "'Roboto', sans-serif" }}>
-                    {item.label}
+                  <a href={item.href} style={{ color: "var(--horeb-green)", fontSize: 15, textDecoration: "none", fontWeight: 700, fontFamily: "'Roboto', sans-serif", wordBreak: "break-word" }}>
+                    {item.value}
                   </a>
                 ) : (
-                  <span style={{ color: "var(--horeb-muted)", fontSize: 14, fontFamily: "'Roboto', sans-serif", lineHeight: 1.5 }}>
-                    {item.label}
-                  </span>
+                  <p style={{ color: "var(--horeb-text-dark)", fontSize: 14, margin: 0, fontFamily: "'Roboto', sans-serif", lineHeight: 1.6, fontWeight: 500 }}>
+                    {item.value}
+                  </p>
                 )}
               </div>
             ))}
           </div>
 
-          <p style={{ color: "var(--horeb-muted)", fontSize: 14, marginBottom: 8, fontFamily: "'Roboto', sans-serif" }}>
-            Suivez-nous sur
-          </p>
-          <p style={{ color: "var(--horeb-green)", fontSize: 16, fontWeight: 700, margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
-            {HOREB_CONTACT.social}
-          </p>
+          <div style={{ textAlign: "center", paddingTop: 8 }}>
+            <p style={{ color: "var(--horeb-muted)", fontSize: 13, marginBottom: 6, fontFamily: "'Roboto', sans-serif" }}>
+              Suivez-nous sur les réseaux sociaux
+            </p>
+            <p style={{ color: "var(--horeb-green)", fontSize: 16, fontWeight: 700, margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
+              @{HOREB_CONTACT.social}
+            </p>
+          </div>
         </div>
       </section>
 
