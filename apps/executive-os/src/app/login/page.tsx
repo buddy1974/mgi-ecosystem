@@ -1,6 +1,7 @@
 import { AuthError, CredentialsSignin } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { signIn } from '@/auth'
+import { safeNextPath } from '@/lib/briefing/links'
 
 // SECURITY: this page must never offer one-click or pre-filled sign-in.
 // Guarded by tests/security.test.ts.
@@ -18,11 +19,14 @@ async function credentialsAction(formData: FormData) {
     await signIn('credentials', {
       email: formData.get('email'),
       password: formData.get('password'),
-      redirectTo: '/dashboard',
+      // Return to the deep-linked page (Telegram record links); same-site paths only.
+      redirectTo: safeNextPath(formData.get('next')) ?? '/dashboard',
     })
   } catch (error) {
-    if (error instanceof CredentialsSignin && error.code === 'rate_limited') redirect('/login?error=RateLimited')
-    if (error instanceof AuthError) redirect(`/login?error=${encodeURIComponent(error.type)}`)
+    const next = safeNextPath(formData.get('next'))
+    const keep = next ? `&next=${encodeURIComponent(next)}` : ''
+    if (error instanceof CredentialsSignin && error.code === 'rate_limited') redirect(`/login?error=RateLimited${keep}`)
+    if (error instanceof AuthError) redirect(`/login?error=${encodeURIComponent(error.type)}${keep}`)
     throw error
   }
 }
@@ -45,7 +49,8 @@ export default async function LoginPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const { error } = await searchParams
+  const { error, next } = await searchParams
+  const nextPath = safeNextPath(next)
   const errorKey = typeof error === 'string' ? error : undefined
   const errorMessage = errorKey ? (ERROR_MESSAGES[errorKey] ?? 'Sign-in failed.') : null
   const magicLinkEnabled = Boolean(process.env.EMAIL_SERVER)
@@ -74,6 +79,7 @@ export default async function LoginPage({
 
         {/* Email + password */}
         <form action={credentialsAction} className="space-y-4">
+          {nextPath && <input type="hidden" name="next" value={nextPath} />}
           <div className="space-y-2">
             <label
               htmlFor="cred-email"

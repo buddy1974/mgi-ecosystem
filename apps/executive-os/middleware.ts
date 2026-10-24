@@ -32,7 +32,11 @@ export default auth((req) => {
     if (pathname.startsWith('/api/')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-    return NextResponse.redirect(new URL('/login', req.nextUrl))
+    // Deep links (e.g. from Telegram) return to the exact page after sign-in. Only same-site
+    // paths are passed on; the login page validates again (lib/briefing/links.ts safeNextPath).
+    const login = new URL('/login', req.nextUrl)
+    if (pathname.startsWith('/briefing')) login.searchParams.set('next', pathname + req.nextUrl.search)
+    return NextResponse.redirect(login)
   }
 
   return NextResponse.next()

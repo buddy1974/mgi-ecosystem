@@ -19,3 +19,4 @@ Thumbs.db
 
 # seed archive backups (operator script output)
 seed-archive-*.json
+.briefing-local/

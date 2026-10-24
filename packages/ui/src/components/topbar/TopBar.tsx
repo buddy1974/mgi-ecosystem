@@ -8,19 +8,19 @@ function Breadcrumb() {
   const segments = pathname.split('/').filter(Boolean)
 
   return (
-    <nav className="flex items-center gap-1.5 text-sm">
-      <span className="text-mgi-label">MGI Ventures</span>
+    <nav className="flex min-w-0 items-center gap-1.5 overflow-hidden text-sm">
+      <span className="hidden text-mgi-label sm:inline">MGI Ventures</span>
       {segments.map((segment, i) => (
-        <span key={i} className="flex items-center gap-1.5">
-          <span className="text-mgi-label">/</span>
+        <span key={i} className={`flex min-w-0 items-center gap-1.5 ${i < segments.length - 1 ? 'hidden sm:flex' : ''}`}>
+          <span className="hidden text-mgi-label sm:inline">/</span>
           <span
-            className={
+            className={`truncate ${
               i === segments.length - 1
                 ? 'text-mgi-text capitalize'
                 : 'text-mgi-label capitalize'
-            }
+            }`}
           >
-            {segment.replace(/-/g, ' ')}
+            {/^[a-z0-9]{20,}$|^demo-/.test(segment) ? 'record' : segment.replace(/-/g, ' ')}
           </span>
         </span>
       ))}
@@ -28,32 +28,40 @@ function Breadcrumb() {
   )
 }
 
+const MOBILE_NAV = [
+  { href: '/briefing', label: 'Briefing' },
+  { href: '/briefing/commitments', label: 'Commitments' },
+  { href: '/briefing/finance', label: 'Finance' },
+  { href: '/dashboard', label: 'Overview' },
+  { href: '/approvals', label: 'Approvals' },
+  { href: '/operations', label: 'Ops' },
+]
+
+// The search box, camera, notification and "+ New" buttons were placeholders with no
+// behaviour (removed 2026-10-24: no control may look functional and do nothing).
 export function TopBar() {
+  const pathname = usePathname()
   return (
-    <header className="flex h-[52px] items-center gap-4 border-b border-mgi-border bg-mgi-bg px-6">
-      <div className="flex-1 min-w-0">
-        <Breadcrumb />
+    <header className="border-b border-mgi-border bg-mgi-bg">
+      <div className="flex h-[52px] items-center gap-3 px-4 md:px-6">
+        <Link href="/briefing" className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-white text-xs font-bold text-black md:hidden" aria-label="MGI Executive OS — Briefing Centre">
+          M
+        </Link>
+        <div className="min-w-0 flex-1">
+          <Breadcrumb />
+        </div>
       </div>
-
-      <button className="hidden md:flex items-center gap-2 rounded-md border border-mgi-border bg-mgi-input px-3 py-1.5 text-sm text-mgi-label hover:border-white/20 hover:text-mgi-muted transition-colors w-72">
-        <span>🔍</span>
-        <span className="flex-1 text-left truncate">Search across ecosystem…</span>
-        <kbd className="font-mono text-[10px] text-mgi-label border border-mgi-border rounded px-1">
-          ⌘K
-        </kbd>
-      </button>
-
-      <div className="flex items-center gap-3">
-        <button className="text-mgi-label hover:text-white transition-colors text-base" title="Camera">
-          📷
-        </button>
-        <button className="relative text-mgi-label hover:text-white transition-colors text-base" title="Notifications">
-          🔔
-        </button>
-        <button className="flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-gray-100 transition-colors">
-          + New
-        </button>
-      </div>
+      {/* Phones: the sidebar is hidden, so the key destinations live here. */}
+      <nav aria-label="Main" className="flex gap-1 overflow-x-auto px-3 pb-2 md:hidden">
+        {MOBILE_NAV.map((i) => {
+          const active = pathname === i.href || (i.href !== '/briefing' && pathname.startsWith(i.href + '/'))
+          return (
+            <Link key={i.href} href={i.href} className={`whitespace-nowrap rounded-md px-3 py-1.5 text-xs ${active ? 'bg-white/10 text-white' : 'text-mgi-muted'}`}>
+              {i.label}
+            </Link>
+          )
+        })}
+      </nav>
     </header>
   )
 }

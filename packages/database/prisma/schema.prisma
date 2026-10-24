@@ -533,3 +533,173 @@ model RogersRegistration {
   @@index([program, status, createdAt])
   @@map("rogers_registrations")
 }
+
+// ─── EXECUTIVE BRIEFING CENTRE ───────────────────────────────────────────────
+// Additive module (2026-10-24). Design: apps/executive-os/docs/briefing-centre/ARCHITECTURE.md
+// - Every row carries isDemo. Demo and live rows are never read together: each query
+//   filters on the deployment's briefing mode (lib/briefing/mode.ts).
+// - ExecRecord is a source-linked read model (sourceSystem + sourceRef), not a ledger:
+//   NMI / Odoo / web forms stay the system of record; MGI never posts accounting entries.
+// - Status fields are strings validated in code (no new enums: additive db push only).
+
+model ExecRecord {
+  id           String    @id @default(cuid())
+  ref          String    @unique
+  companySlug  String
+  domain       String
+  recordType   String
+  title        String
+  summary      String?   @db.Text
+  status       String
+  execStatus   String    @default("NEW") // NEW | ACKNOWLEDGED | ACTION_REQUESTED | CLOSED
+  amount       Float?
+  currency     String?
+  occurredAt   DateTime
+  dueAt        DateTime?
+  sourceSystem String
+  sourceRef    String?
+  parentRef    String?
+  data         Json?
+  isDemo       Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([isDemo, companySlug, recordType, occurredAt])
+  @@index([parentRef])
+  @@map("exec_records")
+}
+
+model ExecMeeting {
+  id          String   @id @default(cuid())
+  ref         String   @unique
+  companySlug String
+  title       String
+  heldAt      DateTime
+  chair       String
+  attendees   String[]
+  agenda      String[]
+  minutes     String   @db.Text
+  summary     String?  @db.Text
+  documents   Json?
+  isDemo      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  decisions   ExecDecision[]
+
+  @@index([isDemo, heldAt])
+  @@map("exec_meetings")
+}
+
+model ExecDecision {
+  id          String   @id @default(cuid())
+  ref         String   @unique
+  meetingId   String
+  companySlug String
+  text        String   @db.Text
+  rationale   String?  @db.Text
+  status      String   @default("OPEN") // OPEN | IMPLEMENTED | SUPERSEDED
+  isDemo      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  meeting     ExecMeeting      @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  commitments ExecCommitment[]
+
+  @@index([meetingId])
+  @@map("exec_decisions")
+}
+
+model ExecCommitment {
+  id          String    @id @default(cuid())
+  ref         String    @unique
+  companySlug String
+  decisionId  String?
+  recordId    String?   // ExecRecord that prompted the action, when there is one
+  title       String
+  deliverable String    @db.Text
+  ownerName   String
+  ownerRole   String
+  committedAt DateTime
+  dueAt       DateTime
+  progress    Int       @default(0)
+  status      String    @default("OPEN") // OPEN | IN_PROGRESS | BLOCKED | DELIVERED | ACCEPTED | CANCELLED
+  blocker     String?   @db.Text
+  delayCause  String?   // OWNER | RESOURCES | PRIORITY_CHANGE | MANAGEMENT_DEPENDENCY | EXTERNAL
+  deliveredAt DateTime?
+  evidence    String?   @db.Text
+  acceptedBy  String?
+  acceptedAt  DateTime?
+  isDemo      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  decision    ExecDecision? @relation(fields: [decisionId], references: [id], onDelete: SetNull)
+
+  @@index([isDemo, companySlug, status, dueAt])
+  @@index([decisionId])
+  @@map("exec_commitments")
+}
+
+model ExecActivity {
+  id          String   @id @default(cuid())
+  subjectType String   // RECORD | COMMITMENT | DECISION | MEETING
+  subjectId   String
+  action      String
+  fromStatus  String?
+  toStatus    String?
+  note        String?  @db.Text
+  actor       String
+  isDemo      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([subjectType, subjectId, createdAt])
+  @@map("exec_activities")
+}
+
+model ExecEvent {
+  id             String    @id @default(cuid())
+  dedupeKey      String    @unique
+  companySlug    String
+  domain         String
+  kind           String
+  priority       String    // CRITICAL | HIGH | NORMAL | LOW
+  subject        String
+  summary        String    @db.Text
+  facts          Json?
+  actionRequired String?
+  subjectType    String    // RECORD | COMMITMENT | MEETING
+  subjectId      String
+  isDemo         Boolean   @default(false)
+  occurredAt     DateTime
+  routing        String?   // ALERT | DIGEST — set when processed
+  processedAt    DateTime?
+  digestedAt     DateTime?
+  createdAt      DateTime  @default(now())
+
+  @@index([isDemo, processedAt])
+  @@index([isDemo, routing, digestedAt])
+  @@map("exec_events")
+}
+
+model ExecNotification {
+  id                String    @id @default(cuid())
+  dedupeKey         String    @unique
+  kind              String    // ALERT | DIGEST | MORNING_BRIEF
+  recipient         String    // recipient key from lib/briefing/recipients.ts — never a chat id
+  eventIds          String[]
+  text              String    @db.Text
+  linkUrl           String?
+  status            String    @default("PENDING") // PENDING | SENDING | SENT | FAILED | DRY_RUN
+  attempts          Int       @default(0)
+  nextAttemptAt     DateTime  @default(now())
+  lastError         String?
+  telegramMessageId String?
+  isDemo            Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  sentAt            DateTime?
+
+  @@index([isDemo, status, nextAttemptAt])
+  @@index([recipient, kind, createdAt])
+  @@map("exec_notifications")
+}

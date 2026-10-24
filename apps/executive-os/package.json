@@ -13,7 +13,9 @@
     "test:env:start": "node scripts/test-env/start-test-server.mjs --build",
     "test:env:seed": "tsx scripts/test-env/fixtures.ts seed",
     "test:env:cleanup": "tsx scripts/test-env/fixtures.ts cleanup",
-    "test:integration": "node scripts/test-env/run-integration.mjs"
+    "test:integration": "node scripts/test-env/run-integration.mjs",
+    "test:briefing:db": "node --import tsx --test --test-concurrency=1 tests/integration/briefing.db.ts",
+    "briefing": "tsx scripts/briefing/cli.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.1",

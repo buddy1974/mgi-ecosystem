@@ -22,6 +22,7 @@ interface NavItem {
 }
 
 const COMMAND_NAV: NavItem[] = [
+  { href: '/briefing',   label: 'Briefing Centre',    icon: '📨' },
   { href: '/priority',   label: 'Priority Tracker',   icon: '🎯' },
   { href: '/dashboard',  label: 'Executive Overview', icon: '🏠' },
   { href: '/operations', label: 'Ops Bridge',         icon: '📡' },
@@ -113,7 +114,7 @@ export function Sidebar({ unreadMessages, pendingApprovals, pendingBookings, sch
 
   return (
     <aside
-      className={`flex flex-col bg-mgi-sidebar border-r border-mgi-border transition-all duration-300 ${
+      className={`hidden md:flex flex-col bg-mgi-sidebar border-r border-mgi-border transition-all duration-300 ${
         collapsed ? 'w-14' : 'w-[196px]'
       } min-h-screen`}
     >

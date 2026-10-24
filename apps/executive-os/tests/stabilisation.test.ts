@@ -132,9 +132,13 @@ test('every server-rendered (os) page that reads data calls requirePageUser()', 
     const s = readFileSync(f, 'utf8')
     if (/^['"]use client['"]/.test(s.trimStart())) return false
     const readsData = /@mgi\/database|@\/lib\/[a-z-]+-data|getDashboardData|prisma\./.test(s)
-    return readsData && !/await requirePageUser\(\)/.test(s)
+    // requireBriefingPage() is the briefing-centre wrapper; checked below to call requirePageUser() first.
+    return readsData && !/await (requirePageUser|requireBriefingPage)\(\)/.test(s)
   }).map((f) => relative(APP, f))
   assert.deepEqual(missing, [])
+  const wrapper = read('src/lib/briefing/access.ts')
+  const body = wrapper.slice(wrapper.indexOf('export async function requireBriefingPage'))
+  assert.match(body.split('\n').slice(0, 3).join('\n'), /const user = await requirePageUser\(\)/)
 })
 
 // ── Security headers ─────────────────────────────────────────────────────────

@@ -6,6 +6,8 @@ const config: Config = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    // Shared shell (Sidebar, TopBar) — its classes were missing from the build before.
+    '../../packages/ui/src/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {

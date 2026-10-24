@@ -34,4 +34,11 @@ export type {
   BookingStatus,
   RogersRegistration,
   VentureReport,
+  ExecRecord,
+  ExecMeeting,
+  ExecDecision,
+  ExecCommitment,
+  ExecActivity,
+  ExecEvent,
+  ExecNotification,
 } from '@prisma/client'

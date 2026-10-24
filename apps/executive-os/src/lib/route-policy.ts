@@ -16,6 +16,8 @@ const PUBLIC_API_EXACT = [
   '/api/venture-report',          // public manager submission — Zod validated
   '/api/users/accept-invite',     // verified by single-use invite token
   '/api/social/posts/publish-due', // verified by x-cron-secret header
+  '/api/briefing/ingest',          // verified by x-exec-briefing-token (fails closed)
+  '/api/briefing/run',             // machine token, or SUPER_ADMIN session checked in the route
 ] as const
 
 export function classifyRoute(pathname: string): RouteAccess {
