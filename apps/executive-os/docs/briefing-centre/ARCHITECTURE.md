@@ -120,7 +120,7 @@ backslash, CR/LF, `/api/`, `/login`).
 Demo separation is enforced in five places: deployment mode (`mode.ts`); every query filters
 `isDemo = mode`; ingest refuses the other mode; `DEMO-` reference prefix; DEMO banner/tags in
 every page and `🧪 DEMO` header + footer in every message. Demo reset deletes `isDemo = true`
-rows only. Recommended: run the demo as a **separate deployment with its own database**.
+rows only. During development the MGI OS itself (os.mgi-ventures.com, existing database) runs with `EXEC_DEMO_MODE=1`; going live = removing that variable once real feeds exist. No separate demo deployment or database is used.
 
 ## 6. Access control (`lib/briefing/access.ts`)
 

@@ -2,7 +2,7 @@ import type { BriefingMode } from './types'
 
 // One deployment runs in exactly one briefing mode. Demo and live rows are never read
 // together: every briefing query filters on isDemo === (mode === 'demo').
-// Demo mode is meant for a separate, isolated deployment + database (see RUNBOOK.md).
+// During development the MGI OS runs in demo mode on its normal database (see RUNBOOK.md §4).
 export function getBriefingMode(env: NodeJS.ProcessEnv = process.env): BriefingMode {
   return env.EXEC_DEMO_MODE === '1' ? 'demo' : 'live'
 }

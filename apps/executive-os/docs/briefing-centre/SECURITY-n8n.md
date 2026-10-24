@@ -63,3 +63,24 @@ mission and were not changed.
    `N8N_SECRET` = the value from step 3, and deploy a build that contains this branch's
    `src/lib/n8n.ts` (header instead of query).
 6. Delete or archive the old workflow once the new one works; the old key is already revoked.
+
+## 5. Applied on 24 October 2026 (consolidation mission, owner-approved)
+
+Done with `scripts/briefing/n8n-secure-approval.mjs apply` through the local n8n API
+(only workflow `oLXVXlcLpslPDj4b` was changed):
+
+* The Resend key was moved out of the node into the encrypted credential
+  "Resend API key (MGI approval alert)"; no key remains inline (`inlineKeyRemaining: false`).
+* Webhook now requires `x-n8n-key` (credential "MGI OS → n8n webhook key (x-n8n-key)", new
+  random value kept in `.briefing-local/production/secrets.json`). Same path, same recipient,
+  still active.
+* Verified from the internet: no key → **403**, wrong key → **403**; correct key with invalid
+  input → stopped at "Validate & escape" (execution 155559), Resend step never ran.
+* Previous definition backed up privately (`.briefing-local/production/n8n-oLXVXlcLpslPDj4b-before.json`,
+  contains the old key — delete it after the rotation below).
+
+**Still open (needs Marcel's Resend account):** the key itself was exposed before this change and
+must be **rotated**: Resend → API Keys → create a sending-only key → n8n → Credentials →
+"Resend API key (MGI approval alert)" → value `Bearer <new key>` → save → revoke the old key.
+The OS does not call this webhook yet (no `N8N_SECRET` in production); setting `N8N_SECRET` to the
+webhook key turns approval e-mails on.
