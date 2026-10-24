@@ -24,7 +24,7 @@ type Line = { productRef: string; title: string; qty: number; unitPrice?: number
 function LinesTable({ lines }: { lines: Line[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
+      <table className="w-full text-sm text-mgi-text">
         <thead><tr className="text-left text-[10px] uppercase tracking-widest text-mgi-label"><th className="py-1">Title</th><th className="py-1 text-right">Qty</th>{lines[0]?.unitPrice !== undefined && <><th className="py-1 text-right">Unit</th><th className="py-1 text-right">Total</th></>}</tr></thead>
         <tbody>
           {lines.map((l) => (
@@ -66,7 +66,7 @@ async function CustomerStatement({ rec, isDemo }: { rec: ExecRecord; isDemo: boo
       <KV rows={[['Balance outstanding', xaf(total)], ['Of which overdue', <span key="o" className={overdue ? 'text-status-risk' : ''}>{xaf(overdue)}</span>], ['Credit limit', credit ? xaf(credit) : '—'], ['Invoices', String(balances.length)]]} />
       {balances.length === 0 ? <div className="mt-3"><Empty>No invoices for this customer.</Empty></div> : (
         <div className="mt-3 overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm text-mgi-text">
             <thead><tr className="text-left text-[10px] uppercase tracking-widest text-mgi-label"><th className="py-1">Invoice</th><th className="py-1">Due</th><th className="py-1 text-right">Amount</th><th className="py-1 text-right">Paid</th><th className="py-1 text-right">Outstanding</th></tr></thead>
             <tbody>
               {balances.slice(-25).map((b) => (

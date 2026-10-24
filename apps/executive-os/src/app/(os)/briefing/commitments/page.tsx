@@ -54,7 +54,7 @@ export default async function CommitmentsPage() {
       <Card title="Delivery record by owner">
         {stats.length === 0 ? <Empty>No commitments recorded yet.</Empty> : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
+            <table className="w-full min-w-[640px] text-sm text-mgi-text">
               <thead>
                 <tr className="text-left text-[10px] uppercase tracking-widest text-mgi-label">
                   <th className="py-1">Owner</th><th className="py-1">Company</th><th className="py-1 text-right">Total</th><th className="py-1 text-right">On time</th>

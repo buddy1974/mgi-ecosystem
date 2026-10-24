@@ -50,8 +50,8 @@ export default async function CompanyFinance({ params }: { params: Promise<{ com
       <Card title="Daily sales — last 14 days">
         <div className="flex h-36 items-end gap-1" role="img" aria-label="Daily sales bar chart">
           {m.daily.map((d) => (
-            <div key={d.date} className="flex flex-1 flex-col items-center justify-end gap-1" title={`${d.date}: ${xaf(d.amount)}`}>
-              <div className="w-full rounded-t bg-status-build" style={{ height: `${Math.round((d.amount / max) * 100)}%`, minHeight: d.amount ? 2 : 0 }} />
+            <div key={d.date} className="flex h-full flex-1 flex-col items-center justify-end gap-1" title={`${d.date}: ${xaf(d.amount)}`}>
+              <div className="w-full flex-1 flex flex-col justify-end"><div className="w-full rounded-t bg-status-build" style={{ height: `${Math.round((d.amount / max) * 100)}%`, minHeight: d.amount ? 2 : 0 }} /></div>
               <span className="text-[9px] text-mgi-label">{d.date.slice(8)}</span>
             </div>
           ))}
@@ -64,24 +64,24 @@ export default async function CompanyFinance({ params }: { params: Promise<{ com
       <div className="grid gap-4 md:grid-cols-2">
         <Card title="Best-selling titles (30 days)">
           {m.bestTitles.length === 0 ? <Empty>No sales.</Empty> : (
-            <table className="w-full text-sm"><tbody>{m.bestTitles.map((t, i) => (
+            <table className="w-full text-sm text-mgi-text"><tbody>{m.bestTitles.map((t, i) => (
               <tr key={t.title} className="border-t border-mgi-border first:border-0"><td className="py-1 text-mgi-label">{i + 1}</td><td className="py-1 text-mgi-text">{t.title}</td><td className="py-1 text-right text-mgi-muted">{t.qty} copies</td><td className="py-1 text-right">{xaf(t.amount)}</td></tr>
             ))}</tbody></table>
           )}
         </Card>
         <Card title="Sales by branch (7 days vs previous 7)">
-          <table className="w-full text-sm"><tbody>{m.byBranch.map((b) => (
+          <table className="w-full text-sm text-mgi-text"><tbody>{m.byBranch.map((b) => (
             <tr key={b.branch} className="border-t border-mgi-border first:border-0"><td className="py-1 text-mgi-text">{b.branch}</td><td className="py-1 text-right">{xaf(b.last7)}</td><td className={`py-1 text-right ${tone(b.changePct)}`}>{pct(b.changePct)}</td></tr>
           ))}</tbody></table>
           <p className="mt-2 text-[11px] text-mgi-label">Includes distributor orders booked at the branch; the alert rule looks at shop (POS) sales only.</p>
         </Card>
         <Card title="Sales by region (30 days)">
-          <table className="w-full text-sm"><tbody>{m.byRegion.map((r) => (
+          <table className="w-full text-sm text-mgi-text"><tbody>{m.byRegion.map((r) => (
             <tr key={r.region} className="border-t border-mgi-border first:border-0"><td className="py-1 text-mgi-text">{r.region}</td><td className="py-1 text-right">{xaf(r.last30)}</td></tr>
           ))}</tbody></table>
         </Card>
         <Card title="Receivables & collections">
-          <table className="w-full text-sm"><tbody>
+          <table className="w-full text-sm text-mgi-text"><tbody>
             <tr><td className="py-1 text-mgi-muted">Outstanding (all)</td><td className="py-1 text-right">{xaf(m.receivables.outstanding)}</td></tr>
             {m.receivables.aging.map((a) => <tr key={a.bucket} className="border-t border-mgi-border"><td className="py-1 text-mgi-muted">Overdue {a.bucket}</td><td className={`py-1 text-right ${a.amount ? 'text-status-attention' : ''}`}>{xaf(a.amount)}</td></tr>)}
             <tr className="border-t border-mgi-border"><td className="py-1 text-mgi-muted">Collected, 7 days</td><td className="py-1 text-right">{xaf(m.collections.last7)}</td></tr>
