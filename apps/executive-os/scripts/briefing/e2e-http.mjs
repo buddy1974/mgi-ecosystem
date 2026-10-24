@@ -9,8 +9,17 @@ import { fileURLToPath } from 'node:url'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(here, '..', '..', '..', '..')
-const cfg = JSON.parse(readFileSync(join(ROOT, '.briefing-local', 'config.json'), 'utf8'))
-const BASE = `http://127.0.0.1:${cfg.appPort}`
+// --staging: hosted staging (Vercel SSO passed with the automation-bypass header; Telegram
+// evidence read from the outbox page). Default: the local server with the mock Telegram.
+const STAGING = process.argv.includes('--staging')
+const local = JSON.parse(readFileSync(join(ROOT, '.briefing-local', 'config.json'), 'utf8'))
+const stg = STAGING ? JSON.parse(readFileSync(join(ROOT, '.briefing-local', 'staging', 'staging-secrets.json'), 'utf8')) : null
+const cfg = STAGING
+  ? { briefingToken: stg.briefingToken, presidentPassword: stg.presidentPassword, staffPassword: stg.staffPassword }
+  : local
+const BASE = STAGING ? stg.url : `http://127.0.0.1:${local.appPort}`
+const LINK_RE = STAGING ? /href="(https:\/\/mgi-exos-preview\.vercel\.app\/briefing\/records\/[^"]+)"/ : /href="(http:\/\/localhost:\d+\/briefing\/records\/[^"]+)"/
+const extra = STAGING ? { 'x-vercel-protection-bypass': stg.bypass } : {}
 const INBOX = join(ROOT, '.briefing-local', 'telegram-inbox.jsonl')
 const results = []
 const check = (name, ok, detail = '') => {
@@ -30,7 +39,7 @@ class Jar {
   header() { return [...this.cookies].map(([k, v]) => `${k}=${v}`).join('; ') }
 }
 async function req(jar, path, init = {}) {
-  const res = await fetch(BASE + path, { ...init, redirect: 'manual', headers: { ...(init.headers ?? {}), ...(jar ? { cookie: jar.header() } : {}) } })
+  const res = await fetch(BASE + path, { ...init, redirect: 'manual', headers: { ...extra, ...(init.headers ?? {}), ...(jar ? { cookie: jar.header() } : {}) } })
   jar?.store(res)
   return res
 }
@@ -57,16 +66,16 @@ async function signIn(email, password, next) {
   const res = await req(jar, loginPath, { method: 'POST', body: fd, headers: { origin: BASE } })
   return { jar, location: res.headers.get('location') ?? res.headers.get('x-action-redirect') ?? '' }
 }
-const token = { 'x-exec-briefing-token': cfg.briefingToken, 'content-type': 'application/json' }
+const token = { ...extra, 'x-exec-briefing-token': cfg.briefingToken, 'content-type': 'application/json' }
 const job = (j) => fetch(`${BASE}/api/briefing/run`, { method: 'POST', headers: token, body: JSON.stringify({ job: j }) }).then((r) => r.json())
 const inbox = () => (existsSync(INBOX) ? readFileSync(INBOX, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [])
 
-writeFileSync(INBOX, '')
+if (!STAGING) writeFileSync(INBOX, '')
 
 // 1. Unauthenticated access and machine-endpoint guards
 let r = await req(null, '/briefing/records/demo-nmi-inv-0412')
 check('unauthenticated deep link redirects to login and keeps the target', r.status === 307 && r.headers.get('location')?.includes('/login?next=%2Fbriefing%2Frecords%2Fdemo-nmi-inv-0412'))
-r = await req(null, '/api/briefing/run', { method: 'POST', body: '{}' })
+r = await req(null, '/api/briefing/run', { method: 'POST', body: '{}' }) // bypass header only: no app auth
 check('jobs API without token or session → 401', r.status === 401)
 r = await fetch(`${BASE}/api/briefing/ingest`, { method: 'POST', headers: { ...token, 'x-exec-briefing-token': 'wrong'.repeat(10) }, body: '{}' })
 check('ingest with wrong token → 401', r.status === 401)
@@ -93,17 +102,29 @@ check('live payload refused by the demo deployment → 409', r.status === 409)
 
 // 3. Schedules (what n8n calls)
 const cyc = await job('cycle')
-check('cycle job routes and delivers', cyc.process?.processed >= 1 && cyc.deliver?.sent >= 1, JSON.stringify(cyc.deliver))
-const msgs = inbox()
-const mine = msgs.find((m) => m.text.includes('E2E: suspected piracy'))
-check('Telegram (mock) received the alert, demo chat only', mine && msgs.every((m) => m.chat_id === '-1000000000000'))
-const link = mine?.text.match(/href="(http:\/\/localhost:\d+\/briefing\/records\/[^"]+)"/)?.[1]
+// Staging without TELEGRAM_* configured stores messages as DRY_RUN; both count as processed.
+const delivered = (d) => (d?.sent ?? 0) + (d?.dryRun ?? 0)
+check('cycle job routes and delivers', cyc.process?.processed >= 1 && delivered(cyc.deliver) >= 1, JSON.stringify(cyc.deliver))
+let mine
+if (STAGING) {
+  // No mock inbox remotely: read the generated message from the outbox as the executive.
+  const ex = await signIn('demo.president@example.test', cfg.presidentPassword)
+  const outbox = await (await follow(ex.jar, '/briefing/notifications')).text()
+  const block = outbox.split('Preview message').find((b) => b.includes('E2E: suspected piracy'))
+  mine = block ? { text: block } : undefined
+  check('outbox holds the alert for the demo route', !!mine, cyc.deliver?.sent ? 'sent to Telegram' : 'dry run (Telegram not configured)')
+} else {
+  const msgs = inbox()
+  mine = msgs.find((m) => m.text.includes('E2E: suspected piracy'))
+  check('Telegram (mock) received the alert, demo chat only', mine && msgs.every((m) => m.chat_id === '-1000000000000'))
+}
+const link = mine?.text.match(LINK_RE)?.[1]
 check('alert carries the exact record link', link?.endsWith(`/briefing/records/${i1.recordId}`), link)
-check('alert is labelled DEMO', mine?.text.includes('🧪 <b>DEMO</b>'))
+check('alert is labelled DEMO', STAGING ? mine?.text.includes('DEMO') : mine?.text.includes('🧪 <b>DEMO</b>'))
 const again = await job('cycle')
-check('second cycle sends nothing new for the same fact', again.deliver?.sent === 0 && inbox().filter((m) => m.text.includes('E2E: suspected piracy')).length === 1)
+check('second cycle sends nothing new for the same fact', delivered(again.deliver) === 0 && (STAGING || inbox().filter((m) => m.text.includes('E2E: suspected piracy')).length === 1))
 const morning = await job('morning')
-check('morning brief generated and delivered', morning.morning?.created === 1 && morning.deliver?.sent >= 1, JSON.stringify(morning.deliver))
+check('morning brief generated and delivered', morning.morning?.created === 1 && delivered(morning.deliver) >= 1, JSON.stringify(morning.deliver))
 check('second morning run is deduplicated', (await job('morning')).morning?.created === 0)
 
 // 4. The President follows the link: login → exact record
@@ -158,5 +179,5 @@ check('login renders no off-site next field', !/name="next"/.test(html))
 
 const failed = results.filter((x) => !x.ok)
 console.log(`\n${results.length - failed.length}/${results.length} passed`)
-writeFileSync(join(ROOT, '.briefing-local', 'e2e-results.json'), JSON.stringify({ at: new Date().toISOString(), results }, null, 2))
+writeFileSync(join(ROOT, '.briefing-local', STAGING ? 'staging/e2e-results.json' : 'e2e-results.json'), JSON.stringify({ at: new Date().toISOString(), target: BASE, results }, null, 2))
 process.exit(failed.length ? 1 : 0)

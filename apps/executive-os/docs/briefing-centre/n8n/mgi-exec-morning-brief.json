@@ -24,6 +24,17 @@
       ]
     },
     {
+      "parameters": {},
+      "id": "a0",
+      "name": "Run now (manual)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
       "parameters": {
         "assignments": {
           "assignments": [
@@ -103,6 +114,17 @@
         [
           {
             "node": "Run briefing job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run now (manual)": {
+      "main": [
+        [
+          {
+            "node": "Config",
             "type": "main",
             "index": 0
           }
