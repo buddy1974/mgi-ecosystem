@@ -4,6 +4,8 @@ import { modeFlag } from './mode'
 import { runScan } from './scan'
 
 // Scheduled jobs (n8n) — each is idempotent and safe to run concurrently.
+// Delivery always uses a fresh clock: notifications enqueued earlier in the same run are
+// stamped after the job started and must still go out in this run, not the next one.
 export const JOBS = ['scan', 'process', 'deliver', 'digest', 'morning', 'cycle'] as const
 export type Job = (typeof JOBS)[number]
 
@@ -12,21 +14,21 @@ export async function runJob(job: Job, now = new Date()) {
   switch (job) {
     case 'scan': return { job, mode: isDemo ? 'demo' : 'live', scan: await runScan(isDemo, now) }
     case 'process': return { job, process: await processEvents(isDemo, now) }
-    case 'deliver': return { job, deliver: await deliverPending(isDemo, now) }
+    case 'deliver': return { job, deliver: await deliverPending(isDemo, new Date()) }
     case 'digest': {
       const digest = await runDigest(isDemo, now)
-      return { job, digest, deliver: await deliverPending(isDemo, now) }
+      return { job, digest, deliver: await deliverPending(isDemo, new Date()) }
     }
     case 'morning': {
       // Route anything new first so the brief and the alerts agree.
       const process = await processEvents(isDemo, now)
       const { created } = await enqueueMorningBrief(isDemo, now)
-      return { job, process, morning: { created }, deliver: await deliverPending(isDemo, now) }
+      return { job, process, morning: { created }, deliver: await deliverPending(isDemo, new Date()) }
     }
     case 'cycle': {
       const scan = await runScan(isDemo, now)
       const process = await processEvents(isDemo, now)
-      return { job, scan, process, deliver: await deliverPending(isDemo, now) }
+      return { job, scan, process, deliver: await deliverPending(isDemo, new Date()) }
     }
   }
 }

@@ -44,6 +44,9 @@ export async function emitEvent(input: EmitInput): Promise<EmitResult> {
   // Demo and live keys live in separate namespaces so a demo replay can never suppress
   // (or be suppressed by) a live event with the same business key.
   const dedupeKey = `${input.isDemo ? 'demo' : 'live'}:${input.dedupeKey}`
+  // Cheap pre-check keeps routine repeats out of the error log; the unique index still
+  // decides under concurrency.
+  if (await prisma.execEvent.findUnique({ where: { dedupeKey }, select: { id: true } })) return { created: false, reason: 'duplicate' }
   try {
     const row = await prisma.execEvent.create({
       data: {

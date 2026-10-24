@@ -1,0 +1,120 @@
+{
+  "id": "MgiExecCycle0001",
+  "name": "MGI Exec — Scan + alerts (every 15 min)",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/15 * * * *"
+            }
+          ]
+        }
+      },
+      "id": "a1",
+      "name": "Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1",
+              "name": "osBaseUrl",
+              "value": "https://REPLACE-WITH-EXECUTIVE-OS-HOST",
+              "type": "string"
+            },
+            {
+              "id": "c2",
+              "name": "job",
+              "value": "cycle",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a2",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "notes": "Only place to change the OS host. The token lives in the Header Auth credential, never here."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.osBaseUrl }}/api/briefing/run",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ job: $json.job }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "a3",
+      "name": "Run briefing job",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE",
+          "name": "MGI Exec Briefing token (x-exec-briefing-token)"
+        }
+      },
+      "notes": "Scans for overdue commitments/receivables, sales swings, low stock, incomplete registrations; routes events; delivers due alerts and retries."
+    }
+  ],
+  "connections": {
+    "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Run briefing job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Africa/Douala",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none"
+  },
+  "tags": []
+}

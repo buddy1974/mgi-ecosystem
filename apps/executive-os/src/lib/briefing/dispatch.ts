@@ -25,10 +25,12 @@ function linkLabel(ev: Pick<ExecEvent, 'subjectType'>): string {
 }
 
 async function enqueue(n: { dedupeKey: string; kind: string; recipient: string; eventIds: string[]; text: string; linkUrl: string | null; isDemo: boolean; status?: string; lastError?: string }): Promise<boolean> {
+  const dedupeKey = `${n.isDemo ? 'demo' : 'live'}:${n.dedupeKey}`
+  if (await prisma.execNotification.findUnique({ where: { dedupeKey }, select: { id: true } })) return false
   try {
     await prisma.execNotification.create({
       data: {
-        dedupeKey: `${n.isDemo ? 'demo' : 'live'}:${n.dedupeKey}`,
+        dedupeKey,
         kind: n.kind, recipient: n.recipient, eventIds: n.eventIds, text: n.text, linkUrl: n.linkUrl,
         isDemo: n.isDemo, status: n.status ?? 'PENDING', lastError: n.lastError ?? null,
       },

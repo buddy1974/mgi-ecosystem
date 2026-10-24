@@ -325,3 +325,25 @@ test('demo stories produce exactly the intended signals', () => {
   assert.equal(full.receivables.overdue, 2_747_200 + 870_000 + (1_438_000 - 400_000))
   assert.ok(full.bestTitles.length === 5)
 })
+
+// ── n8n workflows (docs/briefing-centre/n8n) ─────────────────────────────────
+test('n8n workflows are small, carry no secrets and only call the briefing run endpoint', async () => {
+  const { readdirSync, readFileSync } = await import('node:fs')
+  const { join } = await import('node:path')
+  const dir = join(__dirname, '..', 'docs', 'briefing-centre', 'n8n')
+  const files = readdirSync(dir).filter((f) => f.endsWith('.json'))
+  assert.equal(files.length, 3)
+  for (const f of files) {
+    const raw = readFileSync(join(dir, f), 'utf8')
+    const w = JSON.parse(raw)
+    assert.ok(w.nodes.length <= 4, `${f}: small workflow`)
+    assert.equal(w.active, false, `${f}: imported inactive, activated by a human`)
+    assert.equal(w.settings.timezone, 'Africa/Douala')
+    const http = w.nodes.filter((n: { type: string }) => n.type === 'n8n-nodes-base.httpRequest')
+    assert.equal(http.length, 1)
+    assert.match(http[0].parameters.url, /\/api\/briefing\/run$/)
+    assert.equal(http[0].parameters.genericAuthType, 'httpHeaderAuth', `${f}: token via credential`)
+    assert.ok(!/x-exec-briefing-token"\s*:\s*"[^"]/.test(raw) && !/headerParameters/.test(raw), `${f}: no inline header`)
+    assert.ok(!/(re_[A-Za-z0-9]{10,}|bot\d+:|Bearer )/.test(raw), `${f}: no secrets`)
+  }
+})

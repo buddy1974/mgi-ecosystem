@@ -128,8 +128,8 @@ export default async function BriefingOverview() {
               {events.map((e) => (
                 <Row key={e.id} href={evLink(e)}>
                   <PriorityBadge priority={e.priority} />
-                  <span className="flex-1">{e.subject}</span>
-                  <span className="text-[11px] text-mgi-label">{e.routing ?? 'queued'} · {fmtDateTime(e.createdAt)}</span>
+                  <span className="min-w-0 flex-1">{e.subject}</span>
+                  <span className="w-full pl-1 text-[11px] text-mgi-label">{e.routing === 'ALERT' ? 'sent as alert' : e.routing === 'DIGEST' ? 'in digest' : 'queued'} · {fmtDateTime(e.createdAt)}</span>
                 </Row>
               ))}
             </ul>

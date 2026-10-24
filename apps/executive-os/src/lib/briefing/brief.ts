@@ -117,6 +117,7 @@ export async function enqueueMorningBrief(isDemo: boolean, now = new Date(), env
   let created = 0
   for (const r of RECIPIENTS.filter((x) => x.morningBrief)) {
     const key = `${isDemo ? 'demo' : 'live'}:morning:${r.key}:${doualaDate(now)}${replay ? `:replay-${now.getTime()}` : ''}`
+    if (await prisma.execNotification.findUnique({ where: { dedupeKey: key }, select: { id: true } })) continue
     try {
       await prisma.execNotification.create({
         data: { dedupeKey: key, kind: 'MORNING_BRIEF', recipient: r.key, eventIds: digestEventIds, text, linkUrl: absoluteLink('/briefing', env), isDemo },
