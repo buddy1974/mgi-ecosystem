@@ -2,6 +2,10 @@ const N8N_BASE_URL = process.env.N8N_BASE_URL ?? 'https://n8n.maxpromo.digital'
 // N8N_SECRET must be set via environment variable — no fallback for security.
 // Required in: Vercel env vars (executive-os), .env.local for local dev.
 // NOTE: rotate the secret in n8n if the previous value appeared in Git history.
+// Sent as the x-n8n-key header (checked by the webhook's Header Auth credential), never in
+// the URL: query strings end up in proxy and n8n access logs. See
+// docs/briefing-centre/SECURITY-n8n.md.
+export const N8N_KEY_HEADER = 'x-n8n-key'
 const N8N_SECRET = process.env.N8N_SECRET
 
 export async function triggerN8nWorkflow(
@@ -14,10 +18,10 @@ export async function triggerN8nWorkflow(
   }
   try {
     const res = await fetch(
-      `${N8N_BASE_URL}/webhook/${slug}?key=${encodeURIComponent(N8N_SECRET)}`,
+      `${N8N_BASE_URL}/webhook/${encodeURIComponent(slug)}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', [N8N_KEY_HEADER]: N8N_SECRET },
         body: JSON.stringify(data),
       }
     )

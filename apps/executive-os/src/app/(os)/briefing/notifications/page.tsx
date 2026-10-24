@@ -4,7 +4,7 @@ import { requireBriefingPage } from '@/lib/briefing/access'
 import { getBriefingMode, modeFlag } from '@/lib/briefing/mode'
 import { getRecipient, RECIPIENTS } from '@/lib/briefing/recipients'
 import { resolveTarget } from '@/lib/briefing/telegram-transport'
-import { retryNotificationForm, runJobForm } from '../actions'
+import { retryNotificationForm, runJobForm, telegramTestForm } from '../actions'
 import { BriefingNav, Card, DemoTag, Empty, Flash, ModeBanner, PageHeader, StatusBadge, TelegramPreview, fmtDateTime } from '@/components/briefing/ui'
 
 export const dynamic = 'force-dynamic'
@@ -43,6 +43,12 @@ export default async function NotificationsPage({ searchParams }: Props) {
             )
           })}
         </ul>
+        {isDemo && (
+          <form action={telegramTestForm} className="mt-3">
+            <button className="rounded-md border border-amber-500/50 px-3 py-1.5 text-xs text-amber-200 hover:bg-white/5">Send Telegram connectivity test to the demo chat</button>
+            <span className="ml-2 text-[11px] text-mgi-label">Fixed text, no business data; demo chat only.</span>
+          </form>
+        )}
         <form action={runJobForm} className="mt-3 flex flex-wrap gap-2">
           <input type="hidden" name="back" value="/briefing/notifications" />
           {(['process', 'deliver', 'digest'] as const).map((j) => (

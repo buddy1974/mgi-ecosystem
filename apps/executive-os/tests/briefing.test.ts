@@ -342,7 +342,7 @@ test('n8n workflows are small, carry no secrets and only call the briefing run e
     const http = w.nodes.filter((n: { type: string }) => n.type === 'n8n-nodes-base.httpRequest')
     assert.equal(http.length, 1)
     assert.match(http[0].parameters.url, /\/api\/briefing\/run$/)
-    assert.equal(http[0].parameters.genericAuthType, 'httpHeaderAuth', `${f}: token via credential`)
+    assert.equal(http[0].parameters.genericAuthType, 'httpCustomAuth', `${f}: headers via credential`)
     assert.ok(!/x-exec-briefing-token"\s*:\s*"[^"]/.test(raw) && !/headerParameters/.test(raw), `${f}: no inline header`)
     assert.ok(!/(re_[A-Za-z0-9]{10,}|bot\d+:|Bearer )/.test(raw), `${f}: no secrets`)
   }

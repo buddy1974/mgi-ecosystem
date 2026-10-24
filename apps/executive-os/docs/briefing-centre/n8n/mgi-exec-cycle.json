@@ -58,7 +58,7 @@
         "method": "POST",
         "url": "={{ $json.osBaseUrl }}/api/briefing/run",
         "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "genericAuthType": "httpCustomAuth",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={{ JSON.stringify({ job: $json.job }) }}",
@@ -78,12 +78,12 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "httpHeaderAuth": {
+        "httpCustomAuth": {
           "id": "REPLACE",
-          "name": "MGI Exec Briefing token (x-exec-briefing-token)"
+          "name": "MGI Exec Briefing — OS access headers"
         }
       },
-      "notes": "Scans for overdue commitments/receivables, sales swings, low stock, incomplete registrations; routes events; delivers due alerts and retries."
+      "notes": "Scans for overdue commitments/receivables, sales swings, low stock, incomplete registrations; routes events; delivers due alerts and retries. Credential (Custom Auth): {\"headers\":{\"x-exec-briefing-token\":\"…\"}} — on staging also \"x-vercel-protection-bypass\"."
     }
   ],
   "connections": {

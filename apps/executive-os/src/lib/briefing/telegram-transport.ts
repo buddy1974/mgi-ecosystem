@@ -90,3 +90,18 @@ export async function sendTelegram(
   // from chat) will not fix themselves and are surfaced immediately.
   return { ok: false, retryable: res.status >= 500, error: description }
 }
+
+/** Bot identity check (getMe). Returns the bot username or a redacted error. */
+export async function telegramBotIdentity(
+  target: Extract<Target, { kind: 'send' }>,
+  fetchImpl: typeof fetch = fetch,
+): Promise<{ ok: true; username: string } | { ok: false; error: string }> {
+  try {
+    const res = await fetchImpl(`${target.apiBase}/bot${target.token}/getMe`, { signal: AbortSignal.timeout(10_000) })
+    const json = (await res.json().catch(() => ({}))) as { ok?: boolean; result?: { username?: string }; description?: string }
+    if (json.ok && json.result?.username) return { ok: true, username: json.result.username }
+    return { ok: false, error: redact(`HTTP ${res.status}: ${json.description ?? 'no description'}`, target.token) }
+  } catch (err) {
+    return { ok: false, error: redact(`network: ${String(err)}`, target.token) }
+  }
+}

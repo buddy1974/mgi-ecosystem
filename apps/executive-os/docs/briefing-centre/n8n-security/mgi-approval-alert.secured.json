@@ -1,0 +1,132 @@
+{
+  "id": "MgiApprovalAlrt2",
+  "name": "MGI — New Approval Alert (secured)",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mgi-approval-alert",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "s1",
+      "name": "Webhook (x-n8n-key)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "mgi-approval-alert-secured",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE",
+          "name": "MGI OS → n8n webhook key (x-n8n-key)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validates and escapes webhook input before it reaches an e-mail (was: raw values in HTML).\nconst b = $json.body ?? {};\nconst esc = (s) => String(s ?? '').slice(0, 200).replace(/[&<>\"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\nif (!b.title) throw new Error('title is required');\nconst url = String(b.reviewUrl ?? '');\nlet reviewUrl = 'https://os.mgi-ventures.com/approvals'\ntry {\n  const u = new URL(url)\n  // Only links into the Executive OS may appear in the e-mail (no attacker-chosen links).\n  if (u.protocol === 'https:' && u.hostname === 'os.mgi-ventures.com' && !u.username && !u.password) reviewUrl = u.href\n} catch { /* keep the default */ }\nreturn [{ json: { title: esc(b.title), requestedBy: esc(b.requestedBy), entity: esc(b.entity), priority: esc(b.priority), reviewUrl } }];"
+      },
+      "id": "s2",
+      "name": "Validate & escape",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ from: \"MGI Executive OS <onboarding@resend.dev>\", to: [\"REPLACE-WITH-RECIPIENT\"], subject: \"New approval: \" + $json.title, html: \"<h2>New approval request</h2><p><strong>From:</strong> \" + $json.requestedBy + \"</p><p><strong>Entity:</strong> \" + $json.entity + \"</p><p><strong>Priority:</strong> \" + $json.priority + \"</p><p><a href=\\\"\" + $json.reviewUrl + \"\\\">Review request</a></p>\" }) }}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "s3",
+      "name": "Send via Resend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE",
+          "name": "Resend API key (Authorization: Bearer …)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"status\":\"received\"}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "s4",
+      "name": "Respond 202",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (x-n8n-key)": {
+      "main": [
+        [
+          {
+            "node": "Validate & escape",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & escape": {
+      "main": [
+        [
+          {
+            "node": "Send via Resend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send via Resend": {
+      "main": [
+        [
+          {
+            "node": "Respond 202",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Africa/Douala"
+  },
+  "tags": []
+}

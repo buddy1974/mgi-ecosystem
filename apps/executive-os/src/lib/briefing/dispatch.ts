@@ -6,7 +6,7 @@ import { buildAlertMessage, buildDigestMessage, type DigestItem } from './format
 import { absoluteLink, subjectPath } from './links'
 import { RECIPIENTS, getRecipient, mayReceive, mayReceiveAlert } from './recipients'
 import { alertsPerHour, nextRetry, routeEvent } from './rules'
-import { resolveTarget, sendTelegram } from './telegram-transport'
+import { resolveTarget, sendTelegram, telegramBotIdentity } from './telegram-transport'
 import { PRIORITY_RANK, type Priority, type SubjectType } from './types'
 
 // Event → notification → Telegram. All state changes are single conditional statements
@@ -210,4 +210,32 @@ export async function runDigest(isDemo: boolean, now = new Date(), env: NodeJS.P
   }
   await markDigested([...included], now)
   return { notifications, items: included.size }
+}
+
+/**
+ * Connectivity check for a demo deployment: one fixed DEMO message to the demo chat,
+ * recorded in the outbox (kind TEST). Refused outside demo mode — it can never reach
+ * the President or the Operations group.
+ */
+export async function sendDemoTestMessage(env: NodeJS.ProcessEnv = process.env, fetchImpl: typeof fetch = fetch, now = new Date()) {
+  const recipient = getRecipient('president')!
+  const target = resolveTarget(recipient, true, env)
+  if (env.EXEC_DEMO_MODE !== '1') return { ok: false as const, error: 'Only available on a demo deployment' }
+  if (target.kind !== 'send') return { ok: false as const, error: target.reason }
+  const bot = await telegramBotIdentity(target, fetchImpl)
+  if (!bot.ok) return { ok: false as const, error: `Bot check failed: ${bot.error}` }
+  const text = [
+    '🧪 <b>DEMO</b> · Telegram connectivity check',
+    '',
+    `Bot @${bot.username} can post to the demo chat of the MGI Executive Briefing Centre.`,
+    'No business data is included in this message.',
+  ].join('\n')
+  const res = await sendTelegram(target, text, null, fetchImpl)
+  await prisma.execNotification.create({
+    data: {
+      dedupeKey: `demo:test:${now.toISOString()}`, kind: 'TEST', recipient: 'demo-chat', eventIds: [], text, isDemo: true,
+      status: res.ok ? 'SENT' : 'FAILED', attempts: 1, sentAt: now, telegramMessageId: res.ok ? res.messageId : null, lastError: res.ok ? null : res.error,
+    },
+  })
+  return res.ok ? { ok: true as const, bot: bot.username, messageId: res.messageId } : { ok: false as const, error: res.error }
 }

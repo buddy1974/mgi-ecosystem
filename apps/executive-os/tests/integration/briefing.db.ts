@@ -54,7 +54,9 @@ before(async () => {
     req.on('data', (c) => (raw += c))
     req.on('end', () => {
       tgSeen.push({ path: req.url ?? '', body: JSON.parse(raw || '{}') })
-      const next = tgQueue.shift() ?? { status: 200, body: { ok: true, result: { message_id: 1000 + tgSeen.length } } }
+      const next = (req.url ?? '').endsWith('/getMe')
+        ? { status: 200, body: { ok: true, result: { username: 'mock_briefing_bot' } } }
+        : tgQueue.shift() ?? { status: 200, body: { ok: true, result: { message_id: 1000 + tgSeen.length } } }
       res.writeHead(next.status, { 'Content-Type': 'application/json' }).end(JSON.stringify(next.body))
     })
   })
@@ -262,4 +264,20 @@ test('morning brief: one per day, built from records, links resolve', async () =
     assert.equal(found, 1, path)
   }
   assert.equal((await m.brief.enqueueMorningBrief(true, T0, process.env, true)).created, 1, 'demo replay allowed')
+})
+
+test('Telegram connectivity check: demo chat only, recorded in the outbox', async () => {
+  const before = tgSeen.length
+  const refused = await m.d.sendDemoTestMessage({ ...tgEnv(), TELEGRAM_DEMO_CHAT_ID: '' })
+  assert.equal(refused.ok, false)
+  assert.equal(tgSeen.length, before, 'nothing sent without a demo chat')
+  const live = await m.d.sendDemoTestMessage({ ...tgEnv(), EXEC_DEMO_MODE: '' })
+  assert.equal(live.ok, false, 'refused on a live deployment')
+  const ok = await m.d.sendDemoTestMessage(tgEnv())
+  assert.equal(ok.ok, true)
+  const calls = tgSeen.slice(before)
+  assert.deepEqual(calls.map((c) => c.path.split('/').pop()), ['getMe', 'sendMessage'])
+  assert.equal(calls[1].body.chat_id, '-100777')
+  const row = await m.prisma.execNotification.findFirst({ where: { kind: 'TEST' }, orderBy: { createdAt: 'desc' } })
+  assert.equal(row?.status, 'SENT')
 })

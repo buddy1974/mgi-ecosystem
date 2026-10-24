@@ -94,3 +94,11 @@ export async function demoForm(formData: FormData) {
   revalidatePath('/briefing', 'layout')
   back('/briefing/demo', { ok: true, message })
 }
+
+export async function telegramTestForm() {
+  await requireExecutive()
+  const { sendDemoTestMessage } = await import('@/lib/briefing/dispatch')
+  const r = await sendDemoTestMessage()
+  revalidatePath('/briefing/notifications')
+  back('/briefing/notifications', r.ok ? { ok: true, message: `Test message delivered by @${r.bot} (message ${r.messageId})` } : { ok: false, error: `Telegram test failed: ${r.error}` })
+}
