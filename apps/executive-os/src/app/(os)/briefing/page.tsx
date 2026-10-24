@@ -91,7 +91,7 @@ export default async function BriefingOverview() {
       </div>
 
       <Card title="Company performance" action={<Link href="/briefing/finance" className="text-xs text-mgi-muted hover:text-white">Finance →</Link>}>
-        {metrics.length === 0 ? <Empty>{mode === 'live' ? 'No sales source is connected yet (NMI / Odoo connectors pending) — no figures are shown rather than estimates.' : 'No demo finance records — reset the demo.'}</Empty> : (
+        {metrics.length === 0 ? <Empty>{access.companies !== '*' ? 'No finance figures for the companies your account can see.' : mode === 'live' ? 'No sales source is connected yet (NMI / Odoo connectors pending) — no figures are shown rather than estimates.' : 'No demo finance records — reset the demo.'}</Empty> : (
           <div className="grid gap-3 md:grid-cols-2">
             {metrics.map(([c, m]) => m && (
               <Link key={c} href={`/briefing/finance/${c}`} className="block rounded-md border border-mgi-border p-3 hover:bg-white/5">

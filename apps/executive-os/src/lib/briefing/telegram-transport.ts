@@ -105,3 +105,34 @@ export async function telegramBotIdentity(
     return { ok: false, error: redact(`network: ${String(err)}`, target.token) }
   }
 }
+
+/**
+ * Setup helper for a demo deployment: lists groups the bot has seen recently whose title
+ * contains "DEMO", so the demo chat id can be configured without handling tokens in URLs.
+ * Other chats are never returned. Unavailable while the bot delivers updates to a webhook.
+ */
+export async function findDemoChats(
+  env: NodeJS.ProcessEnv = process.env,
+  fetchImpl: typeof fetch = fetch,
+): Promise<{ ok: true; chats: { id: string; title: string }[] } | { ok: false; error: string }> {
+  const token = env.TELEGRAM_BOT_TOKEN?.trim()
+  const apiBase = telegramApiBase(env)
+  if (!token || !apiBase) return { ok: false, error: 'TELEGRAM_BOT_TOKEN is not set on this deployment' }
+  try {
+    const hook = (await (await fetchImpl(`${apiBase}/bot${token}/getWebhookInfo`, { signal: AbortSignal.timeout(10_000) })).json()) as { ok?: boolean; result?: { url?: string }; description?: string }
+    if (!hook.ok) return { ok: false, error: redact(hook.description ?? 'getWebhookInfo failed', token) }
+    if (hook.result?.url) return { ok: false, error: 'The bot delivers updates to a webhook, so recent chats cannot be listed. Use the chat id from the group info instead.' }
+    const upd = (await (await fetchImpl(`${apiBase}/bot${token}/getUpdates?limit=100&timeout=0`, { signal: AbortSignal.timeout(10_000) })).json()) as {
+      ok?: boolean; description?: string; result?: { message?: { chat?: { id: number; title?: string; type?: string } }; my_chat_member?: { chat?: { id: number; title?: string; type?: string } } }[]
+    }
+    if (!upd.ok) return { ok: false, error: redact(upd.description ?? 'getUpdates failed', token) }
+    const chats = new Map<string, string>()
+    for (const u of upd.result ?? []) {
+      const c = u.message?.chat ?? u.my_chat_member?.chat
+      if (c && c.type !== 'private' && /demo/i.test(c.title ?? '')) chats.set(String(c.id), c.title ?? '')
+    }
+    return { ok: true, chats: [...chats].map(([id, title]) => ({ id, title })) }
+  } catch (err) {
+    return { ok: false, error: redact(`network: ${String(err)}`, token) }
+  }
+}

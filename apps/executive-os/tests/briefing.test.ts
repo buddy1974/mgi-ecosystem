@@ -347,3 +347,20 @@ test('n8n workflows are small, carry no secrets and only call the briefing run e
     assert.ok(!/(re_[A-Za-z0-9]{10,}|bot\d+:|Bearer )/.test(raw), `${f}: no secrets`)
   }
 })
+
+test('demo chat finder returns only groups titled DEMO and never private chats', async () => {
+  const { findDemoChats } = await import('../src/lib/briefing/telegram-transport')
+  const updates = { ok: true, result: [
+    { message: { chat: { id: 111, type: 'private' } } },
+    { message: { chat: { id: -100222, type: 'supergroup', title: 'MGI — Operations' } } },
+    { message: { chat: { id: -100333, type: 'group', title: 'MGI Briefing — DEMO (Marcel only)' } } },
+    { my_chat_member: { chat: { id: -100333, type: 'group', title: 'MGI Briefing — DEMO (Marcel only)' } } },
+  ] }
+  const fake = (hookUrl: string) => (async (url: string) => new Response(JSON.stringify(
+    url.includes('getWebhookInfo') ? { ok: true, result: { url: hookUrl } } : updates), { status: 200 })) as unknown as typeof fetch
+  const ok = await findDemoChats(E({ TELEGRAM_BOT_TOKEN: TOKEN }), fake(''))
+  assert.deepEqual(ok, { ok: true, chats: [{ id: '-100333', title: 'MGI Briefing — DEMO (Marcel only)' }] })
+  const hooked = await findDemoChats(E({ TELEGRAM_BOT_TOKEN: TOKEN }), fake('https://n8n.example/webhook'))
+  assert.equal(hooked.ok, false)
+  assert.equal((await findDemoChats(E({}), fake(''))).ok, false)
+})

@@ -84,7 +84,7 @@ On the demo deployment (or locally), signed in as an executive, open **Briefing 
    chat, no `TELEGRAM_PRESIDENT_CHAT_ID`, no `EXEC_TELEGRAM_LIVE`.
 3. Push the branch; wait for READY; run `npm run briefing -- reset` against the demo DB only
    (or Demo control → Reset).
-4. n8n: create a *Header Auth* credential (`x-exec-briefing-token` = token), import the three
+4. n8n: create a *Custom Auth* credential `{"headers":{"x-exec-briefing-token":"<token>"}}` (staging also needs `"x-vercel-protection-bypass"`), import the three
    files in `docs/briefing-centre/n8n/`, set the OS host in each *Config* node, select the
    credential, activate. They are imported inactive on purpose.
 5. Verify: `/briefing` loads; `POST /api/briefing/run {"job":"process"}` with the token → 200;
@@ -106,3 +106,13 @@ drop the 7 tables (separate approval). Deactivate the three n8n workflows.
 * **Ownership:** module code is in `src/lib/briefing/*` (logic, pure where possible),
   `src/app/(os)/briefing/*` (pages), `src/app/api/briefing/*` (machine endpoints). Each file
   starts with a comment explaining its responsibility.
+
+## 6. Related documents
+
+* `STAGING.md` — hosted staging: URL, access, reproducible deploy, Telegram demo chat setup, rollback.
+* `SECURITY-n8n.md` — n8n findings (inline keys, open webhooks) and the secured approval-alert workflow.
+* n8n versions: production runs **2.9.4**; the project specification names **2.4.8**. The three
+  briefing workflows and the secured approval workflow were executed successfully on both in
+  throwaway containers (`scripts/briefing/n8n-verify.mjs`, `n8n-verify-approval.mjs`). The node
+  versions used (scheduleTrigger 1.2, manualTrigger 1, set 3.4, httpRequest 4.2, code 2,
+  webhook 2, respondToWebhook 1.1) exist in both. No downgrade or upgrade is needed.

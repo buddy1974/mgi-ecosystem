@@ -13,7 +13,7 @@ that tells him what needs his attention across MGI companies, and lets him act o
 | Programme registrations | web-rogers (`rogers_registrations`) | Planned feed via ingest; demo uses its own DEMO rows, never the live table. |
 | Meetings, resolutions, commitments | **Briefing centre** (native) | Source of truth. |
 | Telegram delivery for executive content | **Briefing centre** outbox | Existing venture-report alerts (`lib/telegram.ts`) are unchanged. |
-| Scheduling | n8n (3 small workflows) | n8n only calls `POST /api/briefing/run`; all logic is in the OS and tested. |
+| Scheduling | n8n (3 small workflows) | n8n only calls `POST /api/briefing/run` (Custom Auth credential holds the token header); all logic is in the OS and tested. |
 
 No existing table, enum or route was changed. New tables: `exec_records`, `exec_meetings`,
 `exec_decisions`, `exec_commitments`, `exec_activities`, `exec_events`, `exec_notifications`

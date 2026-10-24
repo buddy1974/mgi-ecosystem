@@ -102,3 +102,13 @@ export async function telegramTestForm() {
   revalidatePath('/briefing/notifications')
   back('/briefing/notifications', r.ok ? { ok: true, message: `Test message delivered by @${r.bot} (message ${r.messageId})` } : { ok: false, error: `Telegram test failed: ${r.error}` })
 }
+
+export async function findDemoChatForm() {
+  await requireExecutive()
+  if (!isDemoMode()) back('/briefing/notifications', { ok: false, error: 'Only available on a demo deployment' })
+  const { findDemoChats } = await import('@/lib/briefing/telegram-transport')
+  const r = await findDemoChats()
+  back('/briefing/notifications', !r.ok ? { ok: false, error: r.error }
+    : r.chats.length === 0 ? { ok: false, error: 'No group with "DEMO" in its title found. Add the bot to the group, send a message there, then try again.' }
+    : { ok: true, message: `Demo group(s) found — set TELEGRAM_DEMO_CHAT_ID on this project to: ${r.chats.map((c) => `${c.title} = ${c.id}`).join('; ')}` })
+}
